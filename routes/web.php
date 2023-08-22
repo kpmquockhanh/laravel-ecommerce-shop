@@ -51,6 +51,6 @@ Route::prefix('/{version}')->group(function () {
 })->whereIn('version', ['v1', 'v2']);
 
 // For vue frontend
-//Route::get('{any}', function () {
-//    return view('vue');
-//})->where('any', '.*');
+Route::get('{any}', function () {
+   return view('vue');
+})->where('any', '.*');
