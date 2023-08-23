@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('/products')->group(function () {
+    Route::get('/new', function () {
+        return new \App\Http\Resources\ProductCollection(\App\Models\Product::with(['categories', 'images'])->orderBy('id', 'asc')->limit(8)->get());
+    });
+    Route::get('/{id}', function ($id) {
+        return new \App\Http\Resources\ProductResource(\App\Models\Product::query()->findOrFail($id));
+    });
+});

@@ -13,7 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet">
         <!-- Styles -->
         @vite('resources/css/app.css')
-        @vite('resources/font-awesome-4.7.0/css/font-awesome.min.css')
+        @vite('resources/css/font-awesome-4.7.0/css/font-awesome.css')
     </head>
     <body class="antialiased">
         <div id="app"></div>

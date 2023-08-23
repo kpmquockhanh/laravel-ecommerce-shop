@@ -19,17 +19,15 @@ class AdminProductController extends Controller
         $defaultNumberPaginate = 12;
         $products = Product::with('admin');
 
-        if (!Auth::guard('admin')->user()->isAdmin() )
+        if (!Auth::guard('admin')->user()->isAdmin())
             $products->where('created_by', Auth::guard('admin')->id());
 
-        if ($search = $request->search)
-        {
-            $products->Where('title','like', '%'.$search.'%')
-                ->orWhere('description','like', '%'.$search.'%');
+        if ($search = $request->search) {
+            $products->Where('title', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
         }
 
-        if ($sort = $request->sort)
-        {
+        if ($sort = $request->sort) {
             $products->orderBy($sort, 'desc');
         }
 
@@ -44,7 +42,7 @@ class AdminProductController extends Controller
 
         if ($request->list_type == 'table') {
             Session::put('list_type', 'table');
-        }elseif ($request->list_type == 'grid') {
+        } elseif ($request->list_type == 'grid') {
             Session::put('list_type', 'grid');
         }
 
@@ -74,16 +72,13 @@ class AdminProductController extends Controller
         $data = $this->getDataForStore($request, 'store');
         $product = Product::query()->create(array_merge($data));
 
-        if ($image = $request->image)
-        {
+        if ($image = $request->image) {
             $this->processImage($image, $product->id);
         }
 
         $requestCategories = $request->categories;
-        if ($requestCategories)
-        {
-            foreach ($requestCategories as $category)
-            {
+        if ($requestCategories) {
+            foreach ($requestCategories as $category) {
                 ProductCategory::query()->insert([
                     'product_id' => $product->id,
                     'category_id' => $category,
@@ -97,14 +92,12 @@ class AdminProductController extends Controller
 
     public function edit($id)
     {
-        if (!$id)
-        {
+        if (!$id) {
             return redirect()->back();
         }
 
         $product = Product::with('categories')->with('images')->findOrFail($id);
-        if (!$product->canChange())
-        {
+        if (!$product->canChange()) {
             return redirect(route('admin.products.list'))->withErrors(['noPermission' => 'You have no permission to change this product!']);
         }
 
@@ -123,11 +116,11 @@ class AdminProductController extends Controller
         //Update category of product
         $requestCategories = $request->categories;
         if ($requestCategories) {
-            $currentCategories = array_column($product->categories->toArray(),'id');
+            $currentCategories = array_column($product->categories->toArray(), 'id');
 
             $deleteCate = array_diff($currentCategories, $requestCategories);
             $addCategories = array_diff($requestCategories, $currentCategories);
-            foreach ($addCategories as  $addCate) {
+            foreach ($addCategories as $addCate) {
                 ProductCategory::query()->insertOrIgnore([
                     'product_id' => $id,
                     'category_id' => $addCate,
@@ -142,8 +135,7 @@ class AdminProductController extends Controller
 
         $product->update($data);
 
-        if ($image = $request->image)
-        {
+        if ($image = $request->image) {
             $this->processImage($image, $product->id);
         }
 
@@ -154,9 +146,8 @@ class AdminProductController extends Controller
     {
         $product = Product::with('images')->findOrFail($request->id);
         $images = $product->images;
-        foreach ($images as $image)
-        {
-            File::delete(public_path('images').'\\'.$image->src);
+        foreach ($images as $image) {
+            File::delete(public_path('images') . '\\' . $image->src);
         }
         if (Product::destroy($request->id)) {
             return response()->json([
@@ -174,16 +165,14 @@ class AdminProductController extends Controller
         $id = $request->id;
         $product = Product::query()->find($id);
 
-        if (!$product)
-        {
+        if (!$product) {
             return response()->json([
                 'status' => false,
             ]);
         }
 
 
-        if (!$product->canChange())
-        {
+        if (!$product->canChange()) {
             return response()->json([
                 'status' => false,
             ]);
@@ -214,13 +203,11 @@ class AdminProductController extends Controller
             case 'update':
                 $id = $request->id;
                 $product = Product::query()->findOrFail($id);
-                if (!$product->canChange())
-                {
+                if (!$product->canChange()) {
                     return [];
                 }
-                if ($request->image)
-                {
-                    File::delete(public_path('images').'\\'.$product->image);
+                if ($request->image) {
+                    File::delete(public_path('images') . '\\' . $product->image);
                     $image = \App\Models\Image::query()->where('entity_type', 'product')
                         ->where('entity_id', $id)
                         ->where('is_thumbnail', true)
@@ -233,23 +220,41 @@ class AdminProductController extends Controller
         }
         return $data;
     }
-    private function processImage($image, $productId): string
+
+    private function processImage($image, $productId)
     {
-        ini_set('memory_limit','256M');
-        $name = time().'.'.$image->getClientOriginalExtension();
+        \App\Models\Image::query()->where([
+            'entity_type' => 'product',
+            'entity_id' => $productId,
+        ])->delete();
+
+        ini_set('memory_limit', '256M');
+        $name = time() . '.' . $image->getClientOriginalExtension();
         Image::make($image)
-            ->resize(null, 500, function ($constraint) {
+            ->resize(null, 300, function ($constraint) {
                 $constraint->aspectRatio();
             })
-            ->insert('img/watermark.png','top-right', 20,20)
-            ->save(public_path('images').'/'.$name);
+            ->crop(300, 300)
+            ->insert('img/watermark.png', 'top-left', 20, 20)
+            ->save(public_path('images') . '/' . $name);
 
+        $originName = time() . '-origin-' . '.' . $image->getClientOriginalExtension();
+        Image::make($image)
+            ->insert('img/watermark.png', 'top-right', 20, 20)
+            ->save(public_path('images') . '/' . $originName);
+        // For thumbnail
         \App\Models\Image::query()->create([
             'entity_type' => 'product',
             'entity_id' => $productId,
             'is_thumbnail' => true,
             'src' => $name,
         ]);
-        return $name;
+        // For origin
+        \App\Models\Image::query()->create( [
+            'entity_type' => 'product',
+            'entity_id' => $productId,
+            'is_thumbnail' => false,
+            'src' => $originName,
+        ]);
     }
 }
