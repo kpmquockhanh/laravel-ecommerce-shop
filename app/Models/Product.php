@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -31,12 +32,16 @@ class Product extends Model
         return $this->hasMany(Image::class, 'entity_id')->where('entity_type', 'product');
     }
 
-    public function thumbnail(): Attribute {
-        $src = $this->images->firstWhere('is_thumbnail', true)?->src;
+    public function thumbnail(): Attribute
+    {
         return Attribute::make(
-            get: fn () => $src?asset('images/'.$src):asset('backend/img/image_placeholder.jpg'),
+            get: function () {
+                $src = $this->images->firstWhere('is_thumbnail', true)?->src;
+                return $src ? env('AWS_URL').$src : asset('backend/img/placeholder.jpg');
+            },
         );
     }
+
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'created_by');

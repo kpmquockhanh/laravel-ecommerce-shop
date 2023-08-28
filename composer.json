@@ -10,7 +10,8 @@
         "intervention/image": "^2.7",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
@@ -64,5 +65,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "storj/uplink": {
+            "type": "composer",
+            "url": "https://raw.githubusercontent.com/storj-thirdparty/uplink-php/main/"
+        }
+    }
 }

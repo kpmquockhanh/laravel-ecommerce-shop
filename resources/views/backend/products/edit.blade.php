@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    @include('backend.products.upload_img', ['image' => $product->thumbnail??asset('backend/img/placeholder.jpg')])
+                    @include('backend.products.upload_img', ['image' => $product->thumbnail])
                 </div>
             </div>
         </form>

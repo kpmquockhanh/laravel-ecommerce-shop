@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Watch from '../views/watch/Watch.vue'
-import Home from '../views/Home.vue'
+import NotFound from '../views/watch/components/core/404.vue'
 
 const routes = [
     {
@@ -9,9 +9,20 @@ const routes = [
         component: Watch
     },
     {
-        path: '/watch',
-        name: 'watch',
-        component: Watch
+        path: '/products/:slug',
+        name: 'product-detail',
+        component: () => import('../views/watch/ProductDetail.vue')
+    },
+    {
+        path: '/products',
+        name: 'product-list',
+        component: () => import('../views/watch/ProductList.vue')
+    },
+    // Not found
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFound,
     },
 ]
 

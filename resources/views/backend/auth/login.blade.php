@@ -2,7 +2,7 @@
 @section('class-body', 'login-page')
 @section('content')
     <div class="wrapper wrapper-full-page ">
-        <div class="full-page section-image" filter-color="black" data-image="../../assets/img/bg/fabio-mangione.jpg">
+        <div class="full-page section-image blue" filter-color="black" data-image="../../assets/img/bg/fabio-mangione.jpg">
             <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
             <div class="content">
                 <div class="container">
@@ -40,7 +40,7 @@
                                             <label>Password *</label>
                                             <input class="form-control" name="password" type="password" required="true" />
                                         </div>
-                                    <div class="form-group">
+                                    <div class="form-group mt-2">
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" value="" name="remeber" {{old('remember')?'checked':''}}>
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer ">
+                                <div class="card-footer">
                                     <button type="submit" class="btn btn-warning btn-round btn-block mb-3">Đăng nhập
                                     </button>
                                 </div>

@@ -15,6 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::query()->create([
+            'id' => 1,
             'name' => 'Test User',
             'email' => 'test@example.com',
             'type' => Admin::ADMIN_CODE,

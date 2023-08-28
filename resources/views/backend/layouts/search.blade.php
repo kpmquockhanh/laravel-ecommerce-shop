@@ -20,7 +20,7 @@
         </span>
     </div>
     <span class="input-group no-border m-0 p-0 col-md-6 flex-grow-1">
-          <input type="text" value="{{ isset($queries['search'])??$queries['search'] }}"
+          <input type="text" value="{{ isset($queries['search'])?$queries['search'] : '' }}"
                  class="form-control" placeholder="Search..." name="search">
           <div class="input-group-append">
              <div class="input-group-text">

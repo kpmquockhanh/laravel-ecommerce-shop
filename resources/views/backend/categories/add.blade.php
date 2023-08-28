@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="content">
-        <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-sm-12">
                     <div class="card ">
                         <div class="card-header">
                             <h4 class="card-title">Add category</h4>
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-2">
                                 @if ($errors->has('code'))
                                     <div class="text-danger col-md-12 offset-md-2">
                                         <strong>{{ $errors->first('code') }}</strong>

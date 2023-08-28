@@ -179,8 +179,8 @@ a:hover {
     width: auto;
     height: 6em;
     float: right;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .navbar_menu li {
@@ -207,6 +207,8 @@ a:hover {
 
 .navbar_user {
     margin-left: 37px;
+    display: flex;
+    gap: 4px;
 }
 
 .navbar_user li {
@@ -304,7 +306,7 @@ a:hover {
 
 
 .hamburger_menu.active {
-    right: 0px;
+    right: 0;
     width: 100%;
     background-color: white;
 
@@ -639,7 +641,7 @@ a:hover {
     background-color: #FFD500;
     border: 1px solid #FFD500;
     border-radius: 10px;
-    color: white;
+    color: #7C7C7C;
     font-size: 18px;
 }
 
@@ -675,7 +677,7 @@ a:hover {
 @media only screen and (max-width: 540px) {
     .add-to-card {
         margin-top: 10px;
-        margin-left: 0px;
+        margin-left: 0;
     }
 
     .add-to-favorite {
@@ -708,7 +710,7 @@ a:hover {
 
     .add-to-card {
         margin-top: 5px;
-        margin-left: 0px;
+        margin-left: 0;
     }
 
     .add-to-favorite {
@@ -724,7 +726,7 @@ a:hover {
 
     .slide-yazi {
         font-size: 1.2rem;
-        margin-top: 0px;
+        margin-top: 0;
     }
 
 
@@ -738,16 +740,14 @@ a:hover {
 
 
 .choice .card {
-    border: 0px;
+    border: 0;
 }
 
 .choice .card .card-img-top {
     object-fit: cover;
     border-radius: 20px;
-    width: 300px;
-    max-height: 450px;
-    max-width: 400px;
-
+    max-height: 300px;
+    max-width: 100%;
 }
 
 
@@ -763,6 +763,9 @@ a:hover {
     color: white;
     font-size: 20px;
     border-radius: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .choice .card .choice-buton a {
@@ -789,7 +792,7 @@ a:hover {
     color: black;
     border-radius: 50%;
     padding: 0.5rem;
-    box-shadow: 0px 5px 15px #d4d4d4;
+    box-shadow: 0 5px 15px #d4d4d4;
 }
 
 .product-icon a i:hover {
@@ -810,7 +813,7 @@ a:hover {
 }
 
 .product-col .card {
-    border: 0px;
+    border: 0;
 }
 
 .product-item .card-body .btn {
@@ -843,6 +846,9 @@ a:hover {
 
 .product-item .card-body .category {
     font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .product-item .card-body .card-text {
@@ -966,7 +972,7 @@ a:hover {
     border: 1px solid #FFD500;
     border-radius: 50px;
     background-color: #FFD500;
-    color: white;
+    color: #7C7C7C;
 }
 
 
@@ -1024,7 +1030,6 @@ a:hover {
     background-color: white;
     cursor: pointer;
     float: left;
-    margin-right: 13px;
     border: 1px solid #EEEEEE;
 }
 
@@ -1107,7 +1112,7 @@ a:hover {
 
 .piece .piece-btn {
     background-color: transparent;
-    border: 0px;
+    border: 0;
     cursor: pointer;
     color: #7C7C7C;
 }
@@ -1255,7 +1260,7 @@ a:hover {
 }
 
 .tab2 .comments-card-sub {
-    box-shadow: 0px 0px 5px 5px rgb(245, 245, 245);
+    box-shadow: 0 0 5px 5px rgb(245, 245, 245);
     margin-left: 30px;
     margin-right: auto;
     margin-top: 20px;
@@ -1269,7 +1274,7 @@ a:hover {
 
 .pc-tab section div .post-a-comment {
     width: 80%;
-    box-shadow: 0px 0px 5px 5px rgb(245, 245, 245);
+    box-shadow: 0 0 5px 5px rgb(245, 245, 245);
 }
 
 
@@ -1333,7 +1338,7 @@ a:hover {
     width: 50%;
     height: 50px;
     border: 1px solid black;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: black;
     color: white;
 }
@@ -1353,23 +1358,23 @@ a:hover {
 }
 
 .tab2 .row {
-    border: 0px;
-    padding: 5px 0px 0px 20px;
+    border: 0;
+    padding: 5px 0 0 20px;
 }
 
 .tab2 .col-lg-12 {
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
 }
 
 .tab2 .col-lg-8 {
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
 }
 
 .tab2 .col-lg-4 {
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
 }
 
 
@@ -1450,7 +1455,7 @@ a:hover {
 
 .price-card {
     padding: 0.5em;
-    box-shadow: 0px 0px 5px 5px rgb(231, 231, 231);
+    box-shadow: 0 0 5px 5px rgb(231, 231, 231);
 }
 
 .price-card .card-text {
@@ -1613,7 +1618,7 @@ a:hover {
 .login-register-now-button {
     width: 100%;
     border: 2px solid white;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: black;
     color: white;
     padding: 15px;
@@ -1621,7 +1626,7 @@ a:hover {
 
 .login-register-button {
     width: 100%;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: black;
     color: white;
     padding: 15px;
@@ -1632,7 +1637,7 @@ a:hover {
     padding: 12px 10px;
     width: 100%;
     border: 0;
-    border-radius: 0px;
+    border-radius: 0;
     outline: 0;
     border-bottom: 1px solid #CECECE;
     color: black;
@@ -1643,7 +1648,7 @@ a:hover {
     padding: 12px 10px;
     width: 100%;
     border: 0;
-    border-radius: 0px;
+    border-radius: 0;
     outline: 0;
     border-bottom: 1px solid #CECECE;
     color: black;
@@ -1654,7 +1659,7 @@ a:hover {
     padding: 12px 10px;
     width: 100%;
     border: 0;
-    border-radius: 0px;
+    border-radius: 0;
     outline: 0;
     border-bottom: 1px solid #CECECE;
     color: black;
@@ -1746,6 +1751,11 @@ a:hover {
 .filter-category {
     background-color: white;
     color: black;
+    font-size: 14px;
+}
+
+.checkmark {
+    font-size: 12px;
 }
 
 .filter input[type="radio"] {
@@ -1765,7 +1775,7 @@ a:hover {
 
 .filter input[type="radio"]:checked {
     background-color: #FFD500;
-    border: 0px;
+    border: 0;
 }
 
 
@@ -1829,8 +1839,8 @@ abbr:where([title]) {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-size: inherit;
-    font-weight: inherit
+    /*font-size: inherit;*/
+    /*font-weight: inherit*/
 }
 
 a {
@@ -1989,7 +1999,7 @@ img, video {
 
     --tw-scroll-snap-strictness: proximity;
 
-    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-width: 0;
     --tw-ring-offset-color: #fff;
     --tw-ring-color: rgb(59 130 246 / 0.5);
     --tw-ring-offset-shadow: 0 0 #0000;
@@ -2120,6 +2130,10 @@ img, video {
 
 .gap-4 {
     gap: 1rem
+}
+
+.gap-2 {
+    gap: 0.5rem
 }
 
 .self-center {
@@ -2373,19 +2387,19 @@ img, video {
     }
 
     .sm\:top-0 {
-        top: 0px
+        top: 0;
     }
 
     .sm\:right-0 {
-        right: 0px
+        right: 0;
     }
 
     .sm\:ml-0 {
-        margin-left: 0px
+        margin-left: 0;
     }
 
     .sm\:flex {
-        display: flex
+        display: flex;
     }
 
     .sm\:items-center {
@@ -2425,9 +2439,56 @@ img, video {
     }
 }
 
-
 .float-item {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+
+/*======================
+    404 page
+=======================*/
+
+
+.page_404 {
+    font-family: 'Quicksand', sans-serif;
+    padding: 100px 0 40px 0;
+    background: #fff;
+}
+
+.page_404 img {
+    width: 100%;
+}
+
+.four_zero_four_bg {
+
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+}
+
+
+.four_zero_four_bg h1 {
+    font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+    font-size: 80px;
+}
+
+.link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.contant_box_404 {
+    margin-top: -50px;
+}
+
+.pointer {
+    cursor: pointer;
 }

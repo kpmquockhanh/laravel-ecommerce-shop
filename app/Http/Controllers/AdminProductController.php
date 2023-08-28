@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class AdminProductController extends Controller
@@ -17,7 +18,7 @@ class AdminProductController extends Controller
     public function index(Request $request)
     {
         $defaultNumberPaginate = 12;
-        $products = Product::with('admin');
+        $products = Product::with('admin', 'images');
 
         if (!Auth::guard('admin')->user()->isAdmin())
             $products->where('created_by', Auth::guard('admin')->id());
@@ -223,25 +224,36 @@ class AdminProductController extends Controller
 
     private function processImage($image, $productId)
     {
-        \App\Models\Image::query()->where([
+        $images = \App\Models\Image::query()->where([
             'entity_type' => 'product',
             'entity_id' => $productId,
-        ])->delete();
+        ]);
+        foreach ($images as $image) {
+            Storage::delete($image->src);
+        }
+        $images->delete();
+
 
         ini_set('memory_limit', '256M');
-        $name = time() . '.' . $image->getClientOriginalExtension();
-        Image::make($image)
-            ->resize(null, 300, function ($constraint) {
+        $timeNow = time();
+        $ext = $image->getClientOriginalExtension();
+        $name = "$timeNow-$productId.$ext";
+        $imageThumb = Image::make($image)
+            ->resize(null, 225, function ($constraint) {
                 $constraint->aspectRatio();
             })
-            ->crop(300, 300)
-            ->insert('img/watermark.png', 'top-left', 20, 20)
-            ->save(public_path('images') . '/' . $name);
+            ->crop(225, 225)
+            ->insert('img/watermark.png', 'top-left', 20, 20);
 
-        $originName = time() . '-origin-' . '.' . $image->getClientOriginalExtension();
-        Image::make($image)
-            ->insert('img/watermark.png', 'top-right', 20, 20)
-            ->save(public_path('images') . '/' . $originName);
+        $originName = "$timeNow-origin-$productId.$ext";
+        $imageOrigin = Image::make($image)
+            ->insert('img/watermark.png', 'top-left', 20, 20);
+
+        $imageOrigin = $imageOrigin->stream();
+        $imageThumb = $imageThumb->stream();
+        Storage::put($originName, $imageOrigin->__toString());
+        Storage::put($name, $imageThumb->__toString());
+
         // For thumbnail
         \App\Models\Image::query()->create([
             'entity_type' => 'product',

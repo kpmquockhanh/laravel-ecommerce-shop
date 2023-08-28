@@ -17,6 +17,9 @@ class CategoryController extends Controller
             $page = $paginate;
         }
 
+        if ($paginate = $request->search) {
+            $categories->where('name', 'like', '%'.$paginate.'%');
+        }
         $viewData = [
             'categories' => $categories->paginate($page),
             'queries' => $request->query(),

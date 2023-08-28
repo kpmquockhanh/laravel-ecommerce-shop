@@ -274,6 +274,18 @@ return [
                 ],
             ]
         ],
+        [
+            'name' => 'settings',
+            'label' => 'Settings',
+            'icon' => 'nc-settings',
+            'items' => [
+                [
+                    'label' => 'Basics',
+                    'icon' => 'B',
+                    'route' => 'admin.settings.list'
+                ],
+            ]
+        ],
     ],
 
 ];

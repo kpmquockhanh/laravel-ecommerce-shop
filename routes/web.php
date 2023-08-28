@@ -36,6 +36,16 @@ Route::prefix('admin')->group(function () {
             Route::get('edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('admin.categories.edit');
             Route::post('update', 'App\Http\Controllers\CategoryController@update')->name('admin.categories.update');
         });
+
+
+        Route::prefix('settings')->group(function () {
+            Route::get('/', 'App\Http\Controllers\SettingController@index')->name('admin.settings.list');
+            Route::get('/create', 'App\Http\Controllers\SettingController@create')->name('admin.settings.create');
+            Route::post('/create', 'App\Http\Controllers\SettingController@add')->name('admin.settings.add');
+            Route::get('/edit/{id}', 'App\Http\Controllers\SettingController@edit')->name('admin.settings.edit');
+            Route::post('/edit/{id}', 'App\Http\Controllers\SettingController@update')->name('admin.settings.update');
+            Route::get('/delete/{id}', 'App\Http\Controllers\SettingController@delete')->name('admin.settings.delete');
+        });
     });
 
     Route::get('/login', 'App\Http\Controllers\Auth\AdminLoginController@showLoginForm')->name('admin.login');
@@ -46,11 +56,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', 'App\Http\Controllers\Auth\AdminRegisterController@register')->name('admin.register.post');
 });
 
-Route::prefix('/{version}')->group(function () {
-    Route::get('products', 'App\Http\Controllers\ProductController@index')->name('products.list');
-})->whereIn('version', ['v1', 'v2']);
-
 // For vue frontend
 Route::get('{any}', function () {
    return view('vue');
-})->where('any', '.*');
+})->where('any', '.*')
+->where('any', '^(?!.*api).*$');

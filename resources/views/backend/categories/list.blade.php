@@ -43,7 +43,7 @@
                                 <tbody>
                                 @if (!count($categories))
                                     <tr>
-                                        <td class="text-center" colspan="6">Không có thể loại nào trong cơ sở dữ
+                                        <td class="text-center" colspan="7">Không có thể loại nào trong cơ sở dữ
                                             liệu
                                         </td>
                                     </tr>
@@ -52,7 +52,7 @@
                                     <tr>
                                         <td class="text-center">
                                             {{$category->id}}
-                                        </t>
+                                        </td>
                                         <td class="text-center">
                                             {{$category->name}}
                                         </td>
