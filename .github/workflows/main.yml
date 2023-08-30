@@ -19,6 +19,7 @@ jobs:
             cd /var/www/kpm/
             git checkout .
             git pull origin main
+            yarn build
             php artisan route:cache
             php artisan config:cache
             php artisan view:cache
