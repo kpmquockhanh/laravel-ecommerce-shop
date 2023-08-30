@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [
         vue(),
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/scss/all.scss'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/scss/all.scss', 'resources/css/font-awesome-4.7.0/css/font-awesome.css'],
             refresh: true,
         }),
     ],
