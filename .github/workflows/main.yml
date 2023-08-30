@@ -7,10 +7,10 @@ jobs:
   my_job:
     name: test
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Install SSH Key
-    - run: echo '123'
+      - name: Run ssh script
+        run: echo '123'
       # with:
       #   key: ${{ secrets.SSH_PRIVATE_KEY }}
- 
+
