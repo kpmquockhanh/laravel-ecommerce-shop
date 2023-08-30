@@ -54,7 +54,7 @@
             </div>
 
             <div class="col-lg-1 col-md-2 col-sm-3 col-12 d-flex justify-content-center">
-                <img src="/images/footer/1153502.png" width="100" height="30">
+                <img :src="'/images/footer/1153502.png'" width="100" height="30">
             </div>
 
         </div>
