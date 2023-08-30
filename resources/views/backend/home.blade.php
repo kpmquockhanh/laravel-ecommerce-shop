@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
-                                    <p class="card-category">Tổng hoa</p>
+                                    <p class="card-category">Total products</p>
                                     <p class="card-title">{{1}}
                                     <p>
                                 </div>
