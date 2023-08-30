@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Hello, remote server!"
+            mkdir hehe
       # with:
       #   key: ${{ secrets.SSH_PRIVATE_KEY }}
 
