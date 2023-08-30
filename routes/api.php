@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Models\Product;
 use \App\Http\Resources\ProductCollection;
 use \App\Http\Resources\ProductResource;
 
@@ -23,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/products')->group(function () {
     Route::get('/', function (Request $request) {
-        $products = Product::with(['categories']);
+        $products = \App\Models\Product::with(['categories']);
         if ($request->category) {
             $products->whereHas('categories', function ($query) {
                 $query->where('categories.id', request()->query('category'));
@@ -40,18 +39,18 @@ Route::prefix('/products')->group(function () {
         return new ProductCollection($products->paginate($limit)->appends(request()->query()));
     });
     Route::get('/newest', function () {
-        return new ProductCollection(Product::with(['categories', 'images'])->orderBy('id', 'desc')->limit(8)->get());
+        return new ProductCollection(\App\Models\Product::with(['categories', 'images'])->orderBy('id', 'desc')->limit(8)->get());
     });
     Route::get('/featured', function () {
-        return new ProductResource(Product::query()->first());
+        return new ProductResource(\App\Models\Product::query()->first());
     });
     Route::get('/similar/{id}', function ($id) {
-        $product = Product::with('categories')->findOrFail($id);
+        $product = \App\Models\Product::with('categories')->findOrFail($id);
         $categoryIds = [];
         foreach ($product->categories as $category) {
             $categoryIds[] = $category->id;
         }
-        return new ProductCollection(Product::with(['categories'])
+        return new ProductCollection(\App\Models\Product::with(['categories'])
             ->whereHas('categories', function ($query) use ($categoryIds) {
                 return $query->where('categories.id', $categoryIds);
             })
@@ -59,10 +58,10 @@ Route::prefix('/products')->group(function () {
             ->orderBy('id', 'desc')->limit(8)->get());
     })->where('id', '\d+');
     Route::get('/{id}', function ($id) {
-        return new ProductResource(Product::query()->findOrFail($id));
+        return new ProductResource(\App\Models\Product::query()->findOrFail($id));
     })->where('id', '\d+');
     Route::get('/{slug}', function ($slug) {
-        return new ProductResource(Product::with('images')->where(['slug' => $slug])->firstOrFail());
+        return new ProductResource(\App\Models\Product::with('images')->where(['slug' => $slug])->firstOrFail());
     });
 });
 
