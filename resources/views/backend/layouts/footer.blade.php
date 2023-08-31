@@ -13,7 +13,7 @@
                 ©
                 <script>
                   document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by nhóm 5 PTPM hướng Framework
+                </script>, from kpmquockhanh with <i class="fa fa-heart heart"></i>
               </span>
             </div>
         </div>
