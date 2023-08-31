@@ -256,6 +256,9 @@ export default {
         const slug = computed(() => route.params.slug);
 
         const fetchProduct = async () => {
+            if (!slug.value) {
+                return
+            }
             const resp = await doGet(`/api/products/${slug.value}`)
             product.value = get(resp, 'data', {})
         }
