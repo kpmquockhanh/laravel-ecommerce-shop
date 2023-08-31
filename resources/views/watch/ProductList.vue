@@ -32,7 +32,7 @@
 
         <div class="col-lg-10">
           <card-skeleton v-if="isLoadingProducts"/>
-          <div v-else class="row mt-5">
+          <div v-else class="row">
             <div v-for="product in products" class="col-lg-3 col-md-6 col-sm-6 col-6 product-col">
               <Product :product="product"/>
             </div>
