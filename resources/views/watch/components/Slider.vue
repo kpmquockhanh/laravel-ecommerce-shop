@@ -1,6 +1,6 @@
 <template>
     <!-- SLİDER  -->
-    <div class="container mt-7">
+    <div v-if="!isLoading" class="container mt-7">
         <div class="row">
             <div class="col-lg-8 col-md-6 col-sm-12 col-12">
                 <h1 class="slide-baslik">{{ product.title }}</h1>
@@ -33,11 +33,12 @@ export default {
     components: {Image},
     setup() {
         const product = ref({});
+        const isLoading = ref(true);
         const fetchProduct = async () => {
             const resp = await doGet('/api/products/featured')
             product.value = get(resp, 'data', {})
         }
-        fetchProduct()
+        fetchProduct().then(() => isLoading.value = false)
 
         const getThumb = (product) => {
             const src = get(product, 'images[0].src')
@@ -49,6 +50,7 @@ export default {
         return {
             product,
             getThumb,
+            isLoading,
         }
     }
 }

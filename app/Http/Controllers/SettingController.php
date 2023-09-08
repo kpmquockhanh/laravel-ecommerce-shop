@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,5 +57,34 @@ class SettingController extends Controller
         $setting = Setting::query()->findOrFail($request->id);
         $setting->delete();
         return redirect(route('admin.settings.list'));
+    }
+
+    public function analytic(Request $request)
+    {
+        $countProduct = Product::query()->count();
+        $countProductByDay = Product::query()->whereDate('created_at', date('Y-m-d'))->count();
+        $countProductPublish = Product::query()->where('active', true)->count();
+        $labels = [
+            'countProduct' => 'Số sản phẩm',
+            'countProductByDay' => 'Số sản phẩm trong ngày',
+            'countProductPublish' => 'Số sản phẩm đã đăng',
+        ];
+        $icons = [
+            'countProduct' => 'nc-tie-bow',
+            'countProductByDay' => 'nc-tap-01',
+            'countProductPublish' => 'nc-box-2',
+        ];
+        $data = [
+            'countProduct' => $countProduct,
+            'countProductByDay' => $countProductByDay,
+            'countProductPublish' => "$countProductPublish/$countProduct",
+        ];
+        return view('backend.home')->with(
+            [
+                'labels' => $labels,
+                'data' => $data,
+                'icons' => $icons,
+            ]
+        );
     }
 }

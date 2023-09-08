@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     Route::middleware('auth.admin')->group(function () {
-        Route::get('/', function () {
-            return view('backend.home');
-        })->name('admin.dashboard');
+        Route::get('/', 'App\Http\Controllers\SettingController@analytic')->name('admin.dashboard');
 
         Route::prefix('products')->group(function () {
             Route::get('/', 'App\Http\Controllers\AdminProductController@index')->name('admin.products.list');

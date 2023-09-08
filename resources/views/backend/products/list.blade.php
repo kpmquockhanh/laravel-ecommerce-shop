@@ -48,18 +48,18 @@
                             <div class="card m-1">
                                 <div class="card-header d-flex align-items-center justify-content-between gap-6">
                                     <h5 style="font-size: 15px">{{ Str::limit($product->title, $limit = 20, $end = '...')}}</h5>
-                                    <div>
+                                    <div class="d-flex gap-2 flex-wrap">
                                         <button
-                                            class="form-check btn {!! $product->active?'btn-primary':'' !!} btn-icon btn-sm trigger-change-status">
+                                            class="form-check btn {!! $product->active?'btn-primary':'' !!} btn-icon btn-sm trigger-change-status m-0">
                                             <i class="fa fa-check " {!! $product->active?'':'style="display: none"' !!}></i>
                                             <input class="form-check-input change-show-status" type="checkbox"
                                                    {{$product->active?'checked':''}} data-id="{{$product->id}}">
                                         </button>
                                         <a href="{{route('admin.products.edit', $product->id)}}" rel="tooltip"
-                                           class="btn btn-success btn-icon btn-sm btn-edit" data-original-title="" title="">
+                                           class="btn btn-success btn-icon btn-sm btn-edit m-0" data-original-title="" title="">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm btn-remove"
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm btn-remove m-0"
                                                 data-id="{{$product->id}}" title="">
                                             <i class="fa fa-times"></i>
                                         </button>
@@ -124,7 +124,7 @@
             @endif
         </div>
         <div class="d-flex justify-content-center border-top pt-3">
-            {{$products->appends($queries)->links()}}
+            {{$products->appends($queries)->links('backend.layouts.pagination')}}
         </div>
     </div>
 @stop

@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/kpm/
+            cd /var/www/shop/
             git checkout .
             git pull origin main
             yarn build
