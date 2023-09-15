@@ -8,42 +8,42 @@
           <div class="flickity flickity-slider-wrap mfp-hover flickity-enabled is-draggable" id="gallery-main" tabindex="0">
             <div class="flickity-viewport" style="height: 877.031px;"><div class="flickity-slider" style="left: 0px; transform: translateX(0%);"><div class="gallery-cell is-selected" style="position: absolute; left: 0%;">
               <a href="img/shop/item_lg_1.jpg" class="lightbox-img">
-                <img src="/img_v2/shop/item_lg_1.jpg" alt="">
+                <img src="@assets/v2/img/shop/item_lg_1.jpg" alt="">
                 <i class="ui-zoom zoom-icon"></i>
               </a>
             </div><div class="gallery-cell" style="position: absolute; left: 100%;">
               <a href="img/shop/item_lg_2.jpg" class="lightbox-img">
-                <img src="/img_v2/shop/item_lg_2.jpg" alt="">
+                <img src="@assets/v2/img/shop/item_lg_2.jpg" alt="">
                 <i class="ui-zoom zoom-icon"></i>
               </a>
             </div><div class="gallery-cell" style="position: absolute; left: 200%;">
               <a href="img/shop/item_lg_3.jpg" class="lightbox-img">
-                <img src="/img_v2/shop/item_lg_3.jpg" alt="">
+                <img src="@assets/v2/img/shop/item_lg_3.jpg" alt="">
                 <i class="ui-zoom zoom-icon"></i>
               </a>
             </div><div class="gallery-cell" style="position: absolute; left: 300%;">
               <a href="img/shop/item_lg_4.jpg" class="lightbox-img">
-                <img src="/img_v2/shop/item_lg_4.jpg" alt="">
+                <img src="@assets/v2/img/shop/item_lg_4.jpg" alt="">
                 <i class="ui-zoom zoom-icon"></i>
               </a>
             </div><div class="gallery-cell" style="position: absolute; left: 400%;">
               <a href="img/shop/item_lg_5.jpg" class="lightbox-img">
-                <img src="/img_v2/shop/item_lg_5.jpg" alt="">
+                <img src="@assets/v2/img/shop/item_lg_5.jpg" alt="">
                 <i class="ui-zoom zoom-icon"></i>
               </a>
             </div></div></div><button class="flickity-prev-next-button previous" type="button" aria-label="previous"><svg viewBox="0 0 100 100"><path d="M 25,50 L 65,90 L 70,90 L 30,50  L 70,10 L 65,10 Z" class="arrow"></path></svg></button><button class="flickity-prev-next-button next" type="button" aria-label="next"><svg viewBox="0 0 100 100"><path d="M 25,50 L 65,90 L 70,90 L 30,50  L 70,10 L 65,10 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button></div> <!-- end gallery main -->
 
           <div class="gallery-thumbs flickity-enabled is-draggable" tabindex="0">
             <div class="flickity-viewport" style="height: 192.297px;"><div class="flickity-slider" style="left: 0px; transform: translateX(0%);"><div class="gallery-cell is-nav-selected is-selected" style="position: absolute; left: 0%;">
-              <img src="/img_v2/shop/item_thumb_1.jpg" alt="">
+              <img src="@assets/v2/img/shop/item_thumb_1.jpg" alt="">
             </div><div class="gallery-cell" style="position: absolute; left: 20%;">
-              <img src="/img_v2/shop/item_thumb_2.jpg" alt="">
+              <img src="@assets/v2/img/shop/item_thumb_2.jpg" alt="">
             </div><div class="gallery-cell" style="position: absolute; left: 40%;">
-              <img src="/img_v2/shop/item_thumb_3.jpg" alt="">
+              <img src="@assets/v2/img/shop/item_thumb_3.jpg" alt="">
             </div><div class="gallery-cell" style="position: absolute; left: 60%;">
-              <img src="/img_v2/shop/item_thumb_4.jpg" alt="">
+              <img src="@assets/v2/img/shop/item_thumb_4.jpg" alt="">
             </div><div class="gallery-cell" style="position: absolute; left: 79.99%;">
-              <img src="/img_v2/shop/item_thumb_5.jpg" alt="">
+              <img src="@assets/v2/img/shop/item_thumb_5.jpg" alt="">
             </div></div></div></div> <!-- end gallery thumbs -->
 
         </div> <!-- end col img slider -->
@@ -229,8 +229,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_3.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_3.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_3.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_3.jpg" alt="" class="back-img">
                 </a>
                 <div class="product-label">
                   <span class="sale">sale</span>
@@ -265,8 +265,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_11.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_11.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_11.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_11.jpg" alt="" class="back-img">
                 </a>
                 <div class="hover-2">
                   <div class="product-actions">
@@ -295,8 +295,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_6.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_6.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_6.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_6.jpg" alt="" class="back-img">
                 </a>
                 <div class="hover-2">
                   <div class="product-actions">
@@ -325,8 +325,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_4.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_4.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_4.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_4.jpg" alt="" class="back-img">
                 </a>
                 <div class="hover-2">
                   <div class="product-actions">
@@ -355,8 +355,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_5.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_5.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_5.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_5.jpg" alt="" class="back-img">
                 </a>
                 <div class="hover-2">
                   <div class="product-actions">
@@ -385,8 +385,8 @@
             <div class="product-item hover-trigger">
               <div class="product-img">
                 <a href="shop-single.html">
-                  <img src="/img_v2/shop/shop_item_6.jpg" alt="">
-                  <img src="/img_v2/shop/shop_item_back_6.jpg" alt="" class="back-img">
+                  <img src="@assets/v2/img/shop/shop_item_6.jpg" alt="">
+                  <img src="@assets/v2/img/shop/shop_item_back_6.jpg" alt="" class="back-img">
                 </a>
                 <div class="product-label">
                   <span class="sale">sale</span>

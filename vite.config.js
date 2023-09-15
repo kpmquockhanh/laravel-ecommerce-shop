@@ -1,6 +1,16 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
+import {
+    resolve
+} from "path";
+
+const aliases = {
+    '@assets': '/resources',
+};
+const resolvedAliases = Object.fromEntries(
+    Object.entries(aliases).map(([key, value]) => [key, resolve(__dirname, value)]),
+);
 export default defineConfig({
     plugins: [
         vue(),
@@ -9,4 +19,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            ...resolvedAliases,
+        },
+    },
 });

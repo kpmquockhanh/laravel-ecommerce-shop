@@ -63,7 +63,7 @@
               <div class="logo-container">
                 <div class="logo-wrap">
                   <a href="index.html">
-                    <img class="logo-dark" src="/img_v2/logo_dark.png" alt="logo">
+                    <img class="logo-dark" src="@assets/v2/img/logo_dark.png" alt="logo">
                   </a>
                 </div>
               </div>
@@ -237,7 +237,7 @@
                       <div class="nav-cart-item clearfix">
                         <div class="nav-cart-img">
                           <a href="#">
-                            <img src="/img_v2/shop/shop_item_1.jpg" alt="">
+                            <img src="@assets/v2/img/shop/shop_item_1.jpg" alt="">
                           </a>
                         </div>
                         <div class="nav-cart-title">
@@ -257,7 +257,7 @@
                       <div class="nav-cart-item clearfix">
                         <div class="nav-cart-img">
                           <a href="#">
-                            <img src="/img_v2/shop/shop_item_2.jpg" alt="">
+                            <img src="@assets/v2/img/shop/shop_item_2.jpg" alt="">
                           </a>
                         </div>
                         <div class="nav-cart-title">

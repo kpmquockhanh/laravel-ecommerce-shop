@@ -11,7 +11,7 @@
             <div class="logo-container">
               <div class="logo-wrap">
                 <a href="index.html">
-                  <img class="logo-dark" src="/img_v2/logo_dark.png" alt="logo">
+                  <img class="logo-dark" src="@assets/v2/img/logo_dark.png" alt="logo">
                 </a>
               </div>
             </div>
