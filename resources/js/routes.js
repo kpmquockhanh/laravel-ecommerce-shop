@@ -1,28 +1,48 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Watch from '../views/watch/Watch.vue'
-import NotFound from '../views/watch/components/core/404.vue'
+import {defineAsyncComponent} from "vue";
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: Watch
+        component: defineAsyncComponent(() =>
+            import('../views/frontend/Home.vue')
+        )
     },
     {
         path: '/products/:slug',
         name: 'product-detail',
-        component: () => import('../views/watch/ProductDetail.vue')
+        component: () => defineAsyncComponent(() =>
+            import('../views/frontend/ProductDetail.vue')
+        )
     },
     {
         path: '/products',
         name: 'product-list',
-        component: () => import('../views/watch/ProductList.vue')
+        component: () => defineAsyncComponent(() =>
+            import('../views/frontend/ProductList.vue')
+        )
+    },
+
+    {
+        path: '/v2',
+        name: 'home_v2',
+        component: defineAsyncComponent(() =>
+            import('../views/frontend_v2/Catalogue.vue')
+        ),
+    },
+    {
+        path: '/v2/:slug',
+        name: 'product-detail-v2',
+        component: defineAsyncComponent(() =>
+            import('../views/frontend_v2/ProductDetail.vue')
+        ),
     },
     // Not found
     {
         path: '/:catchAll(.*)',
-        name: 'NotFound',
-        component: NotFound,
+        name: '404',
+        component: () => import('../views/frontend/components/core/404.vue'),
     },
 ]
 

@@ -55,6 +55,11 @@ Route::prefix('admin')->group(function () {
 });
 
 // For vue frontend
+Route::prefix('v2')->get('{any?}', function () {
+    return view('vue_next');
+})->where('any', '.*?')
+    ->where('any', '^(?!.*api).*$');
+
 Route::get('{any}', function () {
    return view('vue');
 })->where('any', '.*')

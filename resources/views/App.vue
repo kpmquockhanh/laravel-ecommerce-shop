@@ -1,18 +1,31 @@
 <template>
-    <div>
-        <WatchHeader/>
-        <router-view/>
-        <Subscribe/>
-        <Footer/>
-    </div>
+  <template v-if="isV2">
+    <ThemeV2/>
+  </template>
+  <template v-else>
+    <ThemeV1/>
+  </template>
 </template>
 <script>
-import Subscribe from "./watch/components/Subscribe.vue";
-import Footer from "./watch/components/Footer.vue";
-import WatchHeader from "./watch/components/Header.vue";
+import {computed, defineAsyncComponent} from "vue";
 
 export default {
-    components: {WatchHeader, Footer, Subscribe},
-    setup() {}
+  components: {
+    ThemeV2: defineAsyncComponent(() =>
+        import('./ThemeV2.vue')
+    ),
+    ThemeV1: defineAsyncComponent(() =>
+      import('./ThemeV1.vue')
+    ),
+  },
+  setup() {
+    const isV2 = computed(() => {
+      return window.location.pathname.includes('v2')
+    })
+
+    return {
+      isV2,
+    }
+  }
 }
 </script>
