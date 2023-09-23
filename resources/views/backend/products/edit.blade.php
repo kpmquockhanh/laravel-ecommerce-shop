@@ -92,8 +92,21 @@
                             <div class="row mt-3">
                                 <label class="col-sm-2 col-form-label">Images</label>
                                 <div class="col-sm-10">
+                                    <div class="row">
+                                        @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
+                                            <div class="col-sm-4 mb-2 image-item">
+                                                <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="" data-id="{{$image->id}}">
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
+                                                        data-id="{{$image->id}}" title="" style="right: 16px; top: 8px;">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                     <div class="form-group dropzone" id="kpm">
-{{--                                        @include('backend.products.upload_img', ['image' => asset('backend/img/placeholder.jpg'), 'name' => 'images'])--}}
+                                        <div class="dz-default dz-message" data-dz-message="">
+                                            <span>Upload or drag your photo here</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +120,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-4">
                     <div class="card">
@@ -150,12 +162,17 @@
             },
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
+            },
+            addRemoveLinks: true,
         });
 
         $('#submit_form').on('click', function (e) {
             e.preventDefault();
-            myDropzone.processQueue();
+            if (myDropzone.getQueuedFiles().length) {
+                myDropzone.processQueue();
+                return
+            }
+            $('#form').trigger( "submit" );
         });
     </script>
 @stop

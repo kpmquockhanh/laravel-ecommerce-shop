@@ -17,8 +17,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .dropzone .dz-preview .dz-progress {
     top: unset;
-    bottom: 10px;
+    bottom: 25px;
 }

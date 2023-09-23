@@ -60,6 +60,63 @@ $('.btn-remove').click(function () {
     });
 });
 
+$('.btn-remove-image').click(function () {
+    let id = $(this).attr('data-id');
+    const image = $(this).parent('.image-item');
+    iziToast.question({
+        timeout: 10000,
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: 'Delete',
+        message: 'Are you sure for delete this image ?',
+        position: 'center',
+        buttons: [
+            ['<button><b>Yes</b></button>', function (instance, toast) {
+
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                axios.post('/admin/products/delete-image', {id: id})
+                    .then(function (res) {
+                        if (res.data.status)
+                        {
+                            iziToast.success({
+                                title: 'Success!',
+                                message: 'Delete successfully!',
+                                position: 'topCenter'
+                            });
+                            image.fadeOut("500", function() { $(this).remove(); } );
+                        }
+                        else
+                        {
+                            iziToast.error({
+                                title: 'Error',
+                                message: 'Error occurred !',
+                                position: 'topCenter'
+                            });
+                        }
+
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+
+            }, true],
+            ['<button>No</button>', function (instance, toast) {
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }],
+        ],
+        onClosing: function(instance, toast, closedBy){
+            // console.info('Closing | closedBy: ' + closedBy);
+        },
+        onClosed: function(instance, toast, closedBy){
+            // console.info('Closed | closedBy: ' + closedBy);
+        }
+    });
+});
+
 $('.change-show-status').on('change', function () {
     let button = $(this);
     let id = $(this).attr('data-id');

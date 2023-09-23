@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -143,12 +144,12 @@ class AdminProductController extends Controller
         return redirect(route('admin.products.edit', ['id' => $id]));
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request): \Illuminate\Http\JsonResponse
     {
         $product = Product::with('images')->findOrFail($request->id);
         $images = $product->images;
         foreach ($images as $image) {
-            File::delete(public_path('images') . '\\' . $image->src);
+            Storage::delete($image->src);
         }
         if (Product::destroy($request->id)) {
             return response()->json([
@@ -161,7 +162,7 @@ class AdminProductController extends Controller
         ]);
     }
 
-    public function changeShowStatus(Request $request)
+    public function changeShowStatus(Request $request): \Illuminate\Http\JsonResponse
     {
         $id = $request->id;
         $product = Product::query()->find($id);
@@ -208,11 +209,12 @@ class AdminProductController extends Controller
                     return [];
                 }
                 if ($request->image) {
-                    File::delete(public_path('images') . '\\' . $product->image);
-                    $image = \App\Models\Image::query()->where('entity_type', 'product')
+                    $image = \App\Models\Image::query()
+                        ->where('entity_type', 'product')
                         ->where('entity_id', $id)
                         ->where('is_thumbnail', true)
                         ->first();
+                    Storage::delete($image->src);
                     $image?->delete();
                 }
 
@@ -222,13 +224,13 @@ class AdminProductController extends Controller
         return $data;
     }
 
-    private function processImage($image, $productId, $isThumbnail = true)
+    private function processImage($image, $productId, $isThumbnail = true): void
     {
-
         if ($isThumbnail) {
             $images = \App\Models\Image::query()->where([
                 'entity_type' => 'product',
                 'entity_id' => $productId,
+                'is_thumbnail' => true,
             ]);
             foreach ($images as $image) {
                 Storage::delete($image->src);
@@ -264,15 +266,17 @@ class AdminProductController extends Controller
             'src' => $name,
         ]);
         // For origin
-        \App\Models\Image::query()->create( [
-            'entity_type' => 'product',
-            'entity_id' => $productId,
-            'is_thumbnail' => false,
-            'src' => $originName,
-        ]);
+        if (!$isThumbnail) {
+            \App\Models\Image::query()->create([
+                'entity_type' => 'product',
+                'entity_id' => $productId,
+                'is_thumbnail' => false,
+                'src' => $originName,
+            ]);
+        }
     }
 
-    public function upload(Request $request)
+    public function upload(Request $request): \Illuminate\Http\JsonResponse
     {
         if (!$request->file) {
             return response()->json([
@@ -285,6 +289,37 @@ class AdminProductController extends Controller
 
         return response()->json([
             'status' => true,
+        ]);
+    }
+
+    public function deleteImage(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $image = \App\Models\Image::query()->findOrFail($request->id);
+        $timeStamp = explode('-', $image->src)[0];
+        $deleteIds = [];
+        Storage::delete($image->src);
+        $deleteIds[] = $image->id;
+        // Also delete origin image
+        $otherImages = \App\Models\Image::query()->where([
+            'entity_type' => 'product',
+            'entity_id' => $image->entity_id,
+        ])
+            ->where('src', 'like', "$timeStamp%")
+            ->where('id', '!=', $image->id)
+            ->get();
+
+        foreach ($otherImages as $otherImage) {
+            Storage::delete($otherImage->src);
+            $deleteIds[] = $otherImage->id;
+        }
+
+        if (\App\Models\Image::destroy($deleteIds)) {
+            return response()->json([
+                'status' => true,
+            ]);
+        }
+        return response()->json([
+            'status' => false,
         ]);
     }
 }

@@ -25,6 +25,7 @@ Route::prefix('admin')->group(function () {
             Route::post('upload/{id}', 'App\Http\Controllers\AdminProductController@upload')->name('admin.products.upload');
             Route::post('update', 'App\Http\Controllers\AdminProductController@update')->name('admin.products.update');
             Route::post('remove', 'App\Http\Controllers\AdminProductController@delete')->name('admin.products.remove');
+            Route::post('delete-image', 'App\Http\Controllers\AdminProductController@deleteImage')->name('admin.products.delete_image');
             Route::post('change-status', 'App\Http\Controllers\AdminProductController@changeShowStatus')->name('admin.products.change-status');
         });
 
