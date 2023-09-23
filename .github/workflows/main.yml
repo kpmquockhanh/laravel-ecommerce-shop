@@ -19,6 +19,7 @@ jobs:
             cd /var/www/shop/
             git checkout .
             git pull origin main
+            nvm use 16
             node --version
             yarn install
             yarn build
