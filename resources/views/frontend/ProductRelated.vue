@@ -55,12 +55,12 @@ export default {
       isLoading.value = false
     }
     onMounted(() => {
-      fetchProducts()
+      fetchProducts('w3')
     })
 
     watch(() => props.productId, (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        fetchProducts()
+        fetchProducts('w4')
       }
     })
     return {

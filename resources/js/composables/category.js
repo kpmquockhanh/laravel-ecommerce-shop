@@ -4,6 +4,9 @@ import {doGet} from "../http";
 import get from "lodash/get";
 
 // global state, created in module scope
+const currentCategory = ref(0)
+const categories = ref([])
+const countCategories = ref({})
 export function useCategory() {
     const route = useRoute()
     const router = useRouter()
@@ -11,9 +14,6 @@ export function useCategory() {
     const queryCategory = computed(() => {
         return route.query.category || ''
     })
-    const categories = ref([])
-    const countCategories = ref({})
-    const currentCategory = ref(0)
     const fetchCategories = async () => {
         const resp = await doGet('/api/categories')
         categories.value = get(resp, 'data', [])
@@ -24,19 +24,15 @@ export function useCategory() {
     const onClickCategory = (category) => {
         if (currentCategory.value === category.id) {
             currentCategory.value = 0
-            router.push({query: {}})
             return
         }
+        console.log('onClickCategory', category.id)
         currentCategory.value = category.id
-        router.push({query: {category: category.id}})
     }
 
-    watch(queryCategory, (val) => {
-        if (!val) {
-            return
-        }
-        currentCategory.value = parseInt(queryCategory.value)
-    })
+    const updateCategory = (val) => {
+        currentCategory.value = val
+    }
 
     return {
         fetchCategories,
@@ -46,5 +42,6 @@ export function useCategory() {
         queryCategory,
         isLoadingCategory,
         onClickCategory,
+        updateCategory,
     }
 }

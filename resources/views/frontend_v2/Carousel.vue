@@ -1,5 +1,5 @@
 <template>
-    <carousel :items-to-show="1.5" :itemsToShow="numberItem" :wrapAround="wrapAround" :transition="300">
+    <carousel v-if="items.length" :items-to-show="1.5" :itemsToShow="numberItem" :wrapAround="wrapAround" :transition="300">
         <slide v-for="item in items" :key="item.id" :class="itemClass">
             <slot :item="item"></slot>
         </slide>

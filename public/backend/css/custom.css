@@ -18,3 +18,7 @@
     align-items: center;
     justify-content: center;
 }
+.dropzone .dz-preview .dz-progress {
+    top: unset;
+    bottom: 10px;
+}

@@ -3,7 +3,7 @@
     <div class="container relative">
       <ShopFilter/>
       <div class="row">
-        <LeftSidebar :categories="categories" :count-categories="countCategories" :on-click-category="onClickCategory" :current-category="currentCategory"/>
+        <LeftSidebar/>
         <div class="col-md-9 catalogue-col right mb-50">
           <div :class="[
         'shop-catalogue',
@@ -45,7 +45,7 @@ export default {
     const {fetchCategories, categories, countCategories, currentCategory, isLoadingCategory, onClickCategory} = useCategory()
 
     onMounted(() => {
-      fetchProducts()
+      fetchProducts('w5')
       fetchCategories()
     })
 

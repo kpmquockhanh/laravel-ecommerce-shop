@@ -222,17 +222,19 @@ class AdminProductController extends Controller
         return $data;
     }
 
-    private function processImage($image, $productId)
+    private function processImage($image, $productId, $isThumbnail = true)
     {
-        $images = \App\Models\Image::query()->where([
-            'entity_type' => 'product',
-            'entity_id' => $productId,
-        ]);
-        foreach ($images as $image) {
-            Storage::delete($image->src);
-        }
-        $images->delete();
 
+        if ($isThumbnail) {
+            $images = \App\Models\Image::query()->where([
+                'entity_type' => 'product',
+                'entity_id' => $productId,
+            ]);
+            foreach ($images as $image) {
+                Storage::delete($image->src);
+            }
+            $images->delete();
+        }
 
         ini_set('memory_limit', '256M');
         $timeNow = time();
@@ -258,7 +260,7 @@ class AdminProductController extends Controller
         \App\Models\Image::query()->create([
             'entity_type' => 'product',
             'entity_id' => $productId,
-            'is_thumbnail' => true,
+            'is_thumbnail' => $isThumbnail,
             'src' => $name,
         ]);
         // For origin
@@ -267,6 +269,22 @@ class AdminProductController extends Controller
             'entity_id' => $productId,
             'is_thumbnail' => false,
             'src' => $originName,
+        ]);
+    }
+
+    public function upload(Request $request)
+    {
+        if (!$request->file) {
+            return response()->json([
+                'status' => false,
+            ]);
+        }
+        if ($image = $request->file) {
+            $this->processImage($image, $request->id, false);
+        }
+
+        return response()->json([
+            'status' => true,
         ]);
     }
 }

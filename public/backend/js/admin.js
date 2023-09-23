@@ -161,7 +161,6 @@ $('.btn-remove-saler').click(function () {
 
                 axios.post('/admin/salers/remove', {id: id})
                     .then(function (res) {
-                        console.log(res);
                         if (res.data.status)
                         {
                             iziToast.success({

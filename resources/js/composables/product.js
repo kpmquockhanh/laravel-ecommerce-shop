@@ -3,19 +3,21 @@ import {doGet} from "../http";
 import get from "lodash/get";
 import {useRoute, useRouter} from "vue-router";
 import {useCategory} from "./category";
+import debounce from 'lodash/debounce'
 
 // global state, created in module scope
+const isLoadingProducts = ref(false)
+const products = ref([])
+const productMeta = ref({})
+const product = ref({});
 
 export function useProduct() {
     const route = useRoute()
     const router = useRouter()
-    const isLoadingProducts = ref(false)
+
     const querySort = computed(() => {
         return route.query.sort || ''
     })
-    const products = ref([])
-    const productMeta = ref({})
-    const product = ref({});
 
     const { currentCategory,  } = useCategory()
     const currentPage = ref(1)
@@ -23,15 +25,16 @@ export function useProduct() {
     const total = computed(() => {
         return get(productMeta.value, 'total', 0)
     })
-    watch([currentCategory, querySort], () => {
+    watch(currentCategory, (val) => {
+        console.log('currentCategory', currentCategory.value, val)
         currentPage.value = 1
         nextTick(() => {
-            fetchProducts().then()
+            fetchProducts('w1').then()
         }).then()
     })
     watch(currentPage, () => {
         nextTick(() => {
-            fetchProducts().then()
+            fetchProducts('w2').then()
         }).then()
     })
     const onChangeSort = (item) => {
@@ -51,6 +54,7 @@ export function useProduct() {
         if (isLoadingProducts.value) {
             return
         }
+        console.log('fetchProducts', target)
         isLoadingProducts.value = true
         const queryObj = {
             sort: querySort.value,
@@ -59,11 +63,15 @@ export function useProduct() {
             limit: perPage,
         }
         const result = await doGet('/api/products', queryObj)
-        console.log('result', result)
         products.value = get(result, 'data', [])
         productMeta.value = get(result, 'meta', {})
         isLoadingProducts.value = false
         await nextTick(() => {
+            if (currentCategory.value) {
+                router.push({query: {category: currentCategory.value}})
+            } else {
+                router.push({query: {}})
+            }
             scrollToTop()
         })
     }

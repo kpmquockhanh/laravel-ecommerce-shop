@@ -140,7 +140,7 @@
         Dropzone.autoDiscover = false;
 
         let myDropzone = new Dropzone("div#kpm", {
-            url:'/admin/products/{{$product->id}}/upload',
+            url:'/admin/products/upload/{{$product->id}}',
             paramName: "file",
             maxFilesize: 10,
             acceptedFiles: 'image/*',
@@ -148,6 +148,9 @@
             complete: () => {
                 $('#form').trigger( "submit" );
             },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
         });
 
         $('#submit_form').on('click', function (e) {

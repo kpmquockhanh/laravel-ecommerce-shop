@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function () {
             Route::get('create', 'App\Http\Controllers\AdminProductController@create')->name('admin.products.create');
             Route::post('create', 'App\Http\Controllers\AdminProductController@store');
             Route::get('edit/{id}', 'App\Http\Controllers\AdminProductController@edit')->name('admin.products.edit');
+            Route::post('upload/{id}', 'App\Http\Controllers\AdminProductController@upload')->name('admin.products.upload');
             Route::post('update', 'App\Http\Controllers\AdminProductController@update')->name('admin.products.update');
             Route::post('remove', 'App\Http\Controllers\AdminProductController@delete')->name('admin.products.remove');
             Route::post('change-status', 'App\Http\Controllers\AdminProductController@changeShowStatus')->name('admin.products.change-status');

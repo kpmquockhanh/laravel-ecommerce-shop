@@ -42,27 +42,20 @@
 import FilterColor from "./FilterColor.vue";
 import FilterSize from "./FilterSize.vue";
 import BestSeller from "./BestSeller.vue";
+import {useCategory} from "../../js/composables/category";
 
 export default {
   name: 'LeftSidebar',
   components: {BestSeller, FilterSize, FilterColor},
-  props: {
-    currentCategory: {
-      type: Number,
-      default: 0,
-    },
-    categories: {
-      type: Array,
-      default: () => []
-    },
-    countCategories: {
-      type: Object,
-      default: () => {}
-    },
-    onClickCategory: {
-      type: Function,
-      default: () => {}
+  props: {},
+  setup() {
+    const {currentCategory, categories, countCategories, onClickCategory}  = useCategory()
+    return {
+      currentCategory,
+      categories,
+      countCategories,
+      onClickCategory,
     }
-  },
+  }
 }
 </script>

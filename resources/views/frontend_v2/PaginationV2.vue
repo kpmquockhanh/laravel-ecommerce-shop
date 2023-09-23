@@ -1,6 +1,6 @@
 <template>
   <div class="pagination-wrap">
-    <p class="result-count">Showing: 12 of 80 results</p>
+    <p class="result-count">Showing: {{ perPage }} of {{ total }} results</p>
     <nav class="pagination right clearfix">
 
       <a href="#"><i class="fa fa-angle-left"></i></a>
