@@ -19,6 +19,7 @@ jobs:
             cd /var/www/shop/
             git checkout .
             git pull origin main
+            yarn install
             yarn build
             php artisan optimize
             php artisan route:cache
