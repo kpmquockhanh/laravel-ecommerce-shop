@@ -214,8 +214,10 @@ class AdminProductController extends Controller
                         ->where('entity_id', $id)
                         ->where('is_thumbnail', true)
                         ->first();
-                    Storage::delete($image->src);
-                    $image?->delete();
+                    if ($image) {
+                        Storage::delete($image->src);
+                        $image?->delete();
+                    }
                 }
 
                 $data['updated_by'] = Auth::guard('admin')->user()->id;
