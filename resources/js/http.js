@@ -17,7 +17,6 @@ const doRequest = async (method, url, data = null) => {
                 throw error;
             });
     } catch (e) {
-        console.log('error', e)
         return {
             error: e.message,
             status: e.response.status,
@@ -30,10 +29,7 @@ export const doGet = async (url, queryObj = {}) => {
         const query = buildQueryParams(queryObj)
         url = `${url}?${query}`
     }
-    console.log('kpm', url)
-    const resp = await doRequest('get', url);
-    console.log('resp', resp)
-    return resp
+    return await doRequest('get', url)
 }
 
 export const doPost = (url, {query, data}) => {

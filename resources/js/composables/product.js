@@ -78,6 +78,7 @@ export function useProduct() {
             return
         }
         product.value = get(resp, 'data', {})
+        scrollToTop()
     }
 
     // Watch product change
