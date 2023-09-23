@@ -294,6 +294,7 @@ class AdminProductController extends Controller
 
     public function deleteImage(Request $request): \Illuminate\Http\JsonResponse
     {
+        ini_set('memory_limit', '16M');
         $image = \App\Models\Image::query()->findOrFail($request->id);
         $timeStamp = explode('-', $image->src)[0];
         $deleteIds = [];
