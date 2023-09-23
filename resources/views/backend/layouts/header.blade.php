@@ -7,5 +7,4 @@
 <link href="{{asset('backend/css/bootstrap.min.css')}}" rel="stylesheet" />
 <link href="{{asset('backend/css/iziToast.min.css')}}" rel="stylesheet" />
 <link href="{{asset('backend/css/paper-dashboard.min.css')}}" rel="stylesheet" />
-{{--<link href="{{asset('backend/css/app.css')}}" rel="stylesheet" />--}}
 <link href="{{asset('backend/css/custom.css')}}" rel="stylesheet" />

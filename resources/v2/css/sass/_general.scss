@@ -22,8 +22,6 @@
 /*-------------------------------------------------------*/
 
 .clearfix {
-  *zoom: 1;
-
   &:before, &:after {
     display: table;
     line-height: 0;
@@ -141,7 +139,7 @@ video {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fff; 
+  background-color: #fff;
   z-index: 99999;
 }
 

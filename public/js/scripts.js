@@ -527,50 +527,50 @@
     });
   };
 
-  waitForElm('#products-grid').then(() => {
-    const $isotopeGrid = $('#products-grid');
-    $isotopeGrid.imagesLoaded( function() {
-      $isotopeGrid.isotope({
-        isOriginLeft: true,
-        stagger: 30
-      });
-      $isotopeGrid.isotope();
-    });
-  });
+  // waitForElm('#products-grid').then(() => {
+  //   const $isotopeGrid = $('#products-grid');
+  //   $isotopeGrid.imagesLoaded( function() {
+  //     $isotopeGrid.isotope({
+  //       isOriginLeft: true,
+  //       stagger: 30
+  //     });
+  //     $isotopeGrid.isotope();
+  //   });
+  // });
 
 
 
   /* Grid/list Switch
   -------------------------------------------------------*/
-  function get_grid(){
-    $('.list').removeClass('list-active');
-    $('.grid').addClass('grid-active');
-    $('.product-item').animate({opacity:0},function(){
-      $('.shop-catalogue').removeClass('list-view').addClass('grid-view');
-      $('.product').addClass('product-grid').removeClass('product-list');
-      $('.product-item').stop().animate({opacity:1});
-    });
-  }
-
-  function get_list(){
-    $('.grid').removeClass('grid-active');
-    $('.list').addClass('list-active');
-    $('.product-item').animate({opacity:0},function(){
-      $('.shop-catalogue').removeClass('grid-view').addClass('list-view');
-      $('.product').addClass('product-list').removeClass('product-grid');
-      $('.product-item').stop().animate({opacity:1});
-    });
-  }
-
-  $('#list').on('click', function(e){
-    e.preventDefault();
-    get_list();
-  });
-
-  $('#grid').on('click', function(e){
-    e.preventDefault();
-    get_grid();
-  });
+  // function get_grid(){
+  //   $('.list').removeClass('list-active');
+  //   $('.grid').addClass('grid-active');
+  //   $('.product-item').animate({opacity:0},function(){
+  //     $('.shop-catalogue').removeClass('list-view').addClass('grid-view');
+  //     $('.product').addClass('product-grid').removeClass('product-list');
+  //     $('.product-item').stop().animate({opacity:1});
+  //   });
+  // }
+  //
+  // function get_list(){
+  //   $('.grid').removeClass('grid-active');
+  //   $('.list').addClass('list-active');
+  //   $('.product-item').animate({opacity:0},function(){
+  //     $('.shop-catalogue').removeClass('grid-view').addClass('list-view');
+  //     $('.product').addClass('product-list').removeClass('product-grid');
+  //     $('.product-item').stop().animate({opacity:1});
+  //   });
+  // }
+  //
+  // $('#list').on('click', function(e){
+  //   e.preventDefault();
+  //   get_list();
+  // });
+  //
+  // $('#grid').on('click', function(e){
+  //   e.preventDefault();
+  //   get_grid();
+  // });
 
 
   /* Payment Method Accordion

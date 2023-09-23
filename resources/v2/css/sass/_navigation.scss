@@ -73,7 +73,7 @@ header .flex-parent:not(.top-bar-links) {
 header .flex-child {
   flex: 1 0 0;
 
-  @include bp-md { 
+  @include bp-md {
     width: 100%;
   }
 }
@@ -275,7 +275,7 @@ header .flex-child.flex-right {
   font-family: $heading-font;
   font-size: 13px;
   font-weight: 600;
-  line-height: 1;  
+  line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -312,7 +312,7 @@ header .flex-child.flex-right {
 
 // Dropdown hovers
 @media (min-width: 992px) {
-  .dropdown-menu, 
+  .dropdown-menu,
   .dropdown-submenu > .dropdown-menu {
     display: block;
     visibility: hidden;
@@ -574,7 +574,7 @@ input.main-search-input:-ms-input-placeholder {
   padding: 30px;
   line-height: 1;
   border: 1px solid $border-color;
-  text-align: left; 
+  text-align: left;
   @include box-shadow (0 2px 4px rgba(0,0,0,.05));
   @include transition ($all);
   z-index: 201;
@@ -679,7 +679,7 @@ input.main-search-input:-ms-input-placeholder {
 .nav-register a {
   display: inline-block;
   line-height: 1;
-  font-size: 14px; 
+  font-size: 14px;
   color: $nav-color;
 
   &:hover {
@@ -986,7 +986,7 @@ input.main-search-input:-ms-input-placeholder {
 
 .top-bar-links .top-bar-link a:after {
   content: "";
-  border-right: 1px solid #606060; 
+  border-right: 1px solid #606060;
   margin: 0 7px 0 10px;
 }
 
@@ -1076,7 +1076,7 @@ input.main-search-input:-ms-input-placeholder {
   }
 
   .dropdown-menu {
-    width: auto !important;    
+    width: auto !important;
   }
 
   .dropdown-menu,
@@ -1124,7 +1124,7 @@ input.main-search-input:-ms-input-placeholder {
     background-color: transparent;
     border-left: none;
     border-top: none;
-    border-right: none; 
+    border-right: none;
     margin-bottom: 0;
   }
 
@@ -1202,7 +1202,7 @@ input.main-search-input:-ms-input-placeholder {
 
   .vertical-nav .main-wrapper {
     margin-left: 0;
-  }  
+  }
 
   .sticky-on-mobile .navbar {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);

@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/products')->group(function () {
     Route::get('/', function (Request $request) {
-        $products = \App\Models\Product::with(['categories']);
+        $products = \App\Models\Product::with(['categories', 'images']);
         if ($request->category) {
             $products->whereHas('categories', function ($query) {
                 $query->where('categories.id', request()->query('category'));
@@ -72,6 +72,7 @@ Route::prefix('/categories')->group(function () {
         return new \App\Http\Resources\CategoryCollection(\App\Models\Category::query()->orderBy('id', 'desc')->limit(3)->get());
     });
     Route::get('/', function () {
-        return new \App\Http\Resources\CategoryCollection(\App\Models\Category::query()->orderBy('id', 'desc')->limit(100)->get());
+        $categories = \App\Models\Category::query()->orderBy('id', 'desc')->limit(100)->get();
+        return new \App\Http\Resources\CategoryCollection($categories);
     });
 });

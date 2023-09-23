@@ -21,8 +21,21 @@ class ProductCollection extends ResourceCollection
                     'slug' => $c->slug,
                     'title' => $c->title,
                     'thumbnail' => $c->thumbnail,
-                    'categories' => $c->categories,
+                    'categories' => $c->categories->map(function ($cate) {
+                        return [
+                            'id' => $cate->id,
+                            'name' => $cate->name,
+                            'code' => $cate->code,
+                        ];
+                    }),
                     'price' => $c->price,
+                    'images' => $c->images->map(function ($image) {
+                        return [
+                            'src' => $image->src ? env('AWS_URL').$image->src : asset('backend/img/placeholder.jpg'),
+                            'is_thumbnail' => $image->is_thumbnail,
+                        ];
+                    }),
+                    'description' => $c->description,
                 ];
             }),
         ];

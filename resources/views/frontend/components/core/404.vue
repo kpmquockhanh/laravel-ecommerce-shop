@@ -10,7 +10,7 @@
             Look like you're lost
           </h3>
           <p>the page you are looking for not available!</p>
-          <a href="#" class="btn btn-lg btn-dark"><span>Go to Home</span></a>
+          <a href="#" class="btn btn-lg btn-dark" @click.prevent="$router.push({name: 'home'})"><span>Go to Home</span></a>
         </div>
       </div>
     </div>

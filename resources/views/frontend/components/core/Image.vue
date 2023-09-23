@@ -1,11 +1,10 @@
 <template>
     <div>
-        <img v-show="!isLoading" :class="[imgClass, {'rounded': rounded}]" :src="src" class="w-100" :alt="alt" @load="onLoaded">
-        <div v-if="isLoading">
-            <div class="d-flex justify-content-center align-items-center" style="height: 225px;font-size: 14px">
-                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-            </div>
+        <img v-show="!isLoading && !isError" :class="[imgClass, {'rounded': rounded}]" :src="src" :alt="alt" @load="onLoaded" @error="onError">
+        <div v-if="isLoading" class="loading-image">
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
         </div>
+        <div v-if="isError" class="loading-image">Error image</div>
     </div>
 </template>
 
@@ -13,34 +12,41 @@
 import {ref} from "vue";
 
 export default {
-    name: "Image",
-    props: {
-        src: {
-            type: String,
-            required: true
-        },
-        alt: {
-            type: String,
-            default: ''
-        },
-        imgClass: {
-            type: String,
-            default: ''
-        },
-        rounded: {
-            type: Boolean,
-            default: false
-        }
+  name: "Image",
+  props: {
+    src: {
+      type: String,
+      default: '',
     },
-    setup(props) {
-        const isLoading = ref(true)
-        const onLoaded = () => {
-            isLoading.value = false
-        }
-        return {
-            onLoaded,
-            isLoading,
-        }
+    alt: {
+      type: String,
+      default: ''
+    },
+    imgClass: {
+      type: String,
+      default: ''
+    },
+    rounded: {
+      type: Boolean,
+      default: false
     }
+  },
+  setup(props) {
+    const isLoading = ref(true)
+    const isError = ref(!props.src)
+    const onLoaded = () => {
+      isLoading.value = false
+    }
+    const onError = () => {
+      isLoading.value = false
+      isError.value = true
+    }
+    return {
+      onLoaded,
+      isLoading,
+      isError,
+      onError,
+    }
+  }
 }
 </script>

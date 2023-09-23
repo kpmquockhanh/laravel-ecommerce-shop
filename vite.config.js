@@ -7,6 +7,9 @@ import {
 
 const aliases = {
     '@assets': '/resources',
+    '@core': '/resources/js',
+    '@images': '/resources/images',
+    '@composables': '/resources/js/composables',
 };
 const resolvedAliases = Object.fromEntries(
     Object.entries(aliases).map(([key, value]) => [key, resolve(__dirname, value)]),
@@ -15,7 +18,7 @@ export default defineConfig({
     plugins: [
         vue(),
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/scss/all.scss', 'resources/css/font-awesome-4.7.0/css/font-awesome.css', 'resources/v2/css/sass/style.scss'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/scss/all.scss', 'resources/v2/css/sass/style.scss'],
             refresh: true,
         }),
     ],

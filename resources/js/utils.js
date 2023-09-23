@@ -4,3 +4,7 @@ export const buildQueryParams = (params) => {
         .map(key => esc(key) + '=' + esc(params[key]))
         .join('&');
 }
+
+export const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+}

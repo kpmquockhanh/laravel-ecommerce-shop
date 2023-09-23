@@ -1,51 +1,96 @@
 <template>
-  <div class="product-item hover-trigger">
-    <div class="product-img">
-      <a href="shop-single.html">
-        <img :src="`/img_v2/shop/shop_item_${index+1}.jpg`" alt="">
+  <div class="product-item" :class="{'d-flex': type === 'list'}">
+    <div class="product-img hover-trigger">
+      <a href="/" @click.prevent="routeToDetail">
+        <Image v-if="product.thumbnail" :src="product.thumbnail" alt=""/>
+        <Image v-else src="@images/placeholder.jpg" alt=""/>
+
+        <Image v-if="images.length" :src="images[0].src" alt="" class="back-img"/>
       </a>
       <div class="product-label">
         <span class="sale">sale</span>
       </div>
-      <div class="hover-overlay">
+      <div class="hover-2">
         <div class="product-actions">
           <a href="#" class="product-add-to-wishlist">
             <i class="fa fa-heart"></i>
           </a>
         </div>
-        <div class="product-details valign">
-                  <span class="category">
-                    <a href="catalogue-grid.html">Women</a>
-                  </span>
-          <h3 class="product-title">
-            <a href="shop-single.html">Drawstring Dress</a>
-          </h3>
-          <span class="price">
-                    <del>
-                      <span>$730.00</span>
-                    </del>
-                    <ins>
-                      <span class="amount">$399.99</span>
-                    </ins>
-                  </span>
-          <div class="btn-quickview">
-            <a href="#" class="btn btn-md btn-color">
-              <span>Quickview</span>
-            </a>
-          </div>
-        </div>
+      </div>
+      <a href="#" class="product-quickview">See detail</a>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <div class="product-details">
+        <h3 class="product-title text-truncate">
+          <a href="#" @click.prevent="routeToDetail">{{ product.title }}</a>
+        </h3>
+        <span class="category">
+          <a href="#">{{ product.categories?.map(c => c.name).join(', ') }}</a>
+        </span>
+      </div>
+
+      <span class="price">
+        <del>
+          <span>$730.00</span>
+        </del>
+        <ins>
+          <span class="amount">${{ product.price }}</span>
+        </ins>
+      </span>
+    </div>
+
+    <div class="product-description">
+      <h3 class="product-title">
+        <a href="#" @click.prevent="routeToDetail">{{ product.title }}</a>
+      </h3>
+      <span class="price">
+          <del>
+            <span>$730.00</span>
+          </del>
+          <ins>
+            <span class="amount">${{ product.price }}</span>
+          </ins>
+        </span>
+      <span class="rating">
+          <a href="#">3 Reviews</a>
+        </span>
+      <p v-html="product.description"></p>
+      <a href="#" class="btn btn-dark btn-md left"><span>Add to Cart</span></a>
+      <div class="product-add-to-wishlist">
+        <a href="#"><i class="fa fa-heart"></i></a>
       </div>
     </div>
   </div>
 </template>
 <script>
+import {useRouter} from "vue-router";
+import Image from "../frontend/components/core/Image.vue";
+import {computed} from "vue";
+import get from "lodash/get";
+
 export default {
   name: 'ProductItem',
+  components: {Image},
   props: {
-    index: {
-      type: Number,
-      default: 0,
+    type: {
+      type: String,
+      default: 'grid'
+    },
+    product: {
+      type: Object,
     }
-  }
+  },
+  setup(props) {
+    const router = useRouter()
+    const routeToDetail = () => {
+      router.push({name: 'product-detail', params: {slug: props.product.slug}})
+    }
+    const images = computed(() => get(props.product, 'images', []).filter((image) => !image.is_thumbnail))
+    return {
+      routeToDetail,
+      images,
+    }
+  },
 }
 </script>

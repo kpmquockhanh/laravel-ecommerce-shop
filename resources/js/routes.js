@@ -6,37 +6,13 @@ const routes = [
         path: '/',
         name: 'home',
         component: defineAsyncComponent(() =>
-            import('../views/frontend/Home.vue')
+            import('../views/frontend_v2/Catalogue.vue')
         )
     },
     {
         path: '/products/:slug',
         name: 'product-detail',
-        component: () => defineAsyncComponent(() =>
-            import('../views/frontend/ProductDetail.vue')
-        )
-    },
-    {
-        path: '/products',
-        name: 'product-list',
-        component: () => defineAsyncComponent(() =>
-            import('../views/frontend/ProductList.vue')
-        )
-    },
-
-    {
-        path: '/v2',
-        name: 'home_v2',
-        component: defineAsyncComponent(() =>
-            import('../views/frontend_v2/Catalogue.vue')
-        ),
-    },
-    {
-        path: '/v2/:slug',
-        name: 'product-detail-v2',
-        component: defineAsyncComponent(() =>
-            import('../views/frontend_v2/ProductDetail.vue')
-        ),
+        component: () => import('../views/frontend_v2/ProductDetail.vue'),
     },
     // Not found
     {
