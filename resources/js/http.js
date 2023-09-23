@@ -1,25 +1,39 @@
 import {buildQueryParams} from "./utils";
 
-const doRequest = (method, url, data = null) => {
-    return axios({
-        method: method,
-        url: url,
-        data: data
-    })
-        .then(response => {
-            return response.data;
+const doRequest = async (method, url, data = null) => {
+    try {
+        return await axios({
+            method: method,
+            url: url,
+            data: data
         })
-        .catch(error => {
-            return error.response.data;
-        });
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                if (error.response.status === 404) {
+                    console.log('not found')
+                }
+                throw error;
+            });
+    } catch (e) {
+        console.log('error', e)
+        return {
+            error: e.message,
+            status: e.response.status,
+        }
+    }
 }
 
-export const doGet = (url, queryObj = {}) => {
-    if (Object.keys(queryObj).length === 0) {
-        return doRequest('get', url);
+export const doGet = async (url, queryObj = {}) => {
+    if (Object.keys(queryObj).length) {
+        const query = buildQueryParams(queryObj)
+        url = `${url}?${query}`
     }
-    const query = buildQueryParams(queryObj)
-    return doRequest('get', `${url}?${query}`);
+    console.log('kpm', url)
+    const resp = await doRequest('get', url);
+    console.log('resp', resp)
+    return resp
 }
 
 export const doPost = (url, {query, data}) => {

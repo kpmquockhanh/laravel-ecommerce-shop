@@ -16,7 +16,7 @@ const routes = [
     },
     // Not found
     {
-        path: '/:catchAll(.*)',
+        path: '/:catchAll(.*)?',
         name: '404',
         component: () => import('../views/frontend/components/core/404.vue'),
     },

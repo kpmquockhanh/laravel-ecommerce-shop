@@ -15,6 +15,7 @@ export function useProduct() {
     })
     const products = ref([])
     const productMeta = ref({})
+    const product = ref({});
 
     const { currentCategory,  } = useCategory()
     const currentPage = ref(1)
@@ -57,8 +58,8 @@ export function useProduct() {
             page: currentPage.value,
             limit: perPage,
         }
-
         const result = await doGet('/api/products', queryObj)
+        console.log('result', result)
         products.value = get(result, 'data', [])
         productMeta.value = get(result, 'meta', {})
         isLoadingProducts.value = false
@@ -66,6 +67,19 @@ export function useProduct() {
             scrollToTop()
         })
     }
+
+    const fetchProduct = async () => {
+        if (!slug.value) {
+            return
+        }
+        const resp = await doGet(`/api/products/${slug.value}`)
+        if (resp.error && resp.status === 404) {
+            await router.push({name: '404'})
+            return
+        }
+        product.value = get(resp, 'data', {})
+    }
+
     // Watch product change
     watch(products, (val) => {
         nextTick(() => {
@@ -79,6 +93,10 @@ export function useProduct() {
             });
         }).then()
     })
+    const slug = computed(() => route.params.slug);
+    watch(slug, () => {
+        fetchProduct().then()
+    })
     return {
         products,
         productMeta,
@@ -89,5 +107,8 @@ export function useProduct() {
         isLoadingProducts,
         onChangeSort,
         querySort,
+        product,
+        fetchProduct,
+        slug,
     }
 }

@@ -194,33 +194,26 @@
 </template>
 <script>
 import {useRoute} from "vue-router";
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import get from "lodash/get";
 import {doGet} from "@core/http";
 import Flickity from "./Flicktity.vue";
 import Image from "../frontend/components/core/Image.vue";
 import CarouselComponent from "./Carousel.vue";
 import ProductRelated from "../frontend/ProductRelated.vue";
+import {useProduct} from "../../js/composables/product";
 
 export default {
     name: "ProductDetail",
     components: {ProductRelated, CarouselComponent, Image, Flickity},
     setup() {
-        const product = ref({});
-        const route = useRoute();
-        const slug = computed(() => route.params.slug);
+        const {product, fetchProduct, slug} = useProduct()
         const images = computed(() => get(product.value, 'images', []).filter((image) => !image.is_thumbnail))
-        const fetchProduct = async () => {
-            if (!slug.value) {
-                return
-            }
-            const resp = await doGet(`/api/products/${slug.value}`)
-            product.value = get(resp, 'data', {})
-        }
-        fetchProduct()
-        watch(slug, () => {
+
+        onMounted(() => {
             fetchProduct()
         })
+
         return {
             slug,
             product,
