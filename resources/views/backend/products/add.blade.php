@@ -103,7 +103,18 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    @include('backend.products.upload_img', ['image' => asset('backend/img/placeholder.jpg')])
+                    <div class="card">
+                        <div class="card-header ">
+                            <h4 class="card-title">Image</h4>
+                        </div>
+                        <div class="card-body d-flex justify-content-center">
+                            <div class="row">
+                                <div class="col-md-12 m-auto">
+                                    @include('backend.products.upload_img', ['image' => asset('backend/img/placeholder.jpg'), 'name' => 'image'])
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -123,6 +134,8 @@
                 language: 'vi'
             })
         });
+
+        $("div#kpm").dropzone({ url: "/file/upload/" })
     </script>
 
 @stop

@@ -8,12 +8,19 @@
             display: none !important;
         }
     </style>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
+            type="text/css"
+    />
 @stop
+
 
 
 @section('content')
     <div class="content">
-        <form method="post" action="{{route('admin.products.update')}}" class="form-horizontal"
+        <form method="post" id="form" action="{{route('admin.products.update')}}" class="form-horizontal"
               enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-8">
@@ -82,19 +89,39 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                                <label class="col-sm-2 col-form-label">Images</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group dropzone" id="kpm">
+{{--                                        @include('backend.products.upload_img', ['image' => asset('backend/img/placeholder.jpg'), 'name' => 'images'])--}}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <div class="form-group float-right">
-                                        <button type="submit" class="btn btn-success">Update</button>
+                                        <button type="submit" id="submit_form" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-4">
-                    @include('backend.products.upload_img', ['image' => $product->thumbnail])
+                    <div class="card">
+                        <div class="card-header ">
+                            <h4 class="card-title">Image</h4>
+                        </div>
+                        <div class="card-body d-flex justify-content-center">
+                            <div class="row">
+                                <div class="col-md-12 m-auto">
+                                    @include('backend.products.upload_img', ['image' => $product->thumbnail, 'name' => 'image'])
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -102,16 +129,30 @@
 @stop
 
 @section('script')
-    <!-- Include Editor JS files. -->
     <script type="text/javascript" src="{{asset('floara/js/froala_editor.pkgd.min.js')}}"></script>
-
-    <!-- Initialize the editor. -->
     <script>
+
         $('textarea').froalaEditor({
             language: 'vn',
             heightMin: 200,
             spellcheck: false
         });
-    </script>
+        Dropzone.autoDiscover = false;
 
+        let myDropzone = new Dropzone("div#kpm", {
+            url:'/admin/products/{{$product->id}}/upload',
+            paramName: "file",
+            maxFilesize: 10,
+            acceptedFiles: 'image/*',
+            autoProcessQueue: false,
+            complete: () => {
+                $('#form').trigger( "submit" );
+            },
+        });
+
+        $('#submit_form').on('click', function (e) {
+            e.preventDefault();
+            myDropzone.processQueue();
+        });
+    </script>
 @stop

@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    @include('backend.layouts.header')
     @yield('style')
+    @include('backend.layouts.header')
     <title>
         @yield('title', 'Watch shop')
     </title>

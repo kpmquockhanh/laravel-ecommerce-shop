@@ -9,3 +9,12 @@
 .gap-2 {
     gap: 2px;
 }
+.dropzone{
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
