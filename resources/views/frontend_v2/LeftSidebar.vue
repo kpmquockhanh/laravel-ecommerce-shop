@@ -2,7 +2,7 @@
   <aside class="col-md-3 sidebar left-sidebar">
     <!-- Categories -->
     <div class="widget categories">
-      <h3 class="widget-title heading uppercase relative bottom-line full-grey">Categories</h3>
+      <h3 class="widget-title heading uppercase relative bottom-line full-grey">{{$t('categories')}}</h3>
       <ul class="list-dividers">
         <li v-for="category in categories" :class="{'active-cat': category.id === currentCategory}">
           <a href="#" @click.prevent="onClickCategory(category)">{{ category.name }}</a><span>({{ countCategories[`category-${category.id}`] || 0 }})</span>
@@ -23,7 +23,7 @@
 
     <!-- Tags -->
     <div class="widget tags clearfix">
-      <h3 class="widget-title heading uppercase relative bottom-line full-grey">Tags</h3>
+      <h3 class="widget-title heading uppercase relative bottom-line full-grey">{{ $t('tags') }}</h3>
       <a href="#">Multi-purpose</a>
       <a href="#">Creative</a>
       <a href="#">Elegant</a>

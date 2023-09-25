@@ -1121,6 +1121,11 @@ vite@^4.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-i18n-lite@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-i18n-lite/-/vue-i18n-lite-1.0.2.tgz#20a35ae1499f727b258e05a047d1e2f50eeff121"
+  integrity sha512-2eaYIPQb4oY8LbhjDJExpZJvVAu2E8dxwQ9sI+x5EbEVw86oDSEXGvAQrdAT5j4WeICuq9RPAJTNhrBknzAp8Q==
+
 vue-loader@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-17.0.1.tgz#c0ee8875e0610a0c2d13ba9b4d50a9c8442e7a3a"

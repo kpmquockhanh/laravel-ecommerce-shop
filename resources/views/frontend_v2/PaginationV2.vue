@@ -1,6 +1,6 @@
 <template>
   <div class="pagination-wrap">
-    <p class="result-count">Showing: {{ perPage }} of {{ total }} results</p>
+    <p class="result-count">{{$t('showing')}}: {{ perPage }} {{ $t('of') }} {{ total }} {{$t('results')}}</p>
     <nav class="pagination right clearfix">
 
       <a href="#"><i class="fa fa-angle-left"></i></a>

@@ -5,7 +5,7 @@
       <div class="row heading-row">
         <div class="col-md-12 text-center">
           <h2 class="heading bottom-line">
-            Related Products
+            {{ $t('related_products') }}
           </h2>
         </div>
       </div>

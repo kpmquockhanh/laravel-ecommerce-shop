@@ -46,12 +46,12 @@ Route::prefix('/products')->group(function () {
         return new ProductResource(\App\Models\Product::query()->first());
     });
     Route::get('/similar/{id}', function ($id) {
-        $product = \App\Models\Product::with('categories')->findOrFail($id);
+        $product = \App\Models\Product::with(['categories', 'images'])->findOrFail($id);
         $categoryIds = [];
         foreach ($product->categories as $category) {
             $categoryIds[] = $category->id;
         }
-        return new ProductCollection(\App\Models\Product::with(['categories'])
+        return new ProductCollection(\App\Models\Product::with(['categories', 'images'])
             ->whereHas('categories', function ($query) use ($categoryIds) {
                 return $query->where('categories.id', $categoryIds);
             })

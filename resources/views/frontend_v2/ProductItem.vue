@@ -17,7 +17,7 @@
           </a>
         </div>
       </div>
-      <a href="#" class="product-quickview">See detail</a>
+      <a href="#" class="product-quickview">{{$t('see_detail')}}</a>
     </div>
 
     <div class="d-flex justify-content-between">
@@ -32,10 +32,10 @@
 
       <span class="price">
         <del>
-          <span>$730.00</span>
+          <span>{{ formatCurrency(product.price*1.3) }}</span>
         </del>
         <ins>
-          <span class="amount">${{ product.price }}</span>
+          <span class="amount">{{ formatCurrency(parseFloat(product.price)) }}</span>
         </ins>
       </span>
     </div>
@@ -46,17 +46,17 @@
       </h3>
       <span class="price">
           <del>
-            <span>$730.00</span>
+            <span>{{ formatCurrency(product.price*1.3) }}</span>
           </del>
           <ins>
-            <span class="amount">${{ product.price }}</span>
+            <span class="amount">{{ formatCurrency(parseFloat(product.price)) }}</span>
           </ins>
         </span>
       <span class="rating">
-          <a href="#">3 Reviews</a>
+          <a href="#">3 {{ $t('reviews') }}</a>
         </span>
       <p v-html="product.description"></p>
-      <a href="#" class="btn btn-dark btn-md left"><span>Add to Cart</span></a>
+      <a href="#" class="btn btn-dark btn-md left"><span>{{$t('add_to_cart')}}</span></a>
       <div class="product-add-to-wishlist">
         <a href="#"><i class="fa fa-heart"></i></a>
       </div>
@@ -68,9 +68,11 @@ import {useRouter} from "vue-router";
 import Image from "../frontend/components/core/Image.vue";
 import {computed} from "vue";
 import get from "lodash/get";
+import {formatCurrency} from "../../js/utils";
 
 export default {
   name: 'ProductItem',
+  methods: {formatCurrency},
   components: {Image},
   props: {
     type: {

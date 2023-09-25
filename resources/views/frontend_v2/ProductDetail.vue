@@ -3,23 +3,20 @@
     <div class="container-fluid semi-fluid">
       <div class="row">
         <div class="col-md-6 col-xs-12 product-slider mb-60">
-          <CarouselComponent :items="originImages">
+          <CarouselComponent :items="originImages" ref="myCarousel">
             <template v-slot:default="slotProps">
               <Image :src="slotProps.item.src" alt="" rounded/>
-              <i class="ui-zoom zoom-icon"></i>
             </template>
           </CarouselComponent>
           <CarouselComponent v-if="!originImages.length" :items="[1]">
             <template v-slot:default="slotProps">
               <img src="@images/placeholder.jpg" alt=""/>
-              <i class="ui-zoom zoom-icon"></i>
             </template>
           </CarouselComponent>
-
           <CarouselComponent :items="images" :number-item="4" class="gallery-thumbs"
                              item-class="gallery-cell is-selected">
             <template v-slot:default="slotProps">
-              <Image :src="slotProps.item.src" alt="" rounded/>
+              <Image :src="slotProps.item.src" alt="" rounded @click="onChangePreview(slotProps.item)"/>
             </template>
 
           </CarouselComponent>
@@ -30,14 +27,14 @@
           <h1 class="product-title">{{ product.title }}</h1>
           <span class="price">
             <del>
-              <span>$1550.00</span>
+              <span>{{ formatCurrency(product.price*1.3) }}</span>
             </del>
             <ins>
-              <span class="amount">${{ product.price }}</span>
+              <span class="amount">{{ formatCurrency(product.price*1) }}</span>
             </ins>
           </span>
           <span class="rating">
-            <a href="#">3 Reviews</a>
+            <a href="#">3 {{$t('reviews')}}</a>
           </span>
           <p class="short-description" v-html="product.description"></p>
 
@@ -72,7 +69,7 @@
               </div>
             </div>
 
-            <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>Add to Cart</span></a>
+            <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>{{ $t('add_to_cart') }}</span></a>
 
             <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>
           </div>
@@ -80,8 +77,8 @@
 
           <div class="product_meta">
             <span class="sku">SKU: <a href="#">111763</a></span>
-            <span class="brand_as">Category: <a href="#">Men T-shirt</a></span>
-            <span class="posted_in">Tags: <a href="#">Sport, T-shirt, Blue</a></span>
+            <span class="brand_as">{{$t('category')}}: <a href="#">Men T-shirt</a></span>
+            <span class="posted_in">{{ $t('tags') }}: <a href="#">{{ product.categories?.map(c => c.name).join(', ') }}</a></span>
           </div>
 
           <!-- Accordion -->
@@ -103,7 +100,7 @@
 
             <div class="panel">
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="plus">Information<span>&nbsp;</span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="plus">{{ $t('information') }}<span>&nbsp;</span>
                 </a>
               </div>
               <div id="collapseTwo" class="panel-collapse collapse">
@@ -130,7 +127,7 @@
 
             <div class="panel">
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="plus">Reviews<span>&nbsp;</span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="plus">{{ $t('reviews') }}<span>&nbsp;</span>
                 </a>
               </div>
               <div id="collapseThree" class="panel-collapse collapse">
@@ -177,7 +174,7 @@
           </div>
 
           <div class="socials-share clearfix">
-            <span>Share:</span>
+            <span>{{$t('share')}}:</span>
             <div class="social-icons nobase">
               <a href="#"><i class="fa fa-twitter"></i></a>
               <a href="#"><i class="fa fa-facebook"></i></a>
@@ -202,24 +199,36 @@ import Image from "../frontend/components/core/Image.vue";
 import CarouselComponent from "./Carousel.vue";
 import ProductRelated from "../frontend/ProductRelated.vue";
 import {useProduct} from "../../js/composables/product";
+import {formatCurrency} from "../../js/utils";
 
 export default {
   name: "ProductDetail",
+  methods: {formatCurrency},
   components: {ProductRelated, CarouselComponent, Image, Flickity},
   setup() {
     const {product, fetchProduct, slug} = useProduct()
-    const images = computed(() => get(product.value, 'images', []).filter((image) => !image.src.includes('origin')))
+    const myCarousel = ref(null)
+    const images = computed(() => get(product.value, 'images', []).filter((image) => !image.src.includes('origin') && !image.is_thumbnail))
     const originImages = computed(() => get(product.value, 'images', []).filter((image) => image.src.includes('origin')))
-
+    const onChangePreview = (image) => {
+      const split = image.src.split('/')
+      const origin = split[split.length - 1]
+      const timestamp = origin.split('-')[0]
+      const originImageIndex = originImages.value.findIndex((image) => image.src.includes(timestamp))
+      if (originImageIndex > -1 && myCarousel.value) {
+        myCarousel.value.slideTo(originImageIndex)
+      }
+    }
     onMounted(() => {
       fetchProduct()
     })
-
     return {
       slug,
       product,
       images,
       originImages,
+      onChangePreview,
+      myCarousel,
     }
 
   },

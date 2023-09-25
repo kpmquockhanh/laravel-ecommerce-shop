@@ -3,11 +3,8 @@
     <div class="container relative clearfix">
       <div class="title-holder">
         <div class="title-text">
-          <h1 class="uppercase">catalog</h1>
+          <h1 class="uppercase">{{ title }}</h1>
           <ol class="breadcrumb">
-<!--            <li>-->
-<!--              <a href="#" @click.prevent="routeToHome">Home</a>-->
-<!--            </li>-->
             <li v-for="(item, index) in items" :class="{active: index === items.length - 1}">
               <a href="#" @click.prevent="routeTo({name: item.name})">{{ item.label }}</a>
             </li>
@@ -22,12 +19,15 @@ import {useRoute, useRouter} from "vue-router";
 import {computed} from "vue";
 import get from "lodash/get";
 import {useProduct} from "../../js/composables/product";
+import {useI18n} from "vue-i18n-lite";
+
 export default {
   name: 'Breadcrumb',
   setup() {
     const route = useRoute()
     const router = useRouter()
     const {product} = useProduct()
+    const {t} = useI18n()
     const items = computed(() => {
       const matched = get(route.matched, '[0]', {})
       switch (matched.name) {
@@ -35,7 +35,7 @@ export default {
           return [
             {
               name: 'home',
-              label: 'Home'
+              label: t('home')
             },
             {
               name: 'product-detail',
@@ -44,6 +44,15 @@ export default {
           ]
       }
       return []
+    })
+
+    const title = computed(() => {
+      const matched = get(route.matched, '[0]', {})
+      switch (matched.name) {
+        case 'product-detail':
+          return product.value?.title
+      }
+      return ''
     })
     const routeToHome = () => {
       router.push({
@@ -61,6 +70,7 @@ export default {
       items,
       routeToHome,
       routeTo,
+      title,
     }
   },
 }

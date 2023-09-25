@@ -1,7 +1,7 @@
 <template>
   <div class="shop-filter">
     <div class="view-mode hidden-xs">
-      <span>View:</span>
+      <span>{{ $t('view')}}:</span>
       <a class="grid" id="grid" :class="{'grid-active': layout=== 'grid'}"  @click.prevent="setLayout('grid')"></a>
       <a class="list" :class="{'list-active': layout=== 'list'}" id="list" @click.prevent="setLayout('list')"></a>
     </div>
@@ -26,19 +26,21 @@
 <script>
 
 import {useLayout} from "../../js/composables/layout";
+import {useI18n} from "vue-i18n-lite";
 
 export default {
   name: 'ShopFilter',
   setup() {
     const {layout, setLayout} = useLayout()
+    const {t} = useI18n()
     const dropdownData = [
       {
         value: 'desc',
-        label: 'Newest',
+        label: t('newest'),
       },
       {
         value: 'asc',
-        label: 'Oldest',
+        label: t('oldest'),
       }
     ]
     return {layout, setLayout, dropdownData}

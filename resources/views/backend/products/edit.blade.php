@@ -95,7 +95,7 @@
                                     <div class="row">
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
                                             <div class="col-sm-4 mb-2 image-item">
-                                                <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="" data-id="{{$image->id}}">
+                                                <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe" data-id="{{$image->id}}">
                                                 <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
                                                         data-id="{{$image->id}}" title="" style="right: 16px; top: 8px;">
                                                     <i class="fa fa-times"></i>
