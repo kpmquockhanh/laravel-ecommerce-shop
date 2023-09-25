@@ -27,4 +27,7 @@ export default defineConfig({
             ...resolvedAliases,
         },
     },
+    build: {
+        target: 'esnext'
+    }
 });
