@@ -10,8 +10,8 @@
         </div>
       </div>
       <div class="row">
-        <CarouselComponent v-if="products.length" :items="products" :number-item="4" class="product-grid w-100"
-                           wrap-around>
+        <CarouselComponent v-if="products.length" :items="products" :number-item="4.5" class="product-grid w-100"
+                           wrap-around :breakpoints="breakpoints">
           <template v-slot:default="{ item }">
             <div class="product product--carousel">
               <ProductItem :product="item"/>
@@ -63,9 +63,24 @@ export default {
         fetchProducts('w4')
       }
     })
+    const breakpoints = {
+      100: {
+        itemsToShow: 2,
+        snapAlign: "center",
+      },
+      768: {
+        itemsToShow: 3,
+        snapAlign: "center",
+      },
+      1200: {
+        itemsToShow: 4,
+        snapAlign: "center",
+      },
+    }
     return {
       products,
       isLoading,
+      breakpoints,
     }
   },
 }

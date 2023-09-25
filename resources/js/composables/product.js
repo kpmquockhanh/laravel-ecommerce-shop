@@ -54,7 +54,6 @@ export function useProduct() {
         if (isLoadingProducts.value) {
             return
         }
-        console.log('fetchProducts', target)
         isLoadingProducts.value = true
         const queryObj = {
             sort: querySort.value,

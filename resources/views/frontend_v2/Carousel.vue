@@ -1,5 +1,5 @@
 <template>
-  <carousel v-if="items.length" :itemsToShow="numberItem" :wrapAround="wrapAround" :transition="300" ref="controller">
+  <carousel v-if="items.length" :itemsToShow="numberItem" :wrapAround="wrapAround" :transition="300" :breakpoints="breakpoints" ref="controller">
     <slide v-for="item in items" :key="item.id" :class="itemClass">
       <slot :item="item"></slot>
     </slide>
@@ -33,6 +33,10 @@ export default {
     },
     wrapAround: {
       type: Boolean,
+    },
+    breakpoints: {
+      type: Object,
+      default: () => ({}),
     }
   },
 
