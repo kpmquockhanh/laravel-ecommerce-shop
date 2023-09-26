@@ -1,15 +1,20 @@
 <template>
   <header class="nav-type-1">
     <!-- Fullscreen search -->
-    <div class="search-wrap">
+    <div class="search-wrap" :class="{'d-block': isOpenSearch}">
       <div class="search-inner">
         <div class="search-cell">
-          <form method="get">
-            <div class="search-field-holder">
-              <input type="search" class="form-control main-search-input" :placeholder="$t('search_for')">
-              <i class="ui-close search-close" id="search-close"></i>
-            </div>
-          </form>
+          <div class="search-field-holder" ref="target">
+            <input
+                v-model="searchString"
+                type="search"
+                class="form-control main-search-input"
+                :placeholder="$t('search_for')"
+                ref="input"
+                @keyup.esc="isOpenSearch = false"
+                @keyup.enter="onSubmitSearch">
+            <i class="ui-close search-close" id="search-close" @click="isOpenSearch = false"></i>
+          </div>
         </div>
       </div>
     </div> <!-- end fullscreen search -->
@@ -18,15 +23,15 @@
       <div class="container">
         <div class="top-bar-links flex-parent">
           <ul class="top-bar-currency-language">
-<!--            <li>-->
-<!--              {{ $t('currency') }}: <a href="#">USD<i class="fa fa-angle-down"></i></a>-->
-<!--              <div class="currency-dropdown">-->
-<!--                <ul>-->
-<!--                  <li><a href="#">USD</a></li>-->
-<!--                  <li><a href="#">EUR</a></li>-->
-<!--                </ul>-->
-<!--              </div>-->
-<!--            </li>-->
+            <!--            <li>-->
+            <!--              {{ $t('currency') }}: <a href="#">USD<i class="fa fa-angle-down"></i></a>-->
+            <!--              <div class="currency-dropdown">-->
+            <!--                <ul>-->
+            <!--                  <li><a href="#">USD</a></li>-->
+            <!--                  <li><a href="#">EUR</a></li>-->
+            <!--                </ul>-->
+            <!--              </div>-->
+            <!--            </li>-->
             <li class="language">
               {{ $t('language') }}: <a href="#" class="uppercase">{{ current }}<i class="fa fa-angle-down"></i></a>
               <div class="language-dropdown">
@@ -86,107 +91,107 @@
                   <li>
                     <a href="#" @click.prevent="routeToHome">{{ $t('home') }}</a>
                   </li>
-<!--                  <li class="dropdown">-->
-<!--                    <a href="#">Pages</a>-->
-<!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                      <li><a href="about-us.html">About Us</a></li>-->
-<!--                      <li><a href="contact.html">Contact</a></li>-->
-<!--                      <li><a href="faq.html">F.A.Q</a></li>-->
-<!--                      <li><a href="404.html">404</a></li>-->
-<!--                    </ul>-->
-<!--                  </li>-->
+                  <!--                  <li class="dropdown">-->
+                  <!--                    <a href="#">Pages</a>-->
+                  <!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
+                  <!--                    <ul class="dropdown-menu">-->
+                  <!--                      <li><a href="about-us.html">About Us</a></li>-->
+                  <!--                      <li><a href="contact.html">Contact</a></li>-->
+                  <!--                      <li><a href="faq.html">F.A.Q</a></li>-->
+                  <!--                      <li><a href="404.html">404</a></li>-->
+                  <!--                    </ul>-->
+                  <!--                  </li>-->
 
-<!--                  <li class="dropdown">-->
-<!--                    <a href="#">Blog</a>-->
-<!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                      <li><a href="blog-standard.html">Standard</a></li>-->
-<!--                      <li><a href="blog-single.html">Single Post</a></li>-->
-<!--                    </ul>-->
-<!--                  </li>-->
+                  <!--                  <li class="dropdown">-->
+                  <!--                    <a href="#">Blog</a>-->
+                  <!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
+                  <!--                    <ul class="dropdown-menu">-->
+                  <!--                      <li><a href="blog-standard.html">Standard</a></li>-->
+                  <!--                      <li><a href="blog-single.html">Single Post</a></li>-->
+                  <!--                    </ul>-->
+                  <!--                  </li>-->
 
-<!--                  <li class="dropdown">-->
-<!--                    <a href="#">Shop</a>-->
-<!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
-<!--                    <ul class="dropdown-menu megamenu-wide"-->
-<!--                        style="width: 1665px; left: -856.844px;">-->
-<!--                      <li>-->
-<!--                        <div class="megamenu-wrap container">-->
-<!--                          <div class="row">-->
+                  <!--                  <li class="dropdown">-->
+                  <!--                    <a href="#">Shop</a>-->
+                  <!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
+                  <!--                    <ul class="dropdown-menu megamenu-wide"-->
+                  <!--                        style="width: 1665px; left: -856.844px;">-->
+                  <!--                      <li>-->
+                  <!--                        <div class="megamenu-wrap container">-->
+                  <!--                          <div class="row">-->
 
-<!--                            <div class="col-md-3 megamenu-item">-->
-<!--                              <ul class="menu-list">-->
-<!--                                <li>-->
-<!--                                  <span>Shop Pages</span>-->
-<!--                                </li>-->
-<!--                                <li><a href="shop-catalog.html">Catalog no Sidebar</a>-->
-<!--                                </li>-->
-<!--                                <li><a href="shop-catalog-sidebar.html">Catalog With-->
-<!--                                  Sidebar</a></li>-->
-<!--                                <li><a href="shop-single.html">Single Product</a></li>-->
-<!--                                <li><a href="shop-cart.html">Cart</a></li>-->
-<!--                                <li><a href="shop-checkout.html">Checkout</a></li>-->
-<!--                              </ul>-->
-<!--                            </div>-->
+                  <!--                            <div class="col-md-3 megamenu-item">-->
+                  <!--                              <ul class="menu-list">-->
+                  <!--                                <li>-->
+                  <!--                                  <span>Shop Pages</span>-->
+                  <!--                                </li>-->
+                  <!--                                <li><a href="shop-catalog.html">Catalog no Sidebar</a>-->
+                  <!--                                </li>-->
+                  <!--                                <li><a href="shop-catalog-sidebar.html">Catalog With-->
+                  <!--                                  Sidebar</a></li>-->
+                  <!--                                <li><a href="shop-single.html">Single Product</a></li>-->
+                  <!--                                <li><a href="shop-cart.html">Cart</a></li>-->
+                  <!--                                <li><a href="shop-checkout.html">Checkout</a></li>-->
+                  <!--                              </ul>-->
+                  <!--                            </div>-->
 
-<!--                            <div class="col-md-3 megamenu-item">-->
-<!--                              <ul class="menu-list">-->
-<!--                                <li>-->
-<!--                                  <span>For Her</span>-->
-<!--                                </li>-->
-<!--                                <li><a href="catalog.html">Dresses</a></li>-->
-<!--                                <li><a href="catalog.html">Watches</a></li>-->
-<!--                                <li><a href="catalog.html">Belts</a></li>-->
-<!--                                <li><a href="catalog.html">Jackets</a></li>-->
-<!--                                <li><a href="catalog.html">Scarfs</a></li>-->
-<!--                              </ul>-->
-<!--                            </div>-->
+                  <!--                            <div class="col-md-3 megamenu-item">-->
+                  <!--                              <ul class="menu-list">-->
+                  <!--                                <li>-->
+                  <!--                                  <span>For Her</span>-->
+                  <!--                                </li>-->
+                  <!--                                <li><a href="catalog.html">Dresses</a></li>-->
+                  <!--                                <li><a href="catalog.html">Watches</a></li>-->
+                  <!--                                <li><a href="catalog.html">Belts</a></li>-->
+                  <!--                                <li><a href="catalog.html">Jackets</a></li>-->
+                  <!--                                <li><a href="catalog.html">Scarfs</a></li>-->
+                  <!--                              </ul>-->
+                  <!--                            </div>-->
 
-<!--                            <div class="col-md-3 megamenu-item">-->
-<!--                              <ul class="menu-list">-->
-<!--                                <li>-->
-<!--                                  <span>Accessories</span>-->
-<!--                                </li>-->
-<!--                                <li><a href="catalog.html">Wallets</a></li>-->
-<!--                                <li><a href="catalog.html">Watches</a></li>-->
-<!--                                <li><a href="catalog.html">Belts</a></li>-->
-<!--                                <li><a href="catalog.html">Shoes</a></li>-->
-<!--                                <li><a href="catalog.html">Scarfs</a></li>-->
-<!--                              </ul>-->
-<!--                            </div>-->
+                  <!--                            <div class="col-md-3 megamenu-item">-->
+                  <!--                              <ul class="menu-list">-->
+                  <!--                                <li>-->
+                  <!--                                  <span>Accessories</span>-->
+                  <!--                                </li>-->
+                  <!--                                <li><a href="catalog.html">Wallets</a></li>-->
+                  <!--                                <li><a href="catalog.html">Watches</a></li>-->
+                  <!--                                <li><a href="catalog.html">Belts</a></li>-->
+                  <!--                                <li><a href="catalog.html">Shoes</a></li>-->
+                  <!--                                <li><a href="catalog.html">Scarfs</a></li>-->
+                  <!--                              </ul>-->
+                  <!--                            </div>-->
 
-<!--                            <div class="col-md-3 megamenu-item">-->
-<!--                              <ul class="menu-list">-->
-<!--                                <li>-->
-<!--                                  <span>For Him</span>-->
-<!--                                </li>-->
-<!--                                <li><a href="catalog.html">T-shirts</a></li>-->
-<!--                                <li><a href="catalog.html">Watches</a></li>-->
-<!--                                <li><a href="catalog.html">Belts</a></li>-->
-<!--                                <li><a href="catalog.html">Jeans</a></li>-->
-<!--                                <li><a href="catalog.html">Scarfs</a></li>-->
-<!--                              </ul>-->
-<!--                            </div>-->
+                  <!--                            <div class="col-md-3 megamenu-item">-->
+                  <!--                              <ul class="menu-list">-->
+                  <!--                                <li>-->
+                  <!--                                  <span>For Him</span>-->
+                  <!--                                </li>-->
+                  <!--                                <li><a href="catalog.html">T-shirts</a></li>-->
+                  <!--                                <li><a href="catalog.html">Watches</a></li>-->
+                  <!--                                <li><a href="catalog.html">Belts</a></li>-->
+                  <!--                                <li><a href="catalog.html">Jeans</a></li>-->
+                  <!--                                <li><a href="catalog.html">Scarfs</a></li>-->
+                  <!--                              </ul>-->
+                  <!--                            </div>-->
 
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </li>-->
-<!--                    </ul>-->
-<!--                  </li>-->
+                  <!--                          </div>-->
+                  <!--                        </div>-->
+                  <!--                      </li>-->
+                  <!--                    </ul>-->
+                  <!--                  </li>-->
 
-<!--                  <li class="dropdown">-->
-<!--                    <a href="#">Elements</a>-->
-<!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                      <li><a href="shortcodes.html">Shortcodes</a></li>-->
-<!--                      <li><a href="typography.html">Typography</a></li>-->
-<!--                    </ul>-->
-<!--                  </li> &lt;!&ndash; end elements &ndash;&gt;-->
+                  <!--                  <li class="dropdown">-->
+                  <!--                    <a href="#">Elements</a>-->
+                  <!--                    <i class="fa fa-angle-down dropdown-trigger"></i>-->
+                  <!--                    <ul class="dropdown-menu">-->
+                  <!--                      <li><a href="shortcodes.html">Shortcodes</a></li>-->
+                  <!--                      <li><a href="typography.html">Typography</a></li>-->
+                  <!--                    </ul>-->
+                  <!--                  </li> &lt;!&ndash; end elements &ndash;&gt;-->
 
-                  <li class="mobile-links hidden-lg hidden-md">
-                    <a href="#">{{ $t('my_account') }}</a>
-                  </li>
+                  <!--                  <li class="mobile-links hidden-lg hidden-md">-->
+                  <!--                    <a href="#">{{ $t('my_account') }}</a>-->
+                  <!--                  </li>-->
 
                   <!-- Mobile search -->
                   <li id="mobile-search" class="hidden-lg hidden-md">
@@ -204,11 +209,11 @@
 
             <div class="flex-child flex-right nav-right hidden-sm hidden-xs">
               <ul>
-                <li class="nav-register">
-                  <a href="#">{{ $t('my_account') }}</a>
-                </li>
+                <!--                <li class="nav-register">-->
+                <!--                  <a href="#">{{ $t('my_account') }}</a>-->
+                <!--                </li>-->
                 <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
-                  <a href="#" class="nav-search search-trigger">
+                  <a href="#" class="nav-search search-trigger" @click="isOpenSearch = true">
                     <i class="fa fa-search"></i>
                   </a>
                 </li>
@@ -228,6 +233,8 @@
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n-lite";
 import NavCart from "./NavCart.vue";
+import {nextTick, ref, watch} from "vue";
+import {onClickOutside} from '@vueuse/core'
 
 export default {
   name: 'HeaderV2Type1',
@@ -235,22 +242,56 @@ export default {
   setup() {
     const router = useRouter();
     const i18n = useI18n();
-    const { current, changeLocale } = i18n
+    const {current, changeLocale} = i18n
+    const target = ref(null);
     const routeToHome = () => {
       router.push({
         name: 'home',
       })
     };
 
+    const searchString = ref('')
+
     const onChangeLocale = (locale) => {
       localStorage.setItem('locale', locale)
       changeLocale(locale)
     }
 
+    onClickOutside(target, () => {
+      if (isOpenSearch.value) {
+        isOpenSearch.value = false
+      }
+    })
+
+    const isOpenSearch = ref(false);
+
+    const input = ref(null)
+    watch(isOpenSearch, (value) => {
+      if (value) {
+        nextTick(() => {
+          input.value.focus();
+        });
+      }
+    })
+    const onSubmitSearch = () => {
+      router.push({
+        name: 'home',
+        query: {
+          q: searchString.value
+        }
+      }).then(() => {
+        isOpenSearch.value = false
+      })
+    }
     return {
       current,
       onChangeLocale,
       routeToHome,
+      isOpenSearch,
+      target,
+      searchString,
+      onSubmitSearch,
+      input,
     };
   },
 }

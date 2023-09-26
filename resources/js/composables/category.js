@@ -21,12 +21,15 @@ export function useCategory() {
         isLoadingCategory.value = false
     }
 
-    const onClickCategory = (category) => {
+    const onClickCategory = async (category) => {
+        // Remove query q
+        const query = {...route.query}
+        delete query.q
+        await router.push({query: {...query}})
         if (currentCategory.value === category.id) {
             currentCategory.value = 0
             return
         }
-        console.log('onClickCategory', category.id)
         currentCategory.value = category.id
     }
 

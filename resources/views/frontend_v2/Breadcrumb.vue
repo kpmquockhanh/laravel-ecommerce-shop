@@ -42,6 +42,17 @@ export default {
               label: product.value?.title
             }
           ]
+        case 'cart':
+          return [
+            {
+              name: 'home',
+              label: t('home')
+            },
+            {
+              name: 'cart',
+              label: t('cart')
+            }
+          ]
       }
       return []
     })
@@ -51,6 +62,8 @@ export default {
       switch (matched.name) {
         case 'product-detail':
           return product.value?.title
+        case 'cart':
+          return t('cart')
       }
       return ''
     })

@@ -1,7 +1,7 @@
 <template>
     <div>
         <img v-show="!isLoading && !isError" :class="[imgClass, {'rounded': rounded}]" :src="src" :alt="alt" @load="onLoaded" @error="onError">
-        <div v-if="isLoading" class="loading-image">
+        <div v-if="isLoading && !noLoading" class="loading-image">
             <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
         </div>
         <div v-if="isError" class="loading-image">Error image</div>
@@ -27,6 +27,10 @@ export default {
       default: ''
     },
     rounded: {
+      type: Boolean,
+      default: false
+    },
+    noLoading: {
       type: Boolean,
       default: false
     }

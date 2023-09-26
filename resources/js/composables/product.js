@@ -19,6 +19,11 @@ export function useProduct() {
         return route.query.sort || ''
     })
 
+    const querySearch = computed(() => {
+        return route.query.q || ''
+    })
+
+
     const { currentCategory,  } = useCategory()
     const currentPage = ref(1)
     const perPage = 20
@@ -26,7 +31,6 @@ export function useProduct() {
         return get(productMeta.value, 'total', 0)
     })
     watch(currentCategory, (val) => {
-        console.log('currentCategory', currentCategory.value, val)
         currentPage.value = 1
         nextTick(() => {
             fetchProducts('w1').then()
@@ -35,6 +39,13 @@ export function useProduct() {
     watch(currentPage, () => {
         nextTick(() => {
             fetchProducts('w2').then()
+        }).then()
+    })
+
+    watch(querySearch, async () => {
+        currentCategory.value = 0
+        nextTick(() => {
+            fetchProducts('wsearch').then()
         }).then()
     })
     const onChangeSort = (item) => {
@@ -54,12 +65,14 @@ export function useProduct() {
         if (isLoadingProducts.value) {
             return
         }
+        console.log('fetchProducts', target)
         isLoadingProducts.value = true
         const queryObj = {
             sort: querySort.value,
             category: currentCategory.value,
             page: currentPage.value,
             limit: perPage,
+            q: querySearch.value,
         }
         const result = await doGet('/api/products', queryObj)
         products.value = get(result, 'data', [])
@@ -67,9 +80,9 @@ export function useProduct() {
         isLoadingProducts.value = false
         await nextTick(() => {
             if (currentCategory.value) {
-                router.push({query: {category: currentCategory.value}})
+                router.push({query: {...route.query, category: currentCategory.value}})
             } else {
-                router.push({query: {}})
+                router.push({query: {...route.query}})
             }
             scrollToTop()
         })
@@ -118,5 +131,6 @@ export function useProduct() {
         product,
         fetchProduct,
         slug,
+        querySearch,
     }
 }

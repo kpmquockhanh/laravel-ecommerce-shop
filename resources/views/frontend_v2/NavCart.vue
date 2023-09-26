@@ -17,7 +17,7 @@
     </div>
 
     <div class="nav-cart-actions mt-20">
-      <a href="shop-cart.html" class="btn btn-md btn-dark"><span>{{ $t('view_cart') }}</span></a>
+      <a href="#" class="btn btn-md btn-dark" @click="routeToCart"><span>{{ $t('view_cart') }}</span></a>
       <a href="shop-checkout.html"
          class="btn btn-md btn-color mt-10"><span>{{ $t('process_to_checkout') }}</span></a>
     </div>
@@ -25,9 +25,19 @@
 </template>
 <script>
 import CartItem from "./CartItem.vue"
+import {useRouter} from "vue-router";
 
 export default {
   name: 'NavCart',
-  components: {CartItem}
+  components: {CartItem},
+  setup() {
+    const router = useRouter()
+    const routeToCart = () => {
+      router.push({name: 'cart'})
+    }
+    return {
+      routeToCart,
+    }
+  },
 }
 </script>

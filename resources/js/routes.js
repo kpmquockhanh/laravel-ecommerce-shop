@@ -14,6 +14,11 @@ const routes = [
         name: 'product-detail',
         component: () => import('../views/frontend_v2/ProductDetail.vue'),
     },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: () => import('../views/frontend_v2/ShoppingCart.vue'),
+    },
     // Not found
     {
         path: '/:catchAll(.*)?',

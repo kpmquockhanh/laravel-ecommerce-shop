@@ -5,7 +5,7 @@
         <Image v-if="product.thumbnail" :src="product.thumbnail" alt=""/>
         <Image v-else src="@images/placeholder.jpg" alt=""/>
 
-        <Image v-if="images.length" :src="images[0].src" alt="" class="back-img"/>
+        <Image v-if="images.length" :src="images[0].src" alt="" class="back-img" no-loading/>
       </a>
       <div class="product-label">
         <span class="sale">sale</span>

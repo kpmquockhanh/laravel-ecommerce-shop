@@ -29,6 +29,10 @@ Route::prefix('/products')->group(function () {
                 $query->where('categories.id', request()->query('category'));
             });
         }
+
+        if ($request->q) {
+            $products->where('title', 'like', '%' . $request->q . '%');
+        }
         if ($request->sort && in_array($request->sort, ['asc', 'desc'])) {
             $products->orderBy('id', request()->query('sort'));
         }
