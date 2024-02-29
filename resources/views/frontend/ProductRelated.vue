@@ -1,6 +1,6 @@
 <template>
   <section class="section-wrap pt-0 shop-items-slider">
-    <card-skeleton v-if="isLoading" :number-item="4" class="px-5"/>
+    <card-skeleton v-if="isLoading" :number-item="4" class="px-5" />
     <div v-else class="container">
       <div class="row heading-row">
         <div class="col-md-12 text-center">
@@ -10,11 +10,17 @@
         </div>
       </div>
       <div class="row">
-        <CarouselComponent v-if="products.length" :items="products" :number-item="4.5" class="product-grid w-100"
-                           wrap-around :breakpoints="breakpoints">
+        <CarouselComponent
+          v-if="products.length"
+          :items="products"
+          :number-item="4.5"
+          class="product-grid w-100"
+          wrap-around
+          :breakpoints="breakpoints"
+        >
           <template v-slot:default="{ item }">
             <div class="product product--carousel">
-              <ProductItem :product="item"/>
+              <ProductItem :product="item" />
             </div>
           </template>
         </CarouselComponent>
@@ -24,23 +30,22 @@
   </section>
 </template>
 <script>
-
-import CarouselComponent from "../frontend_v2/Carousel.vue";
-import Image from "./components/core/Image.vue";
-import {doGet} from "../../js/http";
-import get from "lodash/get";
-import {onMounted, ref, watch} from "vue";
-import ProductItem from "../frontend_v2/ProductItem.vue";
-import CardSkeleton from "./components/core/CardSkeleton.vue";
+import CarouselComponent from '../frontend_v2/Carousel.vue'
+import Image from './components/core/Image.vue'
+import { doGet } from '../../js/http'
+import get from 'lodash/get'
+import { onMounted, ref, watch } from 'vue'
+import ProductItem from '../frontend_v2/ProductItem.vue'
+import CardSkeleton from './components/core/CardSkeleton.vue'
 
 export default {
-  name: "ProductRelated",
-  components: {CardSkeleton, ProductItem, Image, CarouselComponent},
+  name: 'ProductRelated',
+  components: { CardSkeleton, ProductItem, Image, CarouselComponent },
   props: {
     productId: {
       type: Number,
       required: true,
-    }
+    },
   },
   setup(props) {
     const isLoading = ref(true)
@@ -58,23 +63,26 @@ export default {
       fetchProducts('w3')
     })
 
-    watch(() => props.productId, (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        fetchProducts('w4')
+    watch(
+      () => props.productId,
+      (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+          fetchProducts('w4')
+        }
       }
-    })
+    )
     const breakpoints = {
       100: {
         itemsToShow: 2,
-        snapAlign: "center",
+        snapAlign: 'center',
       },
       768: {
         itemsToShow: 3,
-        snapAlign: "center",
+        snapAlign: 'center',
       },
       1200: {
         itemsToShow: 4,
-        snapAlign: "center",
+        snapAlign: 'center',
       },
     }
     return {
@@ -84,9 +92,6 @@ export default {
     }
   },
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

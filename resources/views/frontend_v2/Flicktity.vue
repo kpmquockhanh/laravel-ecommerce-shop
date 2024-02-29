@@ -4,26 +4,26 @@
   </div>
 </template>
 <script>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from 'vue'
 
-import Flickity from 'flickity';
+import Flickity from 'flickity'
 export default {
   name: 'Flickity',
   props: {
     options: Object,
   },
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const el = ref(null)
     onMounted(() => {
-      init();
-    });
-    let $flickity = null;
+      init()
+    })
+    let $flickity = null
     /**
      * Initialize a new flickity and emit init event.
      */
     const init = () => {
-      $flickity = new Flickity(el.value, props.options);
-      emit('init', $flickity);
+      $flickity = new Flickity(el.value, props.options)
+      emit('init', $flickity)
     }
 
     /**
@@ -32,7 +32,7 @@ export default {
      * @return {Flickity}
      */
     const flickity = () => {
-      return $flickity;
+      return $flickity
     }
 
     /**
@@ -47,7 +47,7 @@ export default {
      * @param {boolean} isInstant
      */
     const select = (index, isWrapped, isInstant) => {
-      $flickity.select(index, isWrapped, isInstant);
+      $flickity.select(index, isWrapped, isInstant)
     }
 
     /**
@@ -57,7 +57,7 @@ export default {
      * @param {boolean} isInstant
      */
     const next = (isWrapped, isInstant) => {
-      $flickity.next(isWrapped, isInstant);
+      $flickity.next(isWrapped, isInstant)
     }
 
     /**
@@ -67,7 +67,7 @@ export default {
      * @param {boolean} isInstant
      */
     const previous = (isWrapped, isInstant) => {
-      $flickity.previous(isWrapped, isInstant);
+      $flickity.previous(isWrapped, isInstant)
     }
 
     /**
@@ -78,7 +78,7 @@ export default {
      * @param {boolean} isInstant
      */
     const selectCell = (value, isWrapped, isInstant) => {
-      $flickity.selectCell(value, isWrapped, isInstant);
+      $flickity.selectCell(value, isWrapped, isInstant)
     }
 
     /**
@@ -89,14 +89,14 @@ export default {
      * Trigger a resize event
      */
     const resize = () => {
-      $flickity.resize();
+      $flickity.resize()
     }
 
     /**
      * Trigger a reposition event
      */
     const reposition = () => {
-      $flickity.reposition();
+      $flickity.reposition()
     }
 
     /**
@@ -109,7 +109,7 @@ export default {
      * @param {array|HTMLElement|NodeList} elements
      */
     const prepend = (elements) => {
-      $flickity.prepend(elements);
+      $flickity.prepend(elements)
     }
 
     /**
@@ -118,7 +118,7 @@ export default {
      * @param {array|HTMLElement|NodeList} elements
      */
     const append = (elements) => {
-      $flickity.append(elements);
+      $flickity.append(elements)
     }
 
     /**
@@ -128,7 +128,7 @@ export default {
      * @param {number} index
      */
     const insert = (elements, index) => {
-      $flickity.insert(elements, index);
+      $flickity.insert(elements, index)
     }
 
     /**
@@ -137,7 +137,7 @@ export default {
      * @param {array|HTMLElement|NodeList} elements
      */
     const remove = (elements) => {
-      $flickity.remove(elements);
+      $flickity.remove(elements)
     }
 
     /**
@@ -148,36 +148,36 @@ export default {
      * Trigger a playPlayer event
      */
     const playPlayer = () => {
-      $flickity.playPlayer();
+      $flickity.playPlayer()
     }
 
     /**
      * Trigger a stopPlayer event
      */
     const stopPlayer = () => {
-      $flickity.stopPlayer();
+      $flickity.stopPlayer()
     }
 
     /**
      * Trigger a pausePlayer event
      */
     const pausePlayer = () => {
-      $flickity.pausePlayer();
+      $flickity.pausePlayer()
     }
 
     /**
      * Trigger a unpausePlayer event
      */
     const unpausePlayer = () => {
-      $flickity.unpausePlayer();
+      $flickity.unpausePlayer()
     }
 
     /**
      * Trigger a rerender event
      */
     const rerender = () => {
-      $flickity.destroy();
-      this.init();
+      $flickity.destroy()
+      this.init()
     }
 
     /**
@@ -188,14 +188,14 @@ export default {
      * Destroy the flickity instance
      */
     const destroy = () => {
-      $flickity.destroy();
+      $flickity.destroy()
     }
 
     /**
      * Trigger a rerender event
      */
     const reloadCells = () => {
-      $flickity.reloadCells();
+      $flickity.reloadCells()
     }
 
     /**
@@ -204,7 +204,7 @@ export default {
      * @return {array}
      */
     const getCellElements = () => {
-      return $flickity.getCellElements();
+      return $flickity.getCellElements()
     }
 
     /**
@@ -213,9 +213,9 @@ export default {
      * @return {Flickity}
      */
     const data = () => {
-      const Flickity = require('flickity');
+      const Flickity = require('flickity')
 
-      return Flickity.data(this.$el);
+      return Flickity.data(this.$el)
     }
 
     /**
@@ -229,7 +229,7 @@ export default {
      * @param {function} listener
      */
     const on = (eventName, listener) => {
-      $flickity.on(eventName, listener);
+      $flickity.on(eventName, listener)
     }
 
     /**
@@ -239,7 +239,7 @@ export default {
      * @param {function} listener
      */
     const off = (eventName, listener) => {
-      $flickity.off(eventName, listener);
+      $flickity.off(eventName, listener)
     }
 
     /**
@@ -249,7 +249,7 @@ export default {
      * @param {function} listener
      */
     const once = (eventName, listener) => {
-      $flickity.once(eventName, listener);
+      $flickity.once(eventName, listener)
     }
 
     /**
@@ -262,7 +262,7 @@ export default {
      * @return {HTMLElement}
      */
     const selectedElement = () => {
-      return $flickity.selectedElement;
+      return $flickity.selectedElement
     }
 
     /**
@@ -271,7 +271,7 @@ export default {
      * @return {array}
      */
     const selectedElements = () => {
-      return $flickity.selectedElements;
+      return $flickity.selectedElements
     }
 
     /**
@@ -280,7 +280,7 @@ export default {
      * @return {number}
      */
     const selectedIndex = () => {
-      return $flickity.selectedIndex;
+      return $flickity.selectedIndex
     }
 
     /**
@@ -289,7 +289,7 @@ export default {
      * @return {array}
      */
     const cells = () => {
-      return $flickity.cells;
+      return $flickity.cells
     }
 
     /**
@@ -297,24 +297,24 @@ export default {
      *
      * @return {array}
      */
-    const slides= () => {
-      return $flickity.slides;
+    const slides = () => {
+      return $flickity.slides
     }
 
     /**
      * Disable dragging of slider
      */
     const disableDrag = () => {
-      $flickity.options.draggable = false;
-      $flickity.updateDraggable();
+      $flickity.options.draggable = false
+      $flickity.updateDraggable()
     }
 
     /**
      * Enable dragging of slider
      */
     const enableDrag = () => {
-      $flickity.options.draggable = true;
-      $flickity.updateDraggable();
+      $flickity.options.draggable = true
+      $flickity.updateDraggable()
     }
 
     return {
@@ -351,8 +351,8 @@ export default {
       enableDrag,
       el,
     }
-  }
+  },
 }
 </script>
 
-<style src='flickity/dist/flickity.css'></style>
+<style src="flickity/dist/flickity.css"></style>

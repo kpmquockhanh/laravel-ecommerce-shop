@@ -3,34 +3,61 @@
     <div class="container relative">
       <div class="row">
         <div class="col-md-12">
-          <CartTable/>
+          <CartTable />
 
           <div class="row mb-50">
             <div class="col-md-5 col-sm-12">
               <div class="coupon">
-                <input type="text" name="coupon_code" id="coupon_code" class="input-text form-control" value placeholder="Coupon code">
-                <input type="submit" name="apply_coupon" class="btn btn-lg btn-stroke" value="Apply">
+                <input
+                  type="text"
+                  name="coupon_code"
+                  id="coupon_code"
+                  class="input-text form-control"
+                  value
+                  placeholder="Coupon code"
+                />
+                <input
+                  type="submit"
+                  name="apply_coupon"
+                  class="btn btn-lg btn-stroke"
+                  value="Apply"
+                />
               </div>
             </div>
 
             <div class="col-md-7">
               <div class="actions d-flex justify-content-end">
-                <input type="submit" name="update_cart" value="Update Cart" class="btn btn-lg btn-stroke">
+                <input
+                  type="submit"
+                  name="update_cart"
+                  value="Update Cart"
+                  class="btn btn-lg btn-stroke"
+                />
                 <div class="wc-proceed-to-checkout">
-                  <a href="checkout.html" class="btn btn-lg btn-dark"><span>proceed to checkout</span></a>
+                  <a href="checkout.html" class="btn btn-lg btn-dark"
+                    ><span>proceed to checkout</span></a
+                  >
                 </div>
               </div>
             </div>
           </div>
-
-        </div> <!-- end col -->
-      </div> <!-- end row -->
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
 
       <div class="row">
         <div class="col-md-6 shipping-calculator-form">
-          <h2 class="heading relative uppercase bottom-line full-grey mb-30">Calculate Shipping</h2>
+          <h2 class="heading relative uppercase bottom-line full-grey mb-30">
+            Calculate Shipping
+          </h2>
           <p class="form-row form-row-wide">
-            <select name="calc_shipping_country" id="calc_shipping_country" class="country_to_state" rel="calc_shipping_state">
+            <select
+              name="calc_shipping_country"
+              id="calc_shipping_country"
+              class="country_to_state"
+              rel="calc_shipping_state"
+            >
               <option>Select a country…</option>
               <option value="AF">Afghanistan</option>
               <option value="AX">Åland Islands</option>
@@ -163,7 +190,9 @@
               <option value="LT">Lithuania</option>
               <option value="LU">Luxembourg</option>
               <option value="MO">Macao</option>
-              <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+              <option value="MK">
+                Macedonia, the former Yugoslav Republic of
+              </option>
               <option value="MG">Madagascar</option>
               <option value="MW">Malawi</option>
               <option value="MY">Malaysia</option>
@@ -217,7 +246,9 @@
               <option value="RU">Russian Federation</option>
               <option value="RW">Rwanda</option>
               <option value="BL">Saint Barthélemy</option>
-              <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+              <option value="SH">
+                Saint Helena, Ascension and Tristan da Cunha
+              </option>
               <option value="KN">Saint Kitts and Nevis</option>
               <option value="LC">Saint Lucia</option>
               <option value="MF">Saint Martin (French part)</option>
@@ -238,7 +269,9 @@
               <option value="SB">Solomon Islands</option>
               <option value="SO">Somalia</option>
               <option value="ZA">South Africa</option>
-              <option value="GS">South Georgia and the South Sandwich Islands</option>
+              <option value="GS">
+                South Georgia and the South Sandwich Islands
+              </option>
               <option value="SS">South Sudan</option>
               <option value="ES">Spain</option>
               <option value="LK">Sri Lanka</option>
@@ -287,67 +320,86 @@
           <div class="row row-10">
             <div class="col-sm-6">
               <p class="form-row form-row-wide">
-                <input type="text" class="input-text" value placeholder="State / county" name="calc_shipping_state" id="calc_shipping_state">
+                <input
+                  type="text"
+                  class="input-text"
+                  value
+                  placeholder="State / county"
+                  name="calc_shipping_state"
+                  id="calc_shipping_state"
+                />
               </p>
             </div>
             <div class="col-sm-6">
               <p class="form-row form-row-wide">
-                <input type="text" class="input-text" value placeholder="Postcode" name="calc_shipping_postcode" id="calc_shipping_postcode">
+                <input
+                  type="text"
+                  class="input-text"
+                  value
+                  placeholder="Postcode"
+                  name="calc_shipping_postcode"
+                  id="calc_shipping_postcode"
+                />
               </p>
             </div>
           </div>
 
           <p>
-            <input type="submit" name="calc_shipping" value="Update Totals" class="btn btn-lg btn-stroke mt-10 mb-mdm-40">
+            <input
+              type="submit"
+              name="calc_shipping"
+              value="Update Totals"
+              class="btn btn-lg btn-stroke mt-10 mb-mdm-40"
+            />
           </p>
-        </div> <!-- end col shipping calculator -->
+        </div>
+        <!-- end col shipping calculator -->
 
         <div class="col-md-6">
           <div class="cart_totals">
-            <h2 class="heading relative bottom-line full-grey uppercase mb-30">Cart Totals</h2>
+            <h2 class="heading relative bottom-line full-grey uppercase mb-30">
+              Cart Totals
+            </h2>
 
             <table class="table shop_table">
               <tbody>
-              <tr class="cart-subtotal">
-                <th>Cart Subtotal</th>
-                <td>
-                  <span class="amount">$1490.00</span>
-                </td>
-              </tr>
-              <tr class="shipping">
-                <th>Shipping</th>
-                <td>
-                  <span>Free Shipping</span>
-                </td>
-              </tr>
-              <tr class="order-total">
-                <th>Order Total</th>
-                <td>
-                  <strong><span class="amount">$1490.00</span></strong>
-                </td>
-              </tr>
+                <tr class="cart-subtotal">
+                  <th>Cart Subtotal</th>
+                  <td>
+                    <span class="amount">$1490.00</span>
+                  </td>
+                </tr>
+                <tr class="shipping">
+                  <th>Shipping</th>
+                  <td>
+                    <span>Free Shipping</span>
+                  </td>
+                </tr>
+                <tr class="order-total">
+                  <th>Order Total</th>
+                  <td>
+                    <strong><span class="amount">$1490.00</span></strong>
+                  </td>
+                </tr>
               </tbody>
             </table>
-
           </div>
-        </div> <!-- end col cart totals -->
-
-      </div> <!-- end row -->
-
-
-    </div> <!-- end container -->
+        </div>
+        <!-- end col cart totals -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
   </section>
 </template>
 <script>
-import CartTable from "./CartTable.vue";
+import CartTable from './CartTable.vue'
 
 export default {
   name: 'ShoppingCart',
-  components: {CartTable},
+  components: { CartTable },
   setup() {
-    return {
-
-    }
+    return {}
   },
 }
 </script>

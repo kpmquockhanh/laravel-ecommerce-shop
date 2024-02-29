@@ -246,7 +246,7 @@ return [
                     'label' => 'Uploaded images',
                     'icon' => 'A',
 //                    'route' => 'admin.categories.list'
-                    'route' => 'admin.dashboard'
+                    'route' => 'admin.dashboard.uploaded_images'
                 ]
             ]
         ],

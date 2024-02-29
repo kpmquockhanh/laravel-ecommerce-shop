@@ -2,39 +2,49 @@
   <section v-if="product?.id" class="section-wrap pb-40 single-product">
     <div class="container-fluid semi-fluid">
       <div class="row">
-        <div class="col-md-6 col-xs-12 product-slider mb-60">
+        <div class="col-md-3 col-xs-12 product-slider">
           <CarouselComponent :items="originImages" ref="myCarousel">
             <template v-slot:default="slotProps">
-              <Image :src="slotProps.item.src" alt="" rounded/>
+              <SImage :src="slotProps.item.src" alt="" rounded />
             </template>
           </CarouselComponent>
           <CarouselComponent v-if="!originImages.length" :items="[1]">
-            <template v-slot:default="slotProps">
-              <img src="@images/placeholder.jpg" alt=""/>
+            <template>
+              <img src="@images/placeholder.jpg" alt="" />
             </template>
           </CarouselComponent>
-          <CarouselComponent :items="images" :number-item="4" class="gallery-thumbs"
-                             item-class="gallery-cell is-selected">
+          <CarouselComponent
+            :items="images"
+            :number-item="4"
+            class="gallery-thumbs"
+            item-class="gallery-cell is-selected"
+          >
             <template v-slot:default="slotProps">
-              <Image :src="slotProps.item.src" alt="" rounded @click="onChangePreview(slotProps.item)"/>
+              <SImage
+                :src="slotProps.item.src"
+                alt=""
+                rounded
+                @click="onChangePreview(slotProps.item)"
+              />
             </template>
-
           </CarouselComponent>
+        </div>
+        <!-- end col img slider -->
 
-        </div> <!-- end col img slider -->
-
-        <div class="col-md-6 col-xs-12 product-description-wrap">
+        <div class="col-md-9 col-xs-12 product-description-wrap">
           <h1 class="product-title">{{ product.title }}</h1>
           <span class="price">
             <del>
-              <span>{{ formatCurrency(product.price*1.3) }}</span>
+              <span>{{ formatCurrency(product.price * 1.3) }}</span>
             </del>
             <ins>
-              <span class="amount">{{ formatCurrency(product.price*1) }}</span>
+              <span class="amount">{{
+                formatCurrency(product.price * 1)
+              }}</span>
             </ins>
           </span>
           <span class="rating">
-            <a href="#">3 {{$t('reviews')}}</a>
+            <a href="#">3 {{ $t('reviews') }}</a>
           </span>
           <p class="short-description" v-html="product.description"></p>
 
@@ -58,7 +68,14 @@
             <span>Qty:</span>
 
             <div class="quantity buttons_added">
-              <input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text">
+              <input
+                type="number"
+                step="1"
+                min="0"
+                value="1"
+                title="Qty"
+                class="input-text qty text"
+              />
               <div class="quantity-adjust">
                 <a href="#" class="plus">
                   <i class="fa fa-angle-up"></i>
@@ -69,16 +86,26 @@
               </div>
             </div>
 
-            <a href="#" class="btn btn-dark btn-lg add-to-cart"><span>{{ $t('add_to_cart') }}</span></a>
+            <a href="#" class="btn btn-dark btn-lg add-to-cart"
+              ><span>{{ $t('add_to_cart') }}</span></a
+            >
 
-            <a href="#" class="product-add-to-wishlist"><i class="fa fa-heart"></i></a>
+            <a href="#" class="product-add-to-wishlist"
+              ><i class="fa fa-heart"></i
+            ></a>
           </div>
-
 
           <div class="product_meta">
             <span class="sku">SKU: <a href="#">111763</a></span>
-            <span class="brand_as">{{$t('category')}}: <a href="#">Men T-shirt</a></span>
-            <span class="posted_in">{{ $t('tags') }}: <a href="#">{{ product.categories?.map(c => c.name).join(', ') }}</a></span>
+            <span class="brand_as"
+              >{{ $t('category') }}: <a href="#">Men T-shirt</a></span
+            >
+            <span class="posted_in"
+              >{{ $t('tags') }}:
+              <a href="#">{{
+                product.categories?.map((c) => c.name).join(', ')
+              }}</a></span
+            >
           </div>
 
           <!-- Accordion -->
@@ -100,25 +127,33 @@
 
             <div class="panel">
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="plus">{{ $t('information') }}<span>&nbsp;</span>
+                <a
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#collapseTwo"
+                  class="plus"
+                  >{{ $t('information') }}<span>&nbsp;</span>
                 </a>
               </div>
               <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
                   <table class="table shop_attributes">
                     <tbody>
-                    <tr>
-                      <th>Size:</th>
-                      <td>EU 41 (US 8), EU 42 (US 9), EU 43 (US 10), EU 45 (US 12)</td>
-                    </tr>
-                    <tr>
-                      <th>Colors:</th>
-                      <td>Violet, Black, Blue</td>
-                    </tr>
-                    <tr>
-                      <th>Fabric:</th>
-                      <td>Cotton (100%)</td>
-                    </tr>
+                      <tr>
+                        <th>Size:</th>
+                        <td>
+                          EU 41 (US 8), EU 42 (US 9), EU 43 (US 10), EU 45 (US
+                          12)
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Colors:</th>
+                        <td>Violet, Black, Blue</td>
+                      </tr>
+                      <tr>
+                        <th>Fabric:</th>
+                        <td>Cotton (100%)</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -127,7 +162,12 @@
 
             <div class="panel">
               <div class="panel-heading">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="plus">{{ $t('reviews') }}<span>&nbsp;</span>
+                <a
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#collapseThree"
+                  class="plus"
+                  >{{ $t('reviews') }}<span>&nbsp;</span>
                 </a>
               </div>
               <div id="collapseThree" class="panel-collapse collapse">
@@ -137,15 +177,19 @@
                       <li>
                         <div class="review-body">
                           <div class="review-content">
-                            <p class="review-author"><strong>Alexander Samokhin</strong> -
-                              May 6, 2014 at 12:48 pm</p>
+                            <p class="review-author">
+                              <strong>Alexander Samokhin</strong> - May 6, 2014
+                              at 12:48 pm
+                            </p>
                             <div class="rating">
                               <a href="#"></a>
                             </div>
-                            <p>This template is so awesome. I didn’t expect so many features
-                              inside. E-commerce pages
-                              are very useful, you can launch your online store in few
-                              seconds. I will rate 5 stars.</p>
+                            <p>
+                              This template is so awesome. I didn’t expect so
+                              many features inside. E-commerce pages are very
+                              useful, you can launch your online store in few
+                              seconds. I will rate 5 stars.
+                            </p>
                           </div>
                         </div>
                       </li>
@@ -153,28 +197,32 @@
                       <li>
                         <div class="review-body">
                           <div class="review-content">
-                            <p class="review-author"><strong>Christopher Robins</strong> -
-                              May 6, 2014 at 12:48 pm</p>
+                            <p class="review-author">
+                              <strong>Christopher Robins</strong> - May 6, 2014
+                              at 12:48 pm
+                            </p>
                             <div class="rating">
                               <a href="#"></a>
                             </div>
-                            <p>This template is so awesome. I didn’t expect so many features
-                              inside. E-commerce pages
-                              are very useful, you can launch your online store in few
-                              seconds. I will rate 5 stars.</p>
+                            <p>
+                              This template is so awesome. I didn’t expect so
+                              many features inside. E-commerce pages are very
+                              useful, you can launch your online store in few
+                              seconds. I will rate 5 stars.
+                            </p>
                           </div>
                         </div>
                       </li>
-
                     </ul>
-                  </div> <!--  end reviews -->
+                  </div>
+                  <!--  end reviews -->
                 </div>
               </div>
             </div>
           </div>
 
           <div class="socials-share clearfix">
-            <span>{{$t('share')}}:</span>
+            <span>{{ $t('share') }}:</span>
             <div class="social-icons nobase">
               <a href="#"><i class="fa fa-twitter"></i></a>
               <a href="#"><i class="fa fa-facebook"></i></a>
@@ -182,39 +230,48 @@
               <a href="#"><i class="fa fa-instagram"></i></a>
             </div>
           </div>
-        </div> <!-- end col product description -->
-      </div> <!-- end row -->
-
-    </div> <!-- end container -->
+        </div>
+        <!-- end col product description -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
   </section>
-  <ProductRelated v-if="product?.id" :product-id="product.id"/>
+  <ProductRelated v-if="product?.id" :product-id="product.id" />
 </template>
 <script>
-import {useRoute} from "vue-router";
-import {computed, onMounted, ref, watch} from "vue";
-import get from "lodash/get";
-import {doGet} from "@core/http";
-import Flickity from "./Flicktity.vue";
-import Image from "../frontend/components/core/Image.vue";
-import CarouselComponent from "./Carousel.vue";
-import ProductRelated from "../frontend/ProductRelated.vue";
-import {useProduct} from "../../js/composables/product";
-import {formatCurrency} from "../../js/utils";
+import { computed, onMounted, ref } from 'vue'
+import get from 'lodash/get'
+import SImage from '../frontend/components/core/Image.vue'
+import CarouselComponent from './Carousel.vue'
+import ProductRelated from '../frontend/ProductRelated.vue'
+import { useProduct } from '../../js/composables/product'
+import { formatCurrency } from '../../js/utils'
 
 export default {
-  name: "ProductDetail",
-  methods: {formatCurrency},
-  components: {ProductRelated, CarouselComponent, Image, Flickity},
+  name: 'ProductDetail',
+  methods: { formatCurrency },
+  components: { ProductRelated, CarouselComponent, SImage },
   setup() {
-    const {product, fetchProduct, slug} = useProduct()
+    const { product, fetchProduct, slug } = useProduct()
     const myCarousel = ref(null)
-    const images = computed(() => get(product.value, 'images', []).filter((image) => !image.src.includes('origin') && !image.is_thumbnail))
-    const originImages = computed(() => get(product.value, 'images', []).filter((image) => image.src.includes('origin')))
+    const images = computed(() =>
+      get(product.value, 'images', []).filter(
+        (image) => !image.src.includes('origin')
+      )
+    )
+    const originImages = computed(() =>
+      get(product.value, 'images', []).filter(
+        (image) => image.src.includes('origin') || image.is_thumbnail
+      )
+    )
     const onChangePreview = (image) => {
       const split = image.src.split('/')
       const origin = split[split.length - 1]
       const timestamp = origin.split('-')[0]
-      const originImageIndex = originImages.value.findIndex((image) => image.src.includes(timestamp))
+      const originImageIndex = originImages.value.findIndex(
+        (image) => image.src.includes(timestamp) || image.is_thumbnail
+      )
       if (originImageIndex > -1 && myCarousel.value) {
         myCarousel.value.slideTo(originImageIndex)
       }
@@ -230,8 +287,6 @@ export default {
       onChangePreview,
       myCarousel,
     }
-
   },
 }
-
 </script>

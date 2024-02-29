@@ -1,0 +1,12 @@
+# Ignore artifacts:
+build
+coverage
+storage
+public/backend
+public/floara
+**/*.min.*
+**/sliders.css
+**/font-icons.css
+gmap3.js
+**/plugin.js
+twitterFetcher_min.js

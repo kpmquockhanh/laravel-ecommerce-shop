@@ -2,7 +2,7 @@
   <tr class="cart_item">
     <td class="product-thumbnail">
       <a href="#">
-        <img src="img/shop/shop_item_3.jpg" alt="">
+        <img src="@images_v2/img/shop/shop_item_3.jpg" alt="" />
       </a>
     </td>
     <td class="product-name">
@@ -17,7 +17,14 @@
     </td>
     <td class="product-quantity">
       <div class="quantity buttons_added">
-        <input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text">
+        <input
+          type="number"
+          step="1"
+          min="0"
+          value="1"
+          title="Qty"
+          class="input-text qty text"
+        />
         <div class="quantity-adjust">
           <a href="#" class="plus">
             <i class="fa fa-angle-up"></i>
@@ -40,6 +47,6 @@
 </template>
 <script>
 export default {
-  name: 'CartItemDetail'
+  name: 'CartItemDetail',
 }
 </script>

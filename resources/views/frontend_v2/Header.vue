@@ -1,23 +1,29 @@
 <template>
   <header class="nav-type-1">
     <!-- Fullscreen search -->
-    <div class="search-wrap" :class="{'d-block': isOpenSearch}">
+    <div class="search-wrap" :class="{ 'd-block': isOpenSearch }">
       <div class="search-inner">
         <div class="search-cell">
           <div class="search-field-holder" ref="target">
             <input
-                v-model="searchString"
-                type="search"
-                class="form-control main-search-input"
-                :placeholder="$t('search_for')"
-                ref="input"
-                @keyup.esc="isOpenSearch = false"
-                @keyup.enter="onSubmitSearch">
-            <i class="ui-close search-close" id="search-close" @click="isOpenSearch = false"></i>
+              v-model="searchString"
+              type="search"
+              class="form-control main-search-input"
+              :placeholder="$t('search_for')"
+              ref="input"
+              @keyup.esc="isOpenSearch = false"
+              @keyup.enter="onSubmitSearch"
+            />
+            <i
+              class="ui-close search-close"
+              id="search-close"
+              @click="isOpenSearch = false"
+            ></i>
           </div>
         </div>
       </div>
-    </div> <!-- end fullscreen search -->
+    </div>
+    <!-- end fullscreen search -->
     <!-- Top Bar -->
     <div class="top-bar hidden-xs">
       <div class="container">
@@ -33,25 +39,42 @@
             <!--              </div>-->
             <!--            </li>-->
             <li class="language">
-              {{ $t('language') }}: <a href="#" class="uppercase">{{ current }}<i class="fa fa-angle-down"></i></a>
+              {{ $t('language') }}:
+              <a href="#" class="uppercase"
+                >{{ current }}<i class="fa fa-angle-down"></i
+              ></a>
               <div class="language-dropdown">
                 <ul>
-                  <li><a href="#" @click.prevent="onChangeLocale('en')">English</a></li>
-                  <li><a href="#" @click.prevent="onChangeLocale('vi')">Tiếng Việt</a></li>
+                  <li>
+                    <a href="#" @click.prevent="onChangeLocale('en')"
+                      >English</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" @click.prevent="onChangeLocale('vi')"
+                      >Tiếng Việt</a
+                    >
+                  </li>
                 </ul>
               </div>
             </li>
           </ul>
 
           <ul class="top-bar-acc">
-            <li class="top-bar-link"><a href="#">{{ $t('my_wishlist') }}</a></li>
-            <li class="top-bar-link"><a href="#">{{ $t('new_letters') }}</a></li>
-            <li class="top-bar-link"><a href="#">{{ $t('login') }}</a></li>
+            <li class="top-bar-link">
+              <a href="#">{{ $t('my_wishlist') }}</a>
+            </li>
+            <li class="top-bar-link">
+              <a href="#">{{ $t('new_letters') }}</a>
+            </li>
+            <li class="top-bar-link">
+              <a href="#">{{ $t('login') }}</a>
+            </li>
           </ul>
-
         </div>
       </div>
-    </div> <!-- end top bar -->
+    </div>
+    <!-- end top bar -->
 
     <nav class="navbar navbar-static-top">
       <div class="navigation" id="sticky-nav">
@@ -62,12 +85,20 @@
               <div class="logo-container">
                 <div class="logo-wrap">
                   <a href="/" @click.prevent="routeToHome">
-                    <img class="logo-dark" src="@assets/v2/img/logo_dark.png" alt="logo">
+                    <img
+                      class="logo-dark"
+                      src="@assets/v2/img/logo_dark.png"
+                      alt="logo"
+                    />
                   </a>
                 </div>
               </div>
-              <button type="button" class="navbar-toggle" data-toggle="collapse"
-                      data-target="#navbar-collapse">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#navbar-collapse"
+              >
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -83,13 +114,19 @@
                   </div>
                 </div>
               </div>
-            </div> <!-- end navbar-header -->
+            </div>
+            <!-- end navbar-header -->
 
             <div class="nav-wrap flex-child">
-              <div class="collapse navbar-collapse text-center show" id="navbar-collapse">
+              <div
+                class="collapse navbar-collapse text-center show"
+                id="navbar-collapse"
+              >
                 <ul class="nav navbar-nav">
                   <li>
-                    <a href="#" @click.prevent="routeToHome">{{ $t('home') }}</a>
+                    <a href="#" @click.prevent="routeToHome">{{
+                      $t('home')
+                    }}</a>
                   </li>
                   <!--                  <li class="dropdown">-->
                   <!--                    <a href="#">Pages</a>-->
@@ -196,16 +233,22 @@
                   <!-- Mobile search -->
                   <li id="mobile-search" class="hidden-lg hidden-md">
                     <form method="get" class="mobile-search">
-                      <input type="search" class="form-control" :placeholder="$t('search')+'...'">
+                      <input
+                        type="search"
+                        class="form-control"
+                        :placeholder="$t('search') + '...'"
+                      />
                       <button type="submit" class="search-button">
                         <i class="fa fa-search"></i>
                       </button>
                     </form>
                   </li>
-
-                </ul> <!-- end menu -->
-              </div> <!-- end collapse -->
-            </div> <!-- end col -->
+                </ul>
+                <!-- end menu -->
+              </div>
+              <!-- end collapse -->
+            </div>
+            <!-- end col -->
 
             <div class="flex-child flex-right nav-right hidden-sm hidden-xs">
               <ul>
@@ -213,42 +256,49 @@
                 <!--                  <a href="#">{{ $t('my_account') }}</a>-->
                 <!--                </li>-->
                 <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
-                  <a href="#" class="nav-search search-trigger" @click="isOpenSearch = true">
+                  <a
+                    href="#"
+                    class="nav-search search-trigger"
+                    @click="isOpenSearch = true"
+                  >
                     <i class="fa fa-search"></i>
                   </a>
                 </li>
                 <li class="nav-cart">
-                  <NavCart/>
+                  <NavCart />
                 </li>
               </ul>
             </div>
-
-          </div> <!-- end row -->
-        </div> <!-- end container -->
-      </div> <!-- end navigation -->
-    </nav> <!-- end navbar -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </div>
+      <!-- end navigation -->
+    </nav>
+    <!-- end navbar -->
   </header>
 </template>
 <script>
-import {useRouter} from "vue-router";
-import {useI18n} from "vue-i18n-lite";
-import NavCart from "./NavCart.vue";
-import {nextTick, ref, watch} from "vue";
-import {onClickOutside} from '@vueuse/core'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n-lite'
+import NavCart from './NavCart.vue'
+import { nextTick, ref, watch } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 
 export default {
   name: 'HeaderV2Type1',
-  components: {NavCart},
+  components: { NavCart },
   setup() {
-    const router = useRouter();
-    const i18n = useI18n();
-    const {current, changeLocale} = i18n
-    const target = ref(null);
+    const router = useRouter()
+    const i18n = useI18n()
+    const { current, changeLocale } = i18n
+    const target = ref(null)
     const routeToHome = () => {
       router.push({
         name: 'home',
       })
-    };
+    }
 
     const searchString = ref('')
 
@@ -263,25 +313,27 @@ export default {
       }
     })
 
-    const isOpenSearch = ref(false);
+    const isOpenSearch = ref(false)
 
     const input = ref(null)
     watch(isOpenSearch, (value) => {
       if (value) {
         nextTick(() => {
-          input.value.focus();
-        });
+          input.value.focus()
+        })
       }
     })
     const onSubmitSearch = () => {
-      router.push({
-        name: 'home',
-        query: {
-          q: searchString.value
-        }
-      }).then(() => {
-        isOpenSearch.value = false
-      })
+      router
+        .push({
+          name: 'home',
+          query: {
+            q: searchString.value,
+          },
+        })
+        .then(() => {
+          isOpenSearch.value = false
+        })
     }
     return {
       current,
@@ -292,7 +344,7 @@ export default {
       searchString,
       onSubmitSearch,
       input,
-    };
+    }
   },
 }
 </script>

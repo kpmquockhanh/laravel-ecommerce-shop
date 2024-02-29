@@ -1,18 +1,25 @@
 <template>
-    <div>
-        <img v-show="!isLoading && !isError" :class="[imgClass, {'rounded': rounded}]" :src="src" :alt="alt" @load="onLoaded" @error="onError">
-        <div v-if="isLoading && !noLoading" class="loading-image">
-            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-        </div>
-        <div v-if="isError" class="loading-image">Error image</div>
+  <div>
+    <img
+      v-show="!isLoading && !isError"
+      :class="[imgClass, { rounded: rounded }]"
+      :src="src"
+      :alt="alt"
+      @load="onLoaded"
+      @error="onError"
+    />
+    <div v-if="isLoading && !noLoading" class="loading-image">
+      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
     </div>
+    <div v-if="isError" class="loading-image">Error image</div>
+  </div>
 </template>
 
 <script>
-import {ref} from "vue";
+import { ref } from 'vue'
 
 export default {
-  name: "Image",
+  name: 'Image',
   props: {
     src: {
       type: String,
@@ -20,20 +27,20 @@ export default {
     },
     alt: {
       type: String,
-      default: ''
+      default: '',
     },
     imgClass: {
       type: String,
-      default: ''
+      default: '',
     },
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noLoading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props) {
     const isLoading = ref(true)
@@ -51,6 +58,6 @@ export default {
       isError,
       onError,
     }
-  }
+  },
 }
 </script>

@@ -2,13 +2,11 @@
   <div class="nav-cart-item clearfix">
     <div class="nav-cart-img">
       <a href="#">
-        <img src="@assets/v2/img/shop/shop_item_1.jpg" alt="">
+        <img src="@assets/v2/img/shop/shop_item_1.jpg" alt="" />
       </a>
     </div>
     <div class="nav-cart-title">
-      <a href="#">
-        Ladies Bag
-      </a>
+      <a href="#"> Ladies Bag </a>
       <div class="nav-cart-price">
         <span>1 x</span>
         <span>1250.00</span>
@@ -21,6 +19,6 @@
 </template>
 <script>
 export default {
-  name: 'CartItem'
+  name: 'CartItem',
 }
 </script>

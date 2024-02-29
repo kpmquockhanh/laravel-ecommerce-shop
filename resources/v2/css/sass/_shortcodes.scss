@@ -44,7 +44,7 @@
     z-index: 100;
     border: 2px solid #fff;
     border-radius: 50%;
-    @include transition ($all);
+    @include transition($all);
 
     &:hover {
       opacity: 1;
@@ -95,7 +95,7 @@
   width: 40px;
   height: 40px;
   opacity: 0;
-  @include transition ($all);
+  @include transition($all);
 }
 
 .flickity-prev-next-button,
@@ -122,7 +122,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform (translate(-50%, -50%));
+    @include transform(translate(-50%, -50%));
   }
 }
 
@@ -130,7 +130,6 @@
   width: auto;
   height: auto;
 }
-
 
 .owl-next:before,
 #flexslider .flex-direction-nav .flex-next:before,
@@ -212,7 +211,7 @@
   opacity: 0.5;
   margin: 0 5px;
   border: 2px solid #fff;
-  @include transition ($all);
+  @include transition($all);
   border-radius: 50%;
   background: transparent;
 }
@@ -269,7 +268,6 @@
   margin-top: 0;
 }
 
-
 /*-------------------------------------------------------*/
 /* Accordions and Toggles
 /*-------------------------------------------------------*/
@@ -279,8 +277,7 @@
     position: relative;
     padding: 0;
     border-radius: 0;
-    @include transition ($all);
-
+    @include transition($all);
 
     &:hover a {
       color: $main-color;
@@ -305,14 +302,14 @@
     }
 
     & > a.plus > span:after {
-      content: "";
+      content: '';
       display: block;
       width: 13px;
       height: 1px;
       position: absolute;
       top: 0;
       background-color: $text-color;
-      @include transform (rotate(-90deg));
+      @include transform(rotate(-90deg));
     }
   }
 
@@ -331,7 +328,7 @@
   margin-bottom: 0;
 }
 
-.accordion .panel-heading+.panel-collapse>.panel-body,
+.accordion .panel-heading + .panel-collapse > .panel-body,
 .panel-content {
   border-top-color: transparent;
   padding: 20px 0;
@@ -351,7 +348,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  @include transition ($all);
+  @include transition($all);
 }
 
 .accordion .panel-heading > a {
@@ -363,9 +360,9 @@
   padding: 14px 0;
 
   &:after {
-    font-family: "Icon54com";
+    font-family: 'Icon54com';
     position: absolute;
-    content: "\ebd0";
+    content: '\ebd0';
     right: 0;
     margin-top: 2px;
     color: $text-color;
@@ -373,7 +370,7 @@
   }
 
   &.active:after {
-    content: "\f0aa";
+    content: '\f0aa';
     color: $heading-color;
   }
 }
@@ -382,7 +379,6 @@
   padding: 20px 0 10px;
   border: none;
 }
-
 
 /*-------------------------------------------------------*/
 /* Tabs
@@ -393,20 +389,19 @@
   margin-bottom: -1px;
 }
 
-.nav.nav-tabs>li.active>a {
+.nav.nav-tabs > li.active > a {
   border: 1px solid $border-color;
   background-color: #fff;
   border-bottom: 2px solid transparent;
 }
 
-.nav.nav-tabs>li.active>a,
-.nav.nav-tabs>li.active>a:hover,
-.nav.nav-tabs>li.active>a:focus,
-.nav.nav-tabs>li>a:hover,
-.nav.nav-tabs>li>a:focus {
+.nav.nav-tabs > li.active > a,
+.nav.nav-tabs > li.active > a:hover,
+.nav.nav-tabs > li.active > a:focus,
+.nav.nav-tabs > li > a:hover,
+.nav.nav-tabs > li > a:focus {
   color: $heading-color;
 }
-
 
 .nav-tabs > li {
   margin-bottom: -2px;
@@ -436,7 +431,6 @@
   }
 }
 
-
 /*-------------------------------------------------------*/
 /* Buttons
 /*-------------------------------------------------------*/
@@ -445,7 +439,7 @@
   margin-bottom: 20px;
 }
 
-.section-buttons [class^="col"] a:last-child {
+.section-buttons [class^='col'] a:last-child {
   margin-bottom: 50px;
 }
 
@@ -459,7 +453,7 @@
   z-index: 1;
   border: none;
   border-radius: 0;
-  @include transition ($all);
+  @include transition($all);
   color: #fff;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -484,11 +478,11 @@
     background: $bg-dark;
     content: '';
     position: absolute;
-    @include transition ($all);
+    @include transition($all);
   }
 
   &:hover {
-    @include transition ($all);
+    @include transition($all);
     color: #fff;
 
     &:after {
@@ -508,11 +502,10 @@
   span {
     position: relative;
     z-index: 3;
-    @include transition (color .3s !important);
+    @include transition(color 0.3s !important);
   }
 
   &.btn-color {
-
     &:before {
       background-color: $main-color;
     }
@@ -546,7 +539,6 @@
     }
   }
 
-
   &.btn-stroke {
     background-color: transparent;
     color: $heading-color;
@@ -573,7 +565,7 @@
   }
 
   &.btn-white {
-    box-shadow: 1px 1.732px 3px 0px rgba( 0, 0, 0, .05 );
+    box-shadow: 1px 1.732px 3px 0px rgba(0, 0, 0, 0.05);
     color: $bg-dark;
 
     &:before {
@@ -638,7 +630,6 @@
   border-radius: 8px;
 }
 
-
 /*-------------------------------------------------------*/
 /* Social Icons
 /*-------------------------------------------------------*/
@@ -654,7 +645,7 @@
     line-height: 32px;
     text-align: center;
     font-size: 14px;
-    @include transition ($all);
+    @include transition($all);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 
@@ -687,19 +678,18 @@
   border-radius: 50%;
 }
 
-
 /*-------------------------------------------------------*/
 /* Form Elements
 /*-------------------------------------------------------*/
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-input[type="date"],
-input[type="search"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='url'],
+input[type='tel'],
+input[type='number'],
+input[type='date'],
+input[type='search'],
 select,
 textarea {
   height: 44px;
@@ -710,8 +700,8 @@ textarea {
   font-size: 15px;
   padding: 0 16px;
   border-radius: 0;
-  @include box-shadow (none);
-  @include transition ($all);
+  @include box-shadow(none);
+  @include transition($all);
 }
 
 textarea {
@@ -720,19 +710,19 @@ textarea {
   margin-bottom: 25px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="date"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="month"]:focus,
-input[type="week"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="time"]:focus,
-input[type="url"]:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='date']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='month']:focus,
+input[type='week']:focus,
+input[type='email']:focus,
+input[type='number']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='time']:focus,
+input[type='url']:focus,
 textarea:focus {
   border-color: $main-color;
   background-color: #fff;
@@ -740,7 +730,7 @@ textarea:focus {
   box-shadow: none !important;
 }
 
-input:not([type=checkbox]):not([type=radio]),
+input:not([type='checkbox']):not([type='radio']),
 textarea {
   -webkit-appearance: none;
 }
@@ -784,23 +774,22 @@ select::-ms-expand {
   display: none;
 }
 
-.row-12 input[type="text"],
-.row-12 input[type="email"] {
+.row-12 input[type='text'],
+.row-12 input[type='email'] {
   margin-bottom: 12px;
 }
-
 
 /* Checkboxes & Radio Buttons
 -------------------------------------------------------*/
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   display: none;
 }
 
-input[type="checkbox"] + label:before {
+input[type='checkbox'] + label:before {
   width: 17px;
   height: 17px;
-  content: "";
+  content: '';
   display: inline-block;
   font-size: 13px;
   margin: -4px 12px 0 0;
@@ -810,16 +799,16 @@ input[type="checkbox"] + label:before {
   border: 1px solid darken($border-color, 5%);
 }
 
-input[type="checkbox"]:checked + label:before {
-  content: "\f0c8";
-  font-family: "FontAwesome";
+input[type='checkbox']:checked + label:before {
+  content: '\f0c8';
+  font-family: 'FontAwesome';
   color: $heading-color;
   font-size: 9px;
   line-height: 16px;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type='checkbox'] + label,
+input[type='radio'] + label {
   cursor: pointer;
   margin-bottom: 0;
   text-transform: none;
@@ -833,13 +822,13 @@ input[type="radio"] + label {
   padding: 7px 0;
 }
 
-input[type="radio"] {
+input[type='radio'] {
   display: none;
 }
 
-input[type="radio"] + label:before {
+input[type='radio'] + label:before {
   display: inline-block;
-  content: "";
+  content: '';
   width: 17px;
   height: 17px;
   box-shadow: 0 0 0 1px #d4d4d4;
@@ -851,13 +840,13 @@ input[type="radio"] + label:before {
   margin-bottom: 0;
 }
 
-input[type="radio"]:checked + label:before  {
+input[type='radio']:checked + label:before {
   background-color: $bg-dark;
   border: 5px solid #fff;
   padding: 1px;
 }
 
-input[type="radio"]:focus {
+input[type='radio']:focus {
   outline: none;
 }
 
@@ -872,7 +861,6 @@ label {
 // Input Buttons
 input.btn,
 button.btn {
-
   &.btn-lg {
     padding: 0 34px;
     height: 44px;
@@ -885,7 +873,7 @@ button.btn {
   }
 
   &:hover {
-    background-color: darken( $main-color, 7% );
+    background-color: darken($main-color, 7%);
     color: #fff;
   }
 
@@ -905,7 +893,6 @@ button.btn {
   }
 }
 
-
 /*-------------------------------------------------------*/
 /* Lightboxes
 /*-------------------------------------------------------*/
@@ -922,7 +909,6 @@ button.btn {
   padding: 15px 30px;
 }
 
-
 /*-------------------------------------------------------*/
 /* Tables
 /*-------------------------------------------------------*/
@@ -931,17 +917,17 @@ table th {
   font-weight: normal;
 }
 
-.table>thead>tr>th,
-.table>tbody>tr>th,
-.table>tfoot>tr>th,
-.table>thead>tr>td,
-.table>tbody>tr>td,
-.table>tfoot>tr>td {
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
   border-top: 1px solid $border-color;
   padding: 10px;
 }
 
-.table>thead>tr>th {
+.table > thead > tr > th {
   border-bottom: none;
 }
 
@@ -950,16 +936,16 @@ table th {
 }
 
 .table-bordered,
-.table-bordered>thead>tr>th,
-.table-bordered>tbody>tr>th,
-.table-bordered>tfoot>tr>th,
-.table-bordered>thead>tr>td,
-.table-bordered>tbody>tr>td,
-.table-bordered>tfoot>tr>td {
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
   border: 1px solid $border-color;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
+.table-striped > tbody > tr:nth-of-type(odd) {
   background-color: $bg-light;
 }
 
@@ -997,7 +983,19 @@ table th {
   margin-top: 2px !important;
 }
 
-.alert-success { background-color: #dbfaeb; color: #158f54; }
-.alert-info { background-color: #dbeef2; color: #18869d; }
-.alert-warning { background-color: #f2ebd3; color: #916c46; }
-.alert-danger { background-color: #f9e0de; color: #a75a54; }
+.alert-success {
+  background-color: #dbfaeb;
+  color: #158f54;
+}
+.alert-info {
+  background-color: #dbeef2;
+  color: #18869d;
+}
+.alert-warning {
+  background-color: #f2ebd3;
+  color: #916c46;
+}
+.alert-danger {
+  background-color: #f9e0de;
+  color: #a75a54;
+}

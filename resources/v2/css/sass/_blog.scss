@@ -34,7 +34,6 @@
   }
 }
 
-
 .entry-wrap {
   position: relative;
   padding-top: 38px;
@@ -60,7 +59,6 @@
 }
 
 .blog-standard {
-
   .entry-item {
     margin-bottom: 50px;
     position: relative;
@@ -81,11 +79,9 @@
   padding-right: 3.2%;
 }
 
-
 /* Quote Post
 -------------------------------------------------------*/
 .entry .blockquote-style-1 {
-
   p > a {
     color: inherit;
 
@@ -100,7 +96,6 @@
   }
 }
 
-
 /* Video Post
 -------------------------------------------------------*/
 .entry-video iframe {
@@ -108,7 +103,6 @@
   display: block;
   border: 0;
 }
-
 
 /*-------------------------------------------------------*/
 /* Pagination
@@ -134,7 +128,7 @@
   margin: 0 3px;
   text-align: center;
   border: 2px solid $border-color;
-  @include transition ($all);
+  @include transition($all);
 }
 
 .pagination a {
@@ -157,7 +151,6 @@
   border-color: #000;
 }
 
-
 /*-------------------------------------------------------*/
 /* Sidebar
 /*-------------------------------------------------------*/
@@ -167,7 +160,6 @@
 }
 
 .sidebar {
-
   .widget-title {
     margin-bottom: 30px;
     font-size: 16px;
@@ -198,7 +190,7 @@
 .widget.categories ul li a {
   color: $text-color;
 
-  &:hover, {
+  &:hover {
     color: $main-color;
   }
 }
@@ -209,7 +201,6 @@
   color: $text-color;
 }
 
-
 /* Entry List
 -------------------------------------------------------*/
 
@@ -218,7 +209,6 @@
 }
 
 .entry-list {
-
   .entry-img {
     float: left;
     margin-right: 20px;
@@ -260,7 +250,7 @@
   }
 
   &.w-thumbs ul > li {
-    padding: 15px 0; 
+    padding: 15px 0;
   }
 }
 
@@ -271,7 +261,6 @@
     color: $text-color;
   }
 }
-
 
 /* Sidebar Search
 -------------------------------------------------------*/
@@ -293,7 +282,6 @@
   }
 }
 
-
 /* Tags
 -------------------------------------------------------*/
 .tags a {
@@ -313,7 +301,6 @@
     border-color: transparent;
   }
 }
-
 
 /*-------------------------------------------------------*/
 /* Blog Single
@@ -339,7 +326,6 @@
 }
 
 .socials-share {
-
   @include bp-md {
     text-align: left;
     margin-top: 15px;
@@ -383,7 +369,6 @@
   display: inline-block;
 }
 
-
 /* Comments
 /*-------------------------------------------------------*/
 .entry-comments .comment-avatar {
@@ -406,7 +391,7 @@
   display: inline-block;
 }
 
-.entry-comments span:last-of-type{
+.entry-comments span:last-of-type {
   margin-bottom: 10px;
 }
 

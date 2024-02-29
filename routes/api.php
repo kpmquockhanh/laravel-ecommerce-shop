@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::prefix('/products')->group(function () {
     Route::get('/', function (Request $request) {
-        $products = \App\Models\Product::with(['categories', 'images']);
+        $products = \App\Models\Product::with(['categories', 'images'])->where('active', 1);
         if ($request->category) {
             $products->whereHas('categories', function ($query) {
                 $query->where('categories.id', request()->query('category'));
+
             });
         }
 

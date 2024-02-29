@@ -1,4 +1,3 @@
-
 /*-------------------------------------------------------*/
 /* Typography
 /*-------------------------------------------------------*/
@@ -9,7 +8,12 @@ ul {
   padding: 0;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $heading-font;
   margin-top: 0;
   color: $heading-color;
@@ -19,18 +23,40 @@ h1,h2,h3,h4,h5,h6 {
   letter-spacing: 0.05em;
 }
 
-h1 { font-size: 32px; }
-h2 { font-size: 24px; }
-h3 { font-size: 22px; }
-h4 { font-size: 20px; }
-h5 { font-size: 18px; }
-h6 { font-size: 16px; }
+h1 {
+  font-size: 32px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 22px;
+}
+h4 {
+  font-size: 20px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 16px;
+}
 
-h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+h1 > a,
+h2 > a,
+h3 > a,
+h4 > a,
+h5 > a,
+h6 > a {
   color: inherit;
 }
 
-h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
   color: $heading-color;
   font-size: 85%;
   font-weight: bold;
@@ -66,7 +92,7 @@ a {
   text-decoration: none;
   color: $main-color;
   outline: none;
-  @include transition (color .1s ease-in-out);
+  @include transition(color 0.1s ease-in-out);
 
   &:hover {
     text-decoration: none;
@@ -81,7 +107,8 @@ a {
   }
 }
 
-b, strong {
+b,
+strong {
   color: $heading-color;
 }
 
@@ -98,7 +125,7 @@ p {
 
 .bottom-line {
   &:after {
-    content: "";
+    content: '';
     display: block;
     width: 46px;
     border-bottom: 2px solid $main-color;
@@ -120,9 +147,7 @@ p {
     border-color: $border-color;
     margin-top: 16px;
   }
-
 }
-
 
 @media (min-width: 768px) {
   .lead {
@@ -164,7 +189,6 @@ blockquote {
   & span {
     color: $main-color;
   }
-
 }
 
 .blockquote-style-2 {
@@ -224,7 +248,7 @@ blockquote {
 }
 
 .bullets li:before {
-  content: "\2022";
+  content: '\2022';
   font-size: 18px;
   position: absolute;
   left: 0;
@@ -250,12 +274,10 @@ ol.numbers {
   padding-left: 20px;
 }
 
-.columns [class^="col"],
-.section-headings [class^="col"] {
+.columns [class^='col'],
+.section-headings [class^='col'] {
   margin-bottom: 40px;
 }
-
-
 
 .widget-title {
   font-size: 16px;

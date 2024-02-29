@@ -1,15 +1,16 @@
 <template>
   <div class="pagination-wrap">
-    <p class="result-count">{{$t('showing')}}: {{ total < perPage ? total : perPage }} {{ $t('of') }} {{ total }} {{$t('results')}}</p>
+    <p class="result-count">
+      {{ $t('showing') }}: {{ total < perPage ? total : perPage }}
+      {{ $t('of') }} {{ total }} {{ $t('results') }}
+    </p>
     <nav class="pagination right clearfix">
-
       <a href="#"><i class="fa fa-angle-left"></i></a>
       <template v-for="n in pageNumber">
-        <span v-if="currentPage === n" class="page-numbers current">{{ n }}</span>
-        <a
-            v-else
-            href="#"
-            @click="onChangePage(n)">{{ n }}</a>
+        <span v-if="currentPage === n" class="page-numbers current">{{
+          n
+        }}</span>
+        <a v-else href="#" @click="onChangePage(n)">{{ n }}</a>
       </template>
 
       <a href="#"><i class="fa fa-angle-right"></i></a>
@@ -17,7 +18,7 @@
   </div>
 </template>
 <script>
-import {computed} from "vue";
+import { computed } from 'vue'
 
 export default {
   name: 'Pagination',
@@ -36,7 +37,7 @@ export default {
     },
   },
   emits: ['update:currentPage'],
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const pageNumber = computed(() => {
       return Math.ceil(props.total / props.perPage)
     })
@@ -47,6 +48,6 @@ export default {
       pageNumber,
       onChangePage,
     }
-  }
+  },
 }
 </script>

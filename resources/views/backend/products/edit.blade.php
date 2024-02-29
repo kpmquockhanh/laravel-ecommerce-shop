@@ -16,11 +16,9 @@
     />
 @stop
 
-
-
 @section('content')
     <div class="content">
-        <form method="post" id="form" action="{{route('admin.products.update')}}" class="form-horizontal"
+        <form method="post" id="form" action="{{route('admin.products.update', ['id' => $product->id])}}" class="form-horizontal"
               enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-8">
@@ -30,7 +28,6 @@
                         </div>
                         <div class="card-body ">
                             @csrf()
-                            <input type="text" name="id" class="form-control" value="{{$product->id}}" hidden>
                             <div class="row pb-2">
                                 @if ($errors->has('title'))
                                     <div class="text-danger col-md-12 offset-md-2">
@@ -63,7 +60,7 @@
                             <div class="row">
                                 <label class="col-sm-2 col-form-label">Categories</label>
                                 <div class="col-lg-5 col-md-6 col-sm-3">
-                                    <select class="selectpicker" data-style="btn btn-info btn-round" multiple
+                                    <select class="selectpicker" data-style="btn btn-info" multiple
                                             title="Select" data-size="7" name="categories[]">
                                         @foreach ($categories as $category)
                                             <option value="{{$category->id}}"
@@ -95,11 +92,13 @@
                                     <div class="row">
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
                                             <div class="col-sm-4 mb-2 image-item">
-                                                <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe" data-id="{{$image->id}}">
-                                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
-                                                        data-id="{{$image->id}}" title="" style="right: 16px; top: 8px;">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
+                                                <div class="w-100 position-relative">
+                                                    <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe" data-id="{{$image->id}}" class="w-100">
+                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
+                                                            data-id="{{$image->id}}" title="" style="right: 8px; top: 8px;">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>

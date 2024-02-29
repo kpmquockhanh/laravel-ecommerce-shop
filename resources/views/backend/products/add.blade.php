@@ -47,16 +47,26 @@
                                     <strong>{{ $errors->first('quantity') }}</strong>
                                 </div>
                             @endif
-                            <div class="row">
+                            <div class="row pb-2">
                                 <label class="col-sm-2 col-form-label">Price</label>
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input type="number" name="price" class="form-control" value="{{old('price')}}">
-
                                     </div>
                                 </div>
+
                                 <label class="col-sm-2 col-form-label">Quantity</label>
                                 <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <input type="number" name="quantity" class="form-control"
+                                               value="{{old('quantity')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">Attributes</label>
+                                <div class="col-lg-5 col-md-6 col-sm-3">
                                     <div class="form-group">
                                         <input type="number" name="quantity" class="form-control"
                                                value="{{old('quantity')}}">
@@ -134,8 +144,6 @@
                 language: 'vi'
             })
         });
-
-        $("div#kpm").dropzone({ url: "/file/upload/" })
     </script>
 
 @stop

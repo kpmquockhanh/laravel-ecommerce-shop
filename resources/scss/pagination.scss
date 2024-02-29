@@ -24,7 +24,7 @@
       height: 10px;
       border-radius: 5px;
       background: grey;
-      transition: width .3s ease-in-out;
+      transition: width 0.3s ease-in-out;
       cursor: pointer;
       button {
         display: inline-block;
@@ -34,12 +34,10 @@
         background: orange;
         width: 15px;
       }
-      &.active
-      {
-        background: #FFD500;
+      &.active {
+        background: #ffd500;
         width: 38px;
       }
     }
   }
 }
-
