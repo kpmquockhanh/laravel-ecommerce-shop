@@ -32,3 +32,6 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 USER $user
+
+EXPOSE 9000
+CMD ["php-fpm"]
