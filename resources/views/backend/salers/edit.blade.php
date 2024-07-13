@@ -63,7 +63,7 @@
                                 </div>
                             </div>
 
-                            @can(\App\enums\PermissionEnum::MANAGE_ACCOUNTS->value)
+                            @can(\App\Enums\PermissionEnum::MANAGE_ACCOUNTS->value)
                                 <div class="row">
                                     @if ($errors->has('status'))
                                         <div class="text-danger col-md-12 offset-md-2">
@@ -98,10 +98,11 @@
                                     <div class="col-sm-10">
                                         <div class="form-group">
                                             <div class="row no-gutters py-2">
-                                                @foreach(\App\enums\RoleEnum::cases() as $role)
+                                                @foreach(\App\Enums\RoleEnum::cases() as $role)
                                                     <div class="form-check col-sm-6">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="{{$role->value}}"
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   value="{{$role->value}}"
                                                                    name="roles[]"
                                                                 {{in_array($role->value, $account->roles->pluck('name')->toArray()) ? 'checked' : ''}}>
                                                             <span class="form-check-sign"></span>

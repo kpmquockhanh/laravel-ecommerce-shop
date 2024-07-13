@@ -19,30 +19,30 @@ Route::prefix('admin')->group(function () {
 
         // Products
         Route::prefix('products')->group(function () {
-            Route::middleware('can:'.\App\Enums\PermissionEnum::VIEW_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::VIEW_PRODUCT->value)
                 ->get('/', [App\Http\Controllers\AdminProductController::class, 'index'])
                 ->name('admin.products.list');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_PRODUCT->value)
                 ->get('create', [App\Http\Controllers\AdminProductController::class, 'create'])
                 ->name('admin.products.create');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_PRODUCT->value)
                 ->post('create', [App\Http\Controllers\AdminProductController::class, 'store']);
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_PRODUCT->value)
                 ->get('edit/{id}', [App\Http\Controllers\AdminProductController::class, 'edit'])
                 ->name('admin.products.edit');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_PRODUCT->value)
                 ->post('upload/{id}', [App\Http\Controllers\AdminProductController::class, 'upload'])
                 ->name('admin.products.upload');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_PRODUCT->value)
                 ->post('update/{id}', [App\Http\Controllers\AdminProductController::class, 'update'])
                 ->name('admin.products.update');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::DELETE_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::DELETE_PRODUCT->value)
                 ->post('remove', [App\Http\Controllers\AdminProductController::class, 'delete'])
                 ->name('admin.products.remove');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_PRODUCT->value)
                 ->post('delete-image', [App\Http\Controllers\AdminProductController::class, 'deleteImage'])
                 ->name('admin.products.delete_image');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_PRODUCT->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_PRODUCT->value)
                 ->post('change-status', [App\Http\Controllers\AdminProductController::class, 'changeShowStatus'])
                 ->name('admin.products.change-status');
 
@@ -66,38 +66,38 @@ Route::prefix('admin')->group(function () {
 
         // BLogs
         Route::prefix('blogs')->group(function () {
-            Route::middleware('can:'.\App\Enums\PermissionEnum::VIEW_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::VIEW_BLOG->value)
                 ->get('/', [App\Http\Controllers\BlogController::class, 'index'])
                 ->name('admin.blogs.list');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_BLOG->value)
                 ->get('create', [App\Http\Controllers\BlogController::class, 'create'])
                 ->name('admin.blogs.create');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_BLOG->value)
                 ->post('create', [App\Http\Controllers\BlogController::class, 'store']);
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_BLOG->value)
                 ->get('edit/{id}', [App\Http\Controllers\BlogController::class, 'edit'])
                 ->name('admin.blogs.edit');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_BLOG->value)
                 ->post('update', [App\Http\Controllers\BlogController::class, 'update'])
                 ->name('admin.blogs.update');
-            Route::middleware('can:'.\App\Enums\PermissionEnum::DELETE_BLOG->value)
+            Route::middleware('can:'. \App\Enums\PermissionEnum::DELETE_BLOG->value)
                 ->post('remove', [App\Http\Controllers\BlogController::class, 'delete'])
                 ->name('admin.products.remove');
 
             // Blog Categories
             Route::prefix('categories')->group(function () {
-                Route::middleware('can:'.\App\Enums\PermissionEnum::VIEW_BLOG_CATEGORY->value)
+                Route::middleware('can:'. \App\Enums\PermissionEnum::VIEW_BLOG_CATEGORY->value)
                     ->get('/', [App\Http\Controllers\BlogCategoryController::class, 'index'])
                     ->name('admin.blog_categories.list');
-                Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_BLOG_CATEGORY->value)
+                Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_BLOG_CATEGORY->value)
                     ->get('create', [App\Http\Controllers\BlogCategoryController::class, 'create'])
                     ->name('admin.blog_categories.create');
-                Route::middleware('can:'.\App\Enums\PermissionEnum::CREATE_BLOG_CATEGORY->value)
+                Route::middleware('can:'. \App\Enums\PermissionEnum::CREATE_BLOG_CATEGORY->value)
                     ->post('create', [App\Http\Controllers\BlogCategoryController::class, 'store']);
-                Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_BLOG_CATEGORY->value)
+                Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_BLOG_CATEGORY->value)
                     ->get('edit/{id}', [App\Http\Controllers\BlogCategoryController::class, 'edit'])
                     ->name('admin.blog_categories.edit');
-                Route::middleware('can:'.\App\Enums\PermissionEnum::EDIT_BLOG_CATEGORY->value)
+                Route::middleware('can:'. \App\Enums\PermissionEnum::EDIT_BLOG_CATEGORY->value)
                     ->post('update', [App\Http\Controllers\BlogCategoryController::class, 'update'])
                     ->name('admin.blog_categories.update');
             });
@@ -105,7 +105,7 @@ Route::prefix('admin')->group(function () {
 
 
         // Settings
-        Route::prefix('settings')->middleware('can:'.\App\Enums\PermissionEnum::MANAGE_SETTINGS->value)->group(function () {
+        Route::prefix('settings')->middleware('can:'. \App\Enums\PermissionEnum::MANAGE_SETTINGS->value)->group(function () {
             Route::get('/', [App\Http\Controllers\SettingController::class, 'index'])->name('admin.settings.list');
             Route::get('/create', [App\Http\Controllers\SettingController::class, 'create'])->name('admin.settings.create');
             Route::post('/create', [App\Http\Controllers\SettingController::class, 'add'])->name('admin.settings.add');
@@ -115,11 +115,11 @@ Route::prefix('admin')->group(function () {
 
             // Images
             Route::get('/uploaded-imgs', [App\Http\Controllers\SettingController::class, 'indexUploadedImages'])
-                ->middleware('can:'.\App\Enums\PermissionEnum::MANAGE_IMAGES->value)
+                ->middleware('can:'. \App\Enums\PermissionEnum::MANAGE_IMAGES->value)
                 ->name('admin.settings.uploaded_images');
         });
 
-        Route::prefix('accounts')->middleware('can:'.\App\Enums\PermissionEnum::MANAGE_ACCOUNTS->value)->group(function () {
+        Route::prefix('accounts')->middleware('can:'. \App\Enums\PermissionEnum::MANAGE_ACCOUNTS->value)->group(function () {
             Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('admin.accounts.list');
             Route::get('/create', [App\Http\Controllers\AccountController::class, 'create'])->name('admin.accounts.create');
             Route::post('/create', [App\Http\Controllers\AccountController::class, 'add'])->name('admin.accounts.add');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\enums\PermissionEnum;
-use App\enums\RoleEnum;
+use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
