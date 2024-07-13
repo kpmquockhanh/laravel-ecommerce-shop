@@ -56,7 +56,6 @@ return [
             'throw' => true,
             'visibility' => 'public',
         ],
-
     ],
 
     /*

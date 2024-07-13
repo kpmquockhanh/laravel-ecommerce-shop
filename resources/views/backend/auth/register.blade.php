@@ -12,7 +12,7 @@
                                 <i class="nc-icon nc-tv-2"></i>
                             </div>
                             <div class="description">
-                                <h5 class="info-title">Xin chào</h5>
+                                <h5 class="info-title">Admin register</h5>
                                 <p class="description">
                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi ex, labore laboriosam quisquam reiciendis rem saepe ullam veniam voluptates!
                                 </p>
@@ -48,7 +48,7 @@
                                 @csrf()
 
                                 <div class="card-header">
-                                    <h4 class="card-title">Admin Register</h4>
+                                    <h4 class="card-title">Register</h4>
                                 </div>
                                 <div class="card-body ">
                                     <div class="form-group has-label">

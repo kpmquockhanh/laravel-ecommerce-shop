@@ -106,33 +106,32 @@
                                 @endif
                             </div>
 
-                            @if (\Illuminate\Support\Facades\Auth::guard('admin')->id() == $saler->id)
-                                <div class="row">
-                                    @if ($errors->has('password'))
-                                        <div class="text-danger col-md-12 offset-md-2">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </div>
-                                    @endif
-                                    <label class="col-sm-2 col-form-label">Mật khẩu</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control" value="" placeholder="Bỏ trống nếu không thay đổi">
-                                            {{--<span class="form-text">A block of help text that breaks onto a new line.</span>--}}
-                                        </div>
-                                    </div>
-                                </div>
+{{--                            @if (\Illuminate\Support\Facades\Auth::guard('admin')->id() == $saler->id)--}}
+{{--                                <div class="row">--}}
+{{--                                    @if ($errors->has('password'))--}}
+{{--                                        <div class="text-danger col-md-12 offset-md-2">--}}
+{{--                                            <strong>{{ $errors->first('password') }}</strong>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+{{--                                    <label class="col-sm-2 col-form-label">Mật khẩu</label>--}}
+{{--                                    <div class="col-sm-10">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="password" name="password" class="form-control" value="" placeholder="Bỏ trống nếu không thay đổi">--}}
+{{--                                            --}}{{--<span class="form-text">A block of help text that breaks onto a new line.</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
-                                <div class="row">
-                                    <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-group">
-                                            <input type="password" name="password_confirmation" class="form-control" value="" placeholder="Nhập lại mật khẩu">
-                                            {{--<span class="form-text">A block of help text that breaks onto a new line.</span>--}}
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-
+{{--                                <div class="row">--}}
+{{--                                    <label class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>--}}
+{{--                                    <div class="col-sm-10">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="password" name="password_confirmation" class="form-control" value="" placeholder="Nhập lại mật khẩu">--}}
+{{--                                            --}}{{--<span class="form-text">A block of help text that breaks onto a new line.</span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
 
                             <div class="row">
                                 <label class="col-sm-2 col-form-label"></label>

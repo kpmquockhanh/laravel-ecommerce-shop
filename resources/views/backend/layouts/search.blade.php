@@ -1,26 +1,28 @@
 <form action="" class="d-flex align-items-center w-100" style="gap: 16px">
-    <div class="d-flex w-100" style="gap: 16px">
+    <div class="d-flex" style="gap: 16px">
        <span class="btn-group bootstrap-select m-0 d-flex align-items-center">
            <select class="selectpicker" data-size="7" data-style="btn btn-primary"
-                   title="Sắp xếp theo" tabindex="-98" id="paginate" name="paginate">
-              <option class="bs-title-option" value="">Paging</option>
-               @foreach ([1,4,8,12,16,100] as $page)
-                   <option value="{{ $page }}" {{isset($queries['paginate'])?$queries['paginate'] == $page?'selected':'':''}}>{{ $page }} item/page</option>
+                   title="" tabindex="-98" id="paginate" name="paginate">
+               @foreach (config('app.per_pages') as $page)
+                   <option value="{{ $page }}" {{ Arr::get($queries, 'paginate') == $page ? 'selected' : '' }}>{{ $page }} items/page</option>
                @endforeach
-
            </select>
        </span>
-        <span class="btn-group bootstrap-select m-0 d-flex align-items-center">
-           <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Sắp xếp theo" tabindex="-98" id="sort" name="sort">
-              <option class="bs-title-option" value="" >Sort by</option>
+        @if(isset($sorts))
+            <span class="btn-group bootstrap-select m-0 d-flex align-items-center">
+           <select class="selectpicker" data-size="7" data-style="btn btn-primary" tabindex="-98"
+                   id="sort" name="sort">
+              <option class="bs-title-option" value="">Sort by</option>
               @foreach ($sorts as $col => $name)
-                   <option value="{{ $col }}" {{isset($queries['sort'])?$queries['sort'] == $col?'selected':'':''}}>{{ $name }}</option>
+                   <option
+                       value="{{ $col }}" {{ Arr::get($queries, 'sort') == $page ? 'selected' : '' }}>{{ $name }}</option>
                @endforeach
            </select>
         </span>
+        @endif
     </div>
-    <span class="input-group no-border m-0 p-0 col-md-6 flex-grow-1">
-          <input type="text" value="{{ isset($queries['search'])?$queries['search'] : '' }}"
+    <span class="input-group no-border flex-grow-1 w-100">
+          <input type="text" value="{{ Arr::get($queries, 'search') }}"
                  class="form-control" placeholder="Search..." name="search">
           <div class="input-group-append">
              <div class="input-group-text">

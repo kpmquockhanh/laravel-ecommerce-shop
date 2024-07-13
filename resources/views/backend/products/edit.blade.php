@@ -1,33 +1,24 @@
 @extends('backend.layouts.master')
-@section('style')
-    <!-- Include Editor style. -->
-    <link href="{{asset('floara/css/froala_editor.pkgd.min.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{asset('floara/css/froala_style.min.css')}}" rel="stylesheet" type="text/css"/>
-    <style>
-        a[href="https://froala.com/wysiwyg-editor"], a[href="https://www.froala.com/wysiwyg-editor?k=u"] {
-            display: none !important;
-        }
-    </style>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <link
-            rel="stylesheet"
-            href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
-            type="text/css"
-    />
-@stop
 
 @section('content')
     <div class="content">
-        <form method="post" id="form" action="{{route('admin.products.update', ['id' => $product->id])}}" class="form-horizontal"
+        <form method="post" id="form" action="{{route('admin.products.update', ['id' => $product->id])}}"
+              class="form-horizontal"
               enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card ">
                         <div class="card-header ">
                             <h4 class="card-title">Edit product</h4>
                         </div>
                         <div class="card-body ">
                             @csrf()
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">Title</label>
+                                <div class="col-sm-10">
+                                    @include('backend.products.upload_img', ['image' => $product->thumbnail, 'name' => 'image'])
+                                </div>
+                            </div>
                             <div class="row pb-2">
                                 @if ($errors->has('title'))
                                     <div class="text-danger col-md-12 offset-md-2">
@@ -39,6 +30,20 @@
                                     <div class="form-group">
                                         <input type="text" name="title" class="form-control"
                                                value="{{old('title', $product->title)}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                @if ($errors->has('slug'))
+                                    <div class="text-danger col-md-12 offset-md-2">
+                                        <strong>{{ $errors->first('slug') }}</strong>
+                                    </div>
+                                @endif
+                                <label class="col-sm-2 col-form-label">Slug</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group">
+                                        <input type="text" name="slug" class="form-control"
+                                               value="{{old('slug', $product->slug)}}">
                                     </div>
                                 </div>
                             </div>
@@ -93,9 +98,12 @@
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
                                             <div class="col-sm-4 mb-2 image-item">
                                                 <div class="w-100 position-relative">
-                                                    <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe" data-id="{{$image->id}}" class="w-100">
-                                                    <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
-                                                            data-id="{{$image->id}}" title="" style="right: 8px; top: 8px;">
+                                                    <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe"
+                                                         data-id="{{$image->id}}" class="w-100">
+                                                    <button type="button" rel="tooltip"
+                                                            class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
+                                                            data-id="{{$image->id}}" title=""
+                                                            style="right: 8px; top: 8px;">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </div>
@@ -120,58 +128,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header ">
-                            <h4 class="card-title">Image</h4>
-                        </div>
-                        <div class="card-body d-flex justify-content-center">
-                            <div class="row">
-                                <div class="col-md-12 m-auto">
-                                    @include('backend.products.upload_img', ['image' => $product->thumbnail, 'name' => 'image'])
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
     </div>
 @stop
 
 @section('script')
-    <script type="text/javascript" src="{{asset('floara/js/froala_editor.pkgd.min.js')}}"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script>
-
-        $('textarea').froalaEditor({
-            language: 'vn',
-            heightMin: 200,
-            spellcheck: false
-        });
         Dropzone.autoDiscover = false;
 
         let myDropzone = new Dropzone("div#kpm", {
-            url:'/admin/products/upload/{{$product->id}}',
+            url: '/admin/products/upload/{{$product->id}}',
             paramName: "file",
             maxFilesize: 10,
-            acceptedFiles: 'image/*',
+            acceptedFiles: "image/*",
             autoProcessQueue: false,
             complete: () => {
-                $('#form').trigger( "submit" );
+                $("#form").trigger("submit");
             },
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                "X-CSRF-TOKEN": '{{ csrf_token() }}'
             },
-            addRemoveLinks: true,
+            addRemoveLinks: true
         });
 
-        $('#submit_form').on('click', function (e) {
+        $("#submit_form").on("click", function(e) {
             e.preventDefault();
             if (myDropzone.getQueuedFiles().length) {
                 myDropzone.processQueue();
-                return
+                return;
             }
-            $('#form').trigger( "submit" );
+            $("#form").trigger("submit");
         });
     </script>
 @stop

@@ -1,3 +1,55 @@
+<script>
+import { computed, onMounted, ref } from 'vue'
+import get from 'lodash/get'
+import SImage from './components/core/CoreImage.vue'
+import CarouselComponent from './components/Carousel.vue'
+import ProductRelated from './components/ProductRelated.vue'
+import { useProduct } from '../../js/composables/product'
+import { formatCurrency } from '../../js/utils'
+
+export default {
+  name: 'ProductDetail',
+  methods: { formatCurrency },
+  components: { ProductRelated, CarouselComponent, SImage },
+  setup() {
+    const { product, fetchProduct, slug } = useProduct()
+    const myCarousel = ref(null)
+    const images = computed(() =>
+      get(product.value, 'images', []).filter(
+        (image) => !image.src.includes('origin')
+      )
+    )
+    const originImages = computed(() =>
+      get(product.value, 'images', []).filter(
+        (image) => image.src.includes('origin') || image.is_thumbnail
+      )
+    )
+    const onChangePreview = (image) => {
+      const split = image.src.split('/')
+      const origin = split[split.length - 1]
+      const timestamp = origin.split('-')[0]
+      const originImageIndex = originImages.value.findIndex(
+        (image) => image.src.includes(timestamp) || image.is_thumbnail
+      )
+      if (originImageIndex > -1 && myCarousel.value) {
+        myCarousel.value.slideTo(originImageIndex)
+      }
+    }
+    onMounted(() => {
+      fetchProduct()
+    })
+    return {
+      slug,
+      product,
+      images,
+      originImages,
+      onChangePreview,
+      myCarousel,
+    }
+  },
+}
+</script>
+
 <template>
   <section v-if="product?.id" class="section-wrap pb-40 single-product">
     <div class="container-fluid semi-fluid">
@@ -239,54 +291,3 @@
   </section>
   <ProductRelated v-if="product?.id" :product-id="product.id" />
 </template>
-<script>
-import { computed, onMounted, ref } from 'vue'
-import get from 'lodash/get'
-import SImage from '../frontend/components/core/Image.vue'
-import CarouselComponent from './Carousel.vue'
-import ProductRelated from '../frontend/ProductRelated.vue'
-import { useProduct } from '../../js/composables/product'
-import { formatCurrency } from '../../js/utils'
-
-export default {
-  name: 'ProductDetail',
-  methods: { formatCurrency },
-  components: { ProductRelated, CarouselComponent, SImage },
-  setup() {
-    const { product, fetchProduct, slug } = useProduct()
-    const myCarousel = ref(null)
-    const images = computed(() =>
-      get(product.value, 'images', []).filter(
-        (image) => !image.src.includes('origin')
-      )
-    )
-    const originImages = computed(() =>
-      get(product.value, 'images', []).filter(
-        (image) => image.src.includes('origin') || image.is_thumbnail
-      )
-    )
-    const onChangePreview = (image) => {
-      const split = image.src.split('/')
-      const origin = split[split.length - 1]
-      const timestamp = origin.split('-')[0]
-      const originImageIndex = originImages.value.findIndex(
-        (image) => image.src.includes(timestamp) || image.is_thumbnail
-      )
-      if (originImageIndex > -1 && myCarousel.value) {
-        myCarousel.value.slideTo(originImageIndex)
-      }
-    }
-    onMounted(() => {
-      fetchProduct()
-    })
-    return {
-      slug,
-      product,
-      images,
-      originImages,
-      onChangePreview,
-      myCarousel,
-    }
-  },
-}
-</script>

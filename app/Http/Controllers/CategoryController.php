@@ -18,14 +18,52 @@ class CategoryController extends Controller
         }
 
         if ($paginate = $request->search) {
-            $categories->where('name', 'like', '%'.$paginate.'%');
+            $categories->where('name', 'like', '%' . $paginate . '%');
         }
         $viewData = [
-            'categories' => $categories->paginate($page),
+            'items' => $categories->paginate($page),
             'queries' => $request->query(),
+            'route' => 'categories',
+            'header' => 'Categories',
+            'display_fields' => [
+                'id' => [
+                    'title' => '#',
+                ],
+                'name' => [
+                    'title' => 'Name',
+                ],
+                'code' => [
+                    'title' => 'Code',
+                ],
+                'created_by' => [
+                    'title' => 'Created By',
+                    'func' => function ($item) {
+                        return $item->admin->name;
+                    },
+                ],
+                'created_at' => [
+                    'title' => 'Created At',
+                    'func' => function ($item) {
+                        return $item->created_at->diffForHumans();
+                    },
+                ],
+                'updated_at' => [
+                    'title' => 'Updated At',
+                    'func' => function ($item) {
+                        return $item->updated_at->diffForHumans();
+                    },
+                ],
+                'actions' => [
+                    'title' => 'Actions',
+                    'items' => [
+//            'active' => true,
+                        'edit' => true,
+//            'delete' => true,
+                    ],
+                ],
+            ],
         ];
-
-        return view('backend.categories.list')->with($viewData);
+        return view('backend.layouts.crud.base_list_table')->with($viewData);
     }
 
     public function create()
@@ -41,16 +79,19 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        dd('$id', $id);
+        $category = Category::query()->find($id);
+        return view('backend.categories.edit', compact('category'));
     }
 
     public function update(CategoryRequest $request)
     {
-        dd(123);
+        $category = Category::query()->find($request->id);
+        $category->update($request->all(['name', 'code']));
+        return view('backend.categories.edit', compact('category'));
     }
 
     public function delete(Request $request)
     {
-       dd(123);
+        dd(123);
     }
 }

@@ -2,7 +2,7 @@
 @section('class-body', 'login-page')
 @section('content')
     <div class="wrapper wrapper-full-page ">
-        <div class="full-page section-image blue" filter-color="black" data-image="../../assets/img/bg/fabio-mangione.jpg">
+        <div class="full-page section-image blue" filter-color="black">
             <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
             <div class="content">
                 <div class="container">
@@ -43,7 +43,7 @@
                                     <div class="form-group mt-2">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" name="remeber" {{old('remember')?'checked':''}}>
+                                                <input class="form-check-input" type="checkbox" value="" name="remember" checked>
                                                 <span class="form-check-sign"></span>
                                                 Remember
                                             </label>
@@ -51,7 +51,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-warning btn-round btn-block mb-3">Đăng nhập
+                                    <button type="submit" class="btn btn-warning btn-round btn-block mb-3">
+                                        Login
                                     </button>
                                 </div>
                             </div>
@@ -61,7 +62,9 @@
             </div>
             @include('backend.layouts.footer_page')
             <div class="full-page-background"
-                 style="background-image: url({{asset('backend/img/bg/fabio-mangione.jpg')}}) "></div>
+                 style="background-image: url({{asset('backend/img/bg/fabio-mangione.jpg')}})">
+
+            </div>
         </div>
     </div>
 @stop

@@ -1,7 +1,7 @@
 $('.btn-remove').click(function () {
-    let id = $(this).attr('data-id');
-    let tr = $(this).parents('tr');
-    let item = $(this).parents('.item-flower');
+    const id = $(this).attr('data-id');
+    const type = $(this).attr('data-type');
+    const tr = $(this).parents('tr');
 
     iziToast.question({
         timeout: 10000,
@@ -11,14 +11,12 @@ $('.btn-remove').click(function () {
         id: 'question',
         zindex: 999,
         title: 'Delete',
-        message: 'Are you sure for delete this products ?',
+        message: 'Are you sure for delete this item ?',
         position: 'center',
         buttons: [
             ['<button><b>Yes</b></button>', function (instance, toast) {
-
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                axios.post('/admin/products/remove', {id: id})
+                axios.post(`/admin/${type}/remove`, {id: id})
                     .then(function (res) {
                         if (res.data.status)
                         {
@@ -28,7 +26,6 @@ $('.btn-remove').click(function () {
                                 position: 'topCenter'
                             });
                             tr.slideUp("normal", function() { $(this).remove(); } );
-                            item.fadeOut("500", function() { $(this).remove(); } );
                         }
                         else
                         {
@@ -43,83 +40,18 @@ $('.btn-remove').click(function () {
                     .catch(function (err) {
                         console.log(err);
                     });
-
-            }, true],
-            ['<button>No</button>', function (instance, toast) {
-
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-            }],
-        ],
-        onClosing: function(instance, toast, closedBy){
-            // console.info('Closing | closedBy: ' + closedBy);
-        },
-        onClosed: function(instance, toast, closedBy){
-            // console.info('Closed | closedBy: ' + closedBy);
-        }
-    });
-});
-
-$('.btn-remove-image').click(function () {
-    let id = $(this).attr('data-id');
-    const image = $(this).parent('.image-item');
-    iziToast.question({
-        timeout: 10000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Delete',
-        message: 'Are you sure for delete this image ?',
-        position: 'center',
-        buttons: [
-            ['<button><b>Yes</b></button>', function (instance, toast) {
-
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                axios.post('/admin/products/delete-image', {id: id})
-                    .then(function (res) {
-                        if (res.data.status)
-                        {
-                            iziToast.success({
-                                title: 'Success!',
-                                message: 'Delete successfully!',
-                                position: 'topCenter'
-                            });
-                            image.fadeOut("500", function() { $(this).remove(); } );
-                        }
-                        else
-                        {
-                            iziToast.error({
-                                title: 'Error',
-                                message: 'Error occurred !',
-                                position: 'topCenter'
-                            });
-                        }
-
-                    })
-                    .catch(function (err) {
-                        console.log(err);
-                    });
-
             }, true],
             ['<button>No</button>', function (instance, toast) {
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
             }],
         ],
-        onClosing: function(instance, toast, closedBy){
-            // console.info('Closing | closedBy: ' + closedBy);
-        },
-        onClosed: function(instance, toast, closedBy){
-            // console.info('Closed | closedBy: ' + closedBy);
-        }
     });
 });
 
 $('.change-show-status').on('change', function () {
-    let button = $(this);
-    let id = $(this).attr('data-id');
+    const button = $(this);
+    const id = $(this).attr('data-id');
+    const route = $(this).attr('data-route');
     iziToast.question({
         timeout: 10000,
         close: false,
@@ -135,7 +67,7 @@ $('.change-show-status').on('change', function () {
 
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
-                axios.post('/admin/products/change-status', {id: id})
+                axios.post(`/admin/${route}/change-status`, {id: id})
                     .then(function (res) {
                         if (res.data.status)
                         {
@@ -195,147 +127,6 @@ $('#paginate').on('change', function () {
 
 $('#sort').on('change', function () {
     $(this).parents('form').trigger('submit');
-});
-
-$('.btn-remove-saler').click(function () {
-    let id = $(this).attr('data-id');
-    let tr = $(this).parents('tr');
-
-    iziToast.question({
-        timeout: 10000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Xóa',
-        message: 'Bạn có chắc muốn xóa sản saler này không?',
-        position: 'center',
-        buttons: [
-            ['<button><b>Có</b></button>', function (instance, toast) {
-
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                axios.post('/admin/salers/remove', {id: id})
-                    .then(function (res) {
-                        if (res.data.status)
-                        {
-                            iziToast.success({
-                                title: 'Thành công',
-                                message: 'Xóa thành công!',
-                                position: 'topCenter'
-                            });
-                            tr.slideUp("normal", function() { $(this).remove(); } );
-                        }
-                        else
-                        {
-                            iziToast.error({
-                                title: 'Lỗi',
-                                message: 'Xóa không thành công!',
-                                position: 'topCenter'
-                            });
-                        }
-
-                    })
-                    .catch(function (err) {
-                        console.log(err);
-                    });
-
-            }, true],
-            ['<button>Không</button>', function (instance, toast) {
-
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-            }],
-        ],
-        onClosing: function(instance, toast, closedBy){
-            // console.info('Closing | closedBy: ' + closedBy);
-        },
-        onClosed: function(instance, toast, closedBy){
-            // console.info('Closed | closedBy: ' + closedBy);
-        }
-    });
-});
-
-$('.change-saler-status').on('click', function () {
-    let button = $(this);
-    let status = button.parents('tr').find('#saler-status');
-    let tagI = button.find('i');
-    let id = $(this).attr('data-id');
-    iziToast.question({
-        timeout: 2000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Thay đổi hiển thị',
-        message: 'Bạn có muốn thay đổi trạng thái của saler này không?',
-        position: 'center',
-        buttons: [
-            ['<button><b>Có</b></button>', function (instance, toast) {
-
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                axios.post('/admin/salers/change-status', {id: id})
-                    .then(function (res) {
-                        if (res.data.status)
-                        {
-                            if (button.hasClass('btn-success'))
-                            {
-                                button.removeClass('btn-success');
-                                button.addClass('btn-primary');
-
-                                tagI.removeClass('fa-check');
-                                tagI.addClass('fa-minus');
-
-                                status.text('Kích hoạt');
-                                status.removeClass('text-danger');
-                                status.addClass('text-success');
-                            }else{
-                                button.addClass('btn-success');
-                                button.removeClass('btn-primary');
-
-                                tagI.addClass('fa-check');
-                                tagI.removeClass('fa-minus');
-
-                                status.text('Vô hiệu hóa');
-                                status.addClass('text-danger');
-                                status.removeClass('text-success');
-                            }
-
-                            iziToast.success({
-                                title: 'Thành công',
-                                message: 'Đã thay đổi trạng thái!',
-                                position: 'topCenter'
-                            });
-                        }
-                        else
-                        {
-                            // console.log(res);
-                            iziToast.error({
-                                title: 'Lỗi',
-                                message: 'Thay đổi không thành công',
-                                position: 'topCenter'
-                            });
-                        }
-                    })
-                    .catch(function (err) {
-                        console.log(err);
-                    });
-
-            }, true],
-            ['<button>Không</button>', function (instance, toast) {
-                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            }],
-        ],
-        onClosing: function(instance, toast, closedBy){
-            // console.info('Closing | closedBy: ' + closedBy);
-        },
-        onClosed: function(instance, toast, closedBy){
-            // console.info('Closed | closedBy: ' + closedBy);
-        }
-    });
 });
 $('body').on('click','.btn-optimize-image', function () {
     let that = $(this);
@@ -480,7 +271,6 @@ $('body').on('click','.btn-download', function (e) {
     let index = $(this).attr('data-index');
     let tr = $(this).parents('tr');
     let i = $(this).children('i');
-
 
     iziToast.question({
         timeout: 10000,

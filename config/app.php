@@ -3,6 +3,84 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
+    'menus' => [
+        [
+            'name' => 'products',
+            'label' => 'Products',
+            'icon' => 'nc-diamond',
+//            'route' => 'admin.products.list'
+            'items' => [
+                [
+                    'label' => 'Items',
+                    'icon' => 'PL',
+                    'route' => 'admin.products.list'
+                ],
+                [
+                    'label' => 'Create',
+                    'icon' => 'PC',
+                    'route' => 'admin.products.create'
+                ],
+                [
+                    'label' => 'Categories',
+                    'icon' => 'C',
+                    'route' => 'admin.categories.list',
+                ],
+            ]
+        ],
+        [
+            'name' => 'blogs',
+            'label' => 'Blogs',
+            'icon' => 'nc-diamond',
+            'items' => [
+                [
+                    'label' => 'Items',
+                    'icon' => 'DS',
+                    'route' => 'admin.blogs.list'
+                ],
+                [
+                    'label' => 'Create',
+                    'icon' => 'CP',
+                    'route' => 'admin.blogs.create'
+                ],
+                [
+                    'label' => 'Blog categories',
+                    'icon' => 'TL',
+                    'route' => 'admin.blog_categories.list'
+                ],
+            ]
+        ],
+        [
+            'name' => 'accounts',
+            'label' => 'Accounts',
+            'icon' => 'nc-shop',
+            'items' => [
+                [
+                    'label' => 'List accounts',
+                    'icon' => 'T',
+                    'route' => 'admin.accounts.list'
+                ],
+            ]
+        ],
+        [
+            'name' => 'settings',
+            'label' => 'Settings',
+            'icon' => 'nc-settings',
+            'items' => [
+                [
+                    'label' => 'Basics',
+                    'icon' => 'B',
+                    'route' => 'admin.settings.list'
+                ],
+                [
+                    'label' => 'Uploaded images',
+                    'icon' => 'A',
+//                    'route' => 'admin.categories.list'
+                    'route' => 'admin.settings.uploaded_images'
+                ]
+            ]
+        ],
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +119,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -189,16 +267,16 @@ return [
         /*
          * Application Service Providers...
          */
-//        App\Providers\AppServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
 //        App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
-        Intervention\Image\ImageServiceProvider::class
-
+        Intervention\Image\ImageServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
@@ -220,72 +298,7 @@ return [
 
     'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
 
-    'menus' => [
-        [
-            'name' => 'products',
-            'label' => 'Products',
-            'icon' => 'nc-diamond',
-            'items' => [
-                [
-                    'label' => 'List',
-                    'icon' => 'DS',
-                    'route' => 'admin.products.list'
-                ],
-//                [
-//                    'label' => 'Create',
-//                    'icon' => 'CP',
-//                    'route' => 'admin.products.create'
-//                ],
-//                [
-//                    'label' => 'Categories',
-//                    'icon' => 'TL',
-////                    'route' => 'admin.categories.list'
-//                    'route' => '/'
-//                ],
-                [
-                    'label' => 'Uploaded images',
-                    'icon' => 'A',
-//                    'route' => 'admin.categories.list'
-                    'route' => 'admin.dashboard.uploaded_images'
-                ]
-            ]
-        ],
-        [
-            'name' => 'categories',
-            'label' => 'Categories',
-            'icon' => 'nc-book-bookmark',
-            'items' => [
-                [
-                    'label' => 'List',
-                    'icon' => 'DS',
-                    'route' => 'admin.categories.list'
-                ]
-            ]
-        ],
-        [
-            'name' => 'accounts',
-            'label' => 'Accounts',
-            'icon' => 'nc-shop',
-            'items' => [
-                [
-                    'label' => 'List salers',
-                    'icon' => 'T',
-                    'route' => 'admin.products.list'
-                ],
-            ]
-        ],
-        [
-            'name' => 'settings',
-            'label' => 'Settings',
-            'icon' => 'nc-settings',
-            'items' => [
-                [
-                    'label' => 'Basics',
-                    'icon' => 'B',
-                    'route' => 'admin.settings.list'
-                ],
-            ]
-        ],
+    'per_pages' => [
+        10, 20, 50, 100
     ],
-
 ];

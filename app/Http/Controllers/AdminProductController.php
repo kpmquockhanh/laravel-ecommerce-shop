@@ -6,22 +6,24 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Traits\ListTrait;
+use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class AdminProductController extends Controller
 {
+    use ListTrait;
+    use UploadTrait;
+
     public function index(Request $request)
     {
-        $defaultNumberPaginate = 12;
         $products = Product::with('admin', 'images');
 
-        if (!Auth::guard('admin')->user()->isAdmin())
+        if (!Auth::guard('admin')->user()->isAdmin)
             $products->where('created_by', Auth::guard('admin')->id());
 
         if ($search = $request->search) {
@@ -33,32 +35,72 @@ class AdminProductController extends Controller
             $products->orderBy($sort, 'desc');
         }
 
-        $page = $defaultNumberPaginate;
+        $page = config('app.per_pages')[0];
         if ($paginate = $request->paginate)
             $page = $paginate;
 
         $viewData = [
+            'items' => $products->paginate($page),
             'products' => $products->paginate($page),
             'queries' => $request->query(),
+            'route' => 'products',
+            'header' => 'Products',
+            'display_fields' => [
+                'id' => [
+                    'title' => '#',
+                    'func' => function ($item) {
+                        return $item->id;
+                    },
+                ],
+                'title' => [
+                    'title' => 'Title',
+                    'func' => function ($item) {
+                        return Str::limit($item->title, 20, '...');
+                    },
+                ],
+                'image' => [
+                    'title' => 'Image',
+                    'func' => function ($item) {
+                        return $item->thumbnail;
+                    },
+                ],
+                'created_by' => [
+                    'title' => 'Created By',
+                    'func' => function ($item) {
+                        return $item->admin->name;
+                    },
+                ],
+                'price' => [
+                    'title' => 'Price',
+                ],
+                'created_at' => [
+                    'title' => 'Created At',
+                    'func' => function ($item) {
+                        return $item->created_at->diffForHumans();
+                    },
+                ],
+                'updated_at' => [
+                    'title' => 'Updated At',
+                    'func' => function ($item) {
+                        return $item->updated_at->diffForHumans();
+                    },
+                ],
+                'actions' => [
+                    'title' => 'Actions',
+                    'items' => [
+                        'active' => true,
+                        'edit' => true,
+                        'delete' => true,
+                    ]
+                ],
+            ],
         ];
 
-        if ($request->list_type == 'table') {
-            Session::put('list_type', 'table');
-        } elseif ($request->list_type == 'grid') {
-            Session::put('list_type', 'grid');
-        }
-
-        if (Session::get('list_type') == 'table') {
-            return view('backend.products.list-table')->with($viewData);
-        }
-        return view('backend.products.list')->with($viewData);
+        return $this->processListVIew($request, $viewData);
     }
 
     public function create()
     {
-        if (!Auth::guard('admin')->user()->status)
-            return redirect(route('admin.products.list'));
-
         $viewData = [
             'categories' => Category::all(),
         ];
@@ -68,14 +110,11 @@ class AdminProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        if (!Auth::guard('admin')->user()->status)
-            return redirect(route('admin.products.list'));
-
         $data = $this->getDataForStore($request, 'store');
         $product = Product::query()->create(array_merge($data));
 
         if ($image = $request->image) {
-            $this->processImage($image, $product->id);
+            $this->doUpload($image, $product->id, 'product');
         }
 
         $requestCategories = $request->categories;
@@ -138,7 +177,7 @@ class AdminProductController extends Controller
         $product->update($data);
 
         if ($image = $request->image) {
-            $this->processImage($image, $product->id);
+            $this->doUpload($image, $product->id, 'product');
         }
 
         return redirect(route('admin.products.edit', ['id' => $id]));
@@ -196,6 +235,7 @@ class AdminProductController extends Controller
             'message',
             'price',
             'description',
+            'slug',
         ]);
 
         switch ($action) {
@@ -226,58 +266,6 @@ class AdminProductController extends Controller
         return $data;
     }
 
-    private function processImage($image, $productId, $isThumbnail = true): void
-    {
-        if ($isThumbnail) {
-            $images = \App\Models\Image::query()->where([
-                'entity_type' => 'product',
-                'entity_id' => $productId,
-                'is_thumbnail' => true,
-            ]);
-            foreach ($images as $image) {
-                Storage::delete($image->src);
-            }
-            $images->delete();
-        }
-
-        ini_set('memory_limit', '256M');
-        $timeNow = time();
-        $ext = $image->getClientOriginalExtension();
-        $name = "$timeNow-$productId.$ext";
-        $imageThumb = Image::make($image)
-            ->resize(null, 225, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            ->crop(225, 225)
-            ->insert('img/watermark.png', 'top-left', 20, 20);
-
-        $originName = "$timeNow-origin-$productId.$ext";
-        $imageOrigin = Image::make($image)
-            ->insert('img/watermark.png', 'top-left', 20, 20);
-
-        $imageOrigin = $imageOrigin->stream();
-        $imageThumb = $imageThumb->stream();
-        Storage::put($originName, $imageOrigin->__toString());
-        Storage::put($name, $imageThumb->__toString());
-
-        // For thumbnail
-        \App\Models\Image::query()->create([
-            'entity_type' => 'product',
-            'entity_id' => $productId,
-            'is_thumbnail' => $isThumbnail,
-            'src' => $name,
-        ]);
-        // For origin
-        if (!$isThumbnail) {
-            \App\Models\Image::query()->create([
-                'entity_type' => 'product',
-                'entity_id' => $productId,
-                'is_thumbnail' => false,
-                'src' => $originName,
-            ]);
-        }
-    }
-
     public function upload(Request $request): \Illuminate\Http\JsonResponse
     {
         if (!$request->file) {
@@ -286,7 +274,7 @@ class AdminProductController extends Controller
             ]);
         }
         if ($image = $request->file) {
-            $this->processImage($image, $request->id, false);
+            $this->doUpload($image, $request->id, 'product', false);
         }
 
         return response()->json([

@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,18 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//         \App\Models\User::factory(10)->create();
-//
-//         \App\Models\User::factory()->create([
-//             'name' => 'Test User',
-//             'email' => 'test@example.com',
-//         ]);
         Product::destroy(Product::all()->pluck('id'));
         Category::destroy(Category::all()->pluck('id'));
         Admin::destroy(Admin::all()->pluck('id'));
+        Role::destroy(Role::all()->pluck('id'));
+        Permission::destroy(Permission::all()->pluck('id'));
         $this->call([
             AdminSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            CategorySeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }

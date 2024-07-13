@@ -7,22 +7,22 @@
                 <div class="col-md-8">
                     <div class="card ">
                         <div class="card-header ">
-                            <h4 class="card-title">Chỉnh sửa thể loại</h4>
+                            <h4 class="card-title">Edit category</h4>
                         </div>
-                        <div class="card-body ">
+                        <div class="card-body">
                             @csrf()
                             <input type="text" name="id" class="form-control" value="{{$category->id}}" hidden>
-                            <div class="row">
+                            <div class="row mb-2">
                                 @if ($errors->has('cate_name'))
                                     <div class="text-danger col-md-12 offset-md-2">
                                         <strong>{{ $errors->first('cate_name') }}</strong>
                                     </div>
                                 @endif
 
-                                <label class="col-sm-2 col-form-label">Tên thể loại</label>
+                                <label class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
                                     <div class="form-group">
-                                        <input type="text" name="cate_name" class="form-control" value="{{old('cate_name', $category->cate_name)}}">
+                                        <input type="text" name="name" class="form-control" value="{{old('name', $category->name)}}">
                                     </div>
                                 </div>
                             </div>
@@ -32,11 +32,11 @@
                                         <strong>{{ $errors->first('cate_code') }}</strong>
                                     </div>
                                 @endif
-                                <label class="col-sm-2 col-form-label">Mã thể loại</label>
+                                <label class="col-sm-2 col-form-label">Code</label>
                                 <div class="col-sm-10">
                                     <div class="form-group">
-                                        <input type="text" name="cate_code" class="form-control"
-                                               value="{{old('cate_code',$category->cate_code)}}">
+                                        <input type="text" name="code" class="form-control"
+                                               value="{{old('code',$category->code)}}">
 
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success">Sửa thể loại</button>
+                                        <button type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </div>

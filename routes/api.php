@@ -80,3 +80,18 @@ Route::prefix('/categories')->group(function () {
         return new \App\Http\Resources\CategoryCollection($categories);
     });
 });
+
+Route::prefix('/posts')->group(function () {
+    Route::get('/', function () {
+        $blogs = \App\Models\Blog::query()->orderBy('id', 'desc')->limit(100)->get();
+        return new \App\Http\Resources\BlogCollection($blogs);
+    });
+    Route::get('/{slug}', function ($slug) {
+        return new \App\Http\Resources\BlogResource(\App\Models\Blog::query()->where(['id' => $slug])->firstOrFail());
+    });
+
+    Route::get('/recent_posts', function () {
+        $blogs = \App\Models\Blog::query()->orderBy('id', 'desc')->limit(100)->get();
+        return new \App\Http\Resources\BlogCollection($blogs);
+    });
+});

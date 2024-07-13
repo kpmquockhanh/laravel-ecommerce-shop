@@ -26,6 +26,7 @@ class CategoryRequest extends FormRequest
 //            'created_by' => 'required|numeric',
             'name' => 'required',
             'code' => 'required',
+            'category_ids' => 'array',
         ];
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Models\Admin;
-use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
@@ -23,14 +21,102 @@ class SettingController extends Controller
         $viewData = [
             'items' => $categories->paginate($page),
             'queries' => $request->query(),
+            'route' => 'settings',
+            'header' => 'Settings',
+            'display_fields' => [
+                'id' => [
+                    'title' => '#',
+                ],
+                'key' => [
+                    'title' => 'Key',
+                ],
+                'value' => [
+                    'title' => 'Value',
+                ],
+                'created_at' => [
+                    'title' => 'Created At',
+                    'func' => function ($item) {
+                        return $item->created_at->diffForHumans();
+                    },
+                ],
+                'updated_at' => [
+                    'title' => 'Updated At',
+                    'func' => function ($item) {
+                        return $item->updated_at->diffForHumans();
+                    },
+                ],
+                'actions' => [
+                    'title' => 'Actions',
+                    'items' => [
+                        'edit' => true,
+                        'delete' => true,
+                    ],
+                ],
+            ],
         ];
 
-        return view('backend.settings.list')->with($viewData);
+        return view('backend.layouts.crud.base_list_table')->with($viewData);
     }
 
     public function create()
     {
         return view('backend.settings.add');
+    }
+
+    public function indexUploadedImages(Request $request)
+    {
+        $images = Image::query();
+        $page = 50;
+        if ($paginate = $request->paginate) {
+            $page = $paginate;
+        }
+
+        $viewData = [
+            'items' => $images->paginate($page),
+            'queries' => $request->query(),
+            'route' => 'settings',
+            'header' => 'Uploaded Images',
+            'display_fields' => [
+                'id' => [
+                    'title' => '#',
+                    'func' => function ($item) {
+                        return $item->id;
+                    },
+                ],
+                'entity_type' => [
+                    'title' => 'Entity Type',
+                    'func' => function ($item) {
+                        return Str::title($item->entity_type);
+                    },
+                ],
+                'is_thumbnail' => [
+                    'title' => 'Is Thumbnail',
+                    'func' => function ($item) {
+                        return $item->is_thumbnail ? 'Yes' : 'No';
+                    },
+                ],
+                'image' => [
+                    'title' => 'Image',
+                    'func' => function ($item) {
+                        return $item->href;
+                    },
+                ],
+                'created_at' => [
+                    'title' => 'Created At',
+                    'func' => function ($item) {
+                        return $item->created_at->diffForHumans();
+                    },
+                ],
+                'updated_at' => [
+                    'title' => 'Updated At',
+                    'func' => function ($item) {
+                        return $item->updated_at->diffForHumans();
+                    },
+                ],
+            ],
+        ];
+
+        return view('backend.layouts.crud.base_list_table')->with($viewData);
     }
 
     public function add(Request $request)
@@ -54,9 +140,15 @@ class SettingController extends Controller
 
     public function delete(Request $request)
     {
-        $setting = Setting::query()->findOrFail($request->id);
-        $setting->delete();
-        return redirect(route('admin.settings.list'));
+        if (Setting::destroy($request->id)) {
+            return response()->json([
+                'status' => true,
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+        ]);
     }
 
     public function analytic(Request $request)
@@ -65,9 +157,9 @@ class SettingController extends Controller
         $countProductByDay = Product::query()->whereDate('created_at', date('Y-m-d'))->count();
         $countProductPublish = Product::query()->where('active', true)->count();
         $labels = [
-            'countProduct' => 'Số sản phẩm',
-            'countProductByDay' => 'Số sản phẩm trong ngày',
-            'countProductPublish' => 'Số sản phẩm đã đăng',
+            'countProduct' => 'Products',
+            'countProductByDay' => 'Products by day',
+            'countProductPublish' => 'Products published',
         ];
         $icons = [
             'countProduct' => 'nc-tie-bow',

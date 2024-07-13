@@ -2,9 +2,12 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +51,25 @@ class Handler extends ExceptionHandler
                     'message' => 'not found'
                 ], 404);
             }
+            return null;
+        });
+        $this->renderable(function (QueryException $e, Request $request) {
+            if ($request->is('api/*') && !config('app.debug')) {
+                return response()->json([
+                    'message' => 'connect to db failed'
+                ], 500);
+            }
+            return null;
+        });
+
+
+        $this->renderable(function (\Exception $e, Request $request) {
+            if ($request->is('api/*') && !config('app.debug')) {
+                return response()->json([
+                    'message' => 'something went wrong'
+                ], 500);
+            }
+            return null;
         });
     }
 }

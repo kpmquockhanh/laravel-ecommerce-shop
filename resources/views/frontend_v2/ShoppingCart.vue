@@ -393,7 +393,7 @@
   </section>
 </template>
 <script>
-import CartTable from './CartTable.vue'
+import CartTable from './components/CartTable.vue'
 
 export default {
   name: 'ShoppingCart',

@@ -9,7 +9,12 @@
 .gap-2 {
     gap: 2px;
 }
-.dropzone{
+
+.gap-4 {
+    gap: 4px;
+}
+
+.dropzone {
     border: 2px dashed #ccc;
     border-radius: 5px;
     padding: 20px;
@@ -19,7 +24,12 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
 .dropzone .dz-preview .dz-progress {
     top: unset;
     bottom: 25px;
+}
+
+.flex {
+    display: flex;
 }

@@ -1,16 +1,5 @@
 @extends('backend.layouts.master')
 
-@section('style')
-    <!-- Include Editor style. -->
-    <link href="{{asset('floara/css/froala_editor.pkgd.min.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{asset('floara/css/froala_style.min.css')}}" rel="stylesheet" type="text/css"/>
-    <style>
-        a[href="https://froala.com/wysiwyg-editor"], a[href="https://www.froala.com/wysiwyg-editor?k=u"] {
-            display: none !important;
-        }
-    </style>
-@stop
-
 @section('content')
     <div class="content">
         <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
@@ -42,11 +31,6 @@
                                     <strong>{{ $errors->first('price') }}</strong>
                                 </div>
                             @endif
-                            @if ($errors->has('quantity'))
-                                <div class="text-danger col-md-12 offset-md-2 p-0">
-                                    <strong>{{ $errors->first('quantity') }}</strong>
-                                </div>
-                            @endif
                             <div class="row pb-2">
                                 <label class="col-sm-2 col-form-label">Price</label>
                                 <div class="col-sm-2">
@@ -55,23 +39,6 @@
                                     </div>
                                 </div>
 
-                                <label class="col-sm-2 col-form-label">Quantity</label>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <input type="number" name="quantity" class="form-control"
-                                               value="{{old('quantity')}}">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <label class="col-sm-2 col-form-label">Attributes</label>
-                                <div class="col-lg-5 col-md-6 col-sm-3">
-                                    <div class="form-group">
-                                        <input type="number" name="quantity" class="form-control"
-                                               value="{{old('quantity')}}">
-                                    </div>
-                                </div>
                             </div>
                           @if($categories->count())
                                 <div class="row">
@@ -132,18 +99,21 @@
 @stop
 
 @section('script')
-    <!-- Include Editor JS files. -->
-    <script type="text/javascript" src="{{asset('floara/js/froala_editor.pkgd.min.js')}}"></script>
-
-    <!-- Initialize the editor. -->
+    <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
     <script>
-        $(function () {
-            $('textarea').froalaEditor({
-                heightMin: 200,
-                spellcheck: false,
-                language: 'vi'
-            })
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+            image_uploadtab: true,
+            images_upload_url: '/admin/products/upload'
         });
     </script>
-
 @stop
