@@ -82,7 +82,7 @@ Route::prefix('admin')->group(function () {
                 ->name('admin.blogs.update');
             Route::middleware('can:'. \App\Enums\PermissionEnum::DELETE_BLOG->value)
                 ->post('remove', [App\Http\Controllers\BlogController::class, 'delete'])
-                ->name('admin.products.remove');
+                ->name('admin.blogs.remove');
 
             // Blog Categories
             Route::prefix('categories')->group(function () {
