@@ -6,7 +6,7 @@ services:
       - '80:80'
     volumes:
       - ./:/var/www/
-      - ~/nginx/:/etc/nginx/ # Sync config from host
+      - ~/nginx/sites-enabled/:/etc/nginx/sites-enabled/ # Sync config from host
     networks:
       - sail
   app:
