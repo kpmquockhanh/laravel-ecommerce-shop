@@ -6,7 +6,7 @@ services:
       - '80:80'
     volumes:
       - ./:/var/www/
-      - ~/configs/nginx/nginx.conf:/etc/nginx/conf.d/default.conf # Sync config from host
+      - ~/nginx/:/etc/nginx/ # Sync config from host
     networks:
       - sail
   app:
