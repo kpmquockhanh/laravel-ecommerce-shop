@@ -13,7 +13,7 @@ services:
   app:
     build:
       args:
-        user: root
+        user: nginx
         uid: 1000
       context: ./
       dockerfile: docker_configs/php/Dockerfile
