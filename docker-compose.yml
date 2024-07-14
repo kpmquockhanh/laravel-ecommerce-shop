@@ -21,12 +21,10 @@ services:
 
     ports:
       - '9000:9000'
-    working_dir: /var/www/
+    working_dir: /var/www
     volumes:
       - ./:/var/www
-      - ./php.conf:/usr/local/etc/php8.1-fpm.d/php.conf
-      - ./storage/logs/php-error.log:/var/log/error.log
-      - ./storage/logs/php-access.log:/var/log/access.log
+#      - ./docker_configs/php/php.conf:/usr/local/etc/php-fpm.d/php.conf
     networks:
       - sail
     depends_on:
