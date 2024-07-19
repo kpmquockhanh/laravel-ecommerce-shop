@@ -15,7 +15,7 @@ class Image extends Model
         return Attribute::make(
             get: function () {
                 $src = $this->src;
-                return $src ? env('AWS_URL') . $src : asset('backend/img/placeholder.jpg');
+                return $src ? config('app.cdn') . $src : asset('backend/img/placeholder.jpg');
             },
         );
     }
