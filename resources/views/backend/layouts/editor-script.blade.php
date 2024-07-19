@@ -1,6 +1,5 @@
 <!-- Place the first <script> tag in your HTML's <head> -->
-<script src="https://cdn.tiny.cloud/1/9gh7tfzs4jcc90xvjyz90oxzjlzs7j1n6clljyxayie30lpg/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
+<script src="{{asset('backend/js/tinymce/tinymce.min.js')}}"></script>
 <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
 <script>
     tinymce.init({
@@ -9,7 +8,7 @@
         toolbar1: 'undo redo | blocks fontfamily fontsize',
         toolbar2: 'bold italic underline strikethrough | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | link image media table mergetags',
         tinycomments_mode: 'embedded',
-        tinycomments_author: 'kpm',
+        tinycomments_author: 'kpmquockhanh',
         ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
         file_picker_callback (callback, value, meta) {
             let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth
