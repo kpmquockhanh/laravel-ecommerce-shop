@@ -2,13 +2,17 @@
   <carousel
     v-if="items.length"
     :itemsToShow="numberItem"
+    :items-to-scroll="itemScroll"
     :wrapAround="wrapAround"
-    :transition="300"
+    :transition="500"
     :breakpoints="breakpoints"
+    :touch-drag="true"
     ref="controller"
   >
     <slide v-for="item in items" :key="item.id" :class="itemClass">
-      <slot :item="item"></slot>
+      <div class="carousel__item">
+        <slot :item="item"></slot>
+      </div>
     </slide>
 
     <template #addons="{ slidesCount }">
@@ -29,6 +33,10 @@ export default {
       type: Number,
       default: 1
     },
+    itemScroll: {
+      type: Number,
+      default: 1
+    },
     items: {
       type: Array,
       required: true
@@ -38,7 +46,8 @@ export default {
       default: ""
     },
     wrapAround: {
-      type: Boolean
+      type: Boolean,
+      default: true,
     },
     breakpoints: {
       type: Object,
@@ -63,3 +72,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.carousel__slide {
+  padding: 0;
+  margin-right: 0 !important;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  margin: 0;
+}
+</style>

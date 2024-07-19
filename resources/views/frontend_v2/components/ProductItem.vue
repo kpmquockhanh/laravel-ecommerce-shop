@@ -2,14 +2,15 @@
   <div class="product-item" :class="{ 'd-flex': type === 'list' }">
     <div class="product-img hover-trigger">
       <a href="/public" @click.prevent="routeToDetail">
-        <Image v-if="product.thumbnail" :src="product.thumbnail" alt="" />
-        <Image v-else src="@images/placeholder.jpg" alt="" />
+        <E-Image v-if="product.thumbnail" :src="product.thumbnail" alt="" />
+        <E-Image v-else src="@images/placeholder.jpg" alt="" />
 
-        <Image
+        <E-Image
           v-if="images.length"
           :src="images[0].src"
           alt=""
-          class="back-img"
+          class="back-img h-100"
+          img-class="h-100 object-fit-cover"
           no-loading
         />
       </a>
@@ -81,7 +82,7 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
-import Image from './core/CoreImage.vue'
+import EImage from './core/CoreImage.vue'
 import { computed } from 'vue'
 import get from 'lodash/get'
 import { formatCurrency } from '../../../js/utils'
@@ -89,7 +90,7 @@ import { formatCurrency } from '../../../js/utils'
 export default {
   name: 'ProductItem',
   methods: { formatCurrency },
-  components: { Image },
+  components: { EImage },
   props: {
     type: {
       type: String,

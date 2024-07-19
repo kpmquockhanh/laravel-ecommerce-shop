@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <img
       v-show="!isLoading && !isError"
       :class="[imgClass, { rounded: rounded }]"
@@ -19,7 +19,7 @@
 import { ref } from 'vue'
 
 export default {
-  name: 'Image',
+  name: 'EImage',
   props: {
     src: {
       type: String,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Traits\ListTrait;
@@ -12,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 
 class AdminProductController extends Controller
 {
@@ -155,6 +155,18 @@ class AdminProductController extends Controller
         $id = $request->id;
         $product = Product::query()->findOrFail($request->id);
         //Update category of product
+
+        $this->processCategory($request, $product);
+        $data = $this->getDataForStore($request, 'update');
+        if ($image = $request->image) {
+            $this->doUpload($image, $id, 'product');
+        }
+        $product->update($data);
+        return redirect(route('admin.products.edit', ['id' => $id]));
+    }
+
+    private function processCategory($request, $product)
+    {
         $requestCategories = $request->categories;
         if ($requestCategories) {
             $currentCategories = array_column($product->categories->toArray(), 'id');
@@ -163,24 +175,14 @@ class AdminProductController extends Controller
             $addCategories = array_diff($requestCategories, $currentCategories);
             foreach ($addCategories as $addCate) {
                 ProductCategory::query()->insertOrIgnore([
-                    'product_id' => $id,
+                    'product_id' => $product->id,
                     'category_id' => $addCate,
                 ]);
             }
 
-            ProductCategory::query()->where('product_id', $id)
+            ProductCategory::query()->where('product_id', $product->id)
                 ->whereIn('category_id', $deleteCate)->delete();
         }
-
-        $data = $this->getDataForStore($request, 'update');
-
-        $product->update($data);
-
-        if ($image = $request->image) {
-            $this->doUpload($image, $product->id, 'product');
-        }
-
-        return redirect(route('admin.products.edit', ['id' => $id]));
     }
 
     public function delete(Request $request): \Illuminate\Http\JsonResponse
@@ -248,19 +250,8 @@ class AdminProductController extends Controller
                 if (!$product->canChange()) {
                     return [];
                 }
-                if ($request->image) {
-                    $image = \App\Models\Image::query()
-                        ->where('entity_type', 'product')
-                        ->where('entity_id', $id)
-                        ->where('is_thumbnail', true)
-                        ->first();
-                    if ($image) {
-                        Storage::delete($image->src);
-                        $image?->delete();
-                    }
-                }
 
-                $data['updated_by'] = Auth::guard('admin')->user()->id;
+                $data['updated_by'] = Auth::guard('admin')->id();
                 break;
         }
         return $data;
@@ -284,27 +275,24 @@ class AdminProductController extends Controller
 
     public function deleteImage(Request $request): \Illuminate\Http\JsonResponse
     {
-        ini_set('memory_limit', '16M');
-        $image = \App\Models\Image::query()->findOrFail($request->id);
-        $timeStamp = explode('-', $image->src)[0];
+        $image = Image::query()->findOrFail($request->id);
         $deleteIds = [];
         Storage::delete($image->src);
         $deleteIds[] = $image->id;
-        // Also delete origin image
-        $otherImages = \App\Models\Image::query()->where([
-            'entity_type' => 'product',
-            'entity_id' => $image->entity_id,
-        ])
-            ->where('src', 'like', "$timeStamp%")
-            ->where('id', '!=', $image->id)
-            ->get();
 
-        foreach ($otherImages as $otherImage) {
-            Storage::delete($otherImage->src);
-            $deleteIds[] = $otherImage->id;
+        if ($image->is_thumbnail) {
+            $image = Image::query()->where([
+                'entity_type' => 'product',
+                'entity_id' => $image->entity_id,
+                'is_thumbnail' => false,
+            ])->first();
+
+            $image?->update([
+                'is_thumbnail' => true
+            ]);
         }
 
-        if (\App\Models\Image::destroy($deleteIds)) {
+        if (Image::destroy($deleteIds)) {
             return response()->json([
                 'status' => true,
             ]);

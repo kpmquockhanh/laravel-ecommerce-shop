@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -12,7 +10,7 @@ trait UploadTrait
     private function doUpload($image, $entityId, $entityType, $isThumbnail = true)
     {
         $resp = [];
-        $needPreview = in_array($entityType, ['product']);
+        $needPreview = in_array($entityType, ['product']) && $isThumbnail;
         if ($isThumbnail) {
             $images = \App\Models\Image::query()->where([
                 'entity_type' => $entityType,
@@ -25,12 +23,11 @@ trait UploadTrait
             $images->delete();
         }
 
-        ini_set('memory_limit', '256M');
         $timeNow = time();
         $ext = $image->getClientOriginalExtension();
         $oName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+        $originName = "$timeNow-$oName-$entityType-$entityId.$ext";
 
-        $originName = "$timeNow-origin-$oName-$entityType-$entityId.$ext";
         $imageOrigin = Image::make($image)
             ->insert('img/watermark.png', 'top-left', 20, 20);
         $imageOrigin = $imageOrigin->stream();
@@ -45,6 +42,7 @@ trait UploadTrait
 
         $resp[] = $originName;
 
+        // TODO For preview plan for future
         if ($needPreview) {
             $imageThumb = Image::make($image)
                 ->resize(null, 225, function ($constraint) {
@@ -54,7 +52,7 @@ trait UploadTrait
                 ->insert('img/watermark.png', 'top-left', 20, 20);
 
             $imageThumb = $imageThumb->stream();
-            $name = "$timeNow-$oName-$entityType-$entityId.$ext";
+            $name = "thumbs/$originName";
             Storage::put($name, $imageThumb->__toString());
 
             // For thumbnail

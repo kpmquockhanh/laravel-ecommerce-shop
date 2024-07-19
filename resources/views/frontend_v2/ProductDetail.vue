@@ -21,7 +21,7 @@ export default {
     )
     const originImages = computed(() =>
       get(product.value, 'images', []).filter(
-        (image) => image.src.includes('origin') || image.is_thumbnail
+        () => true
       )
     )
     const onChangePreview = (image) => {
@@ -54,8 +54,8 @@ export default {
   <section v-if="product?.id" class="section-wrap pb-40 single-product">
     <div class="container-fluid semi-fluid">
       <div class="row">
-        <div class="col-md-3 col-xs-12 product-slider">
-          <CarouselComponent :items="originImages" ref="myCarousel">
+        <div class="col-md-4 col-xs-12">
+          <CarouselComponent :items="originImages" ref="myCarousel" :number-item="1">
             <template v-slot:default="slotProps">
               <SImage :src="slotProps.item.src" alt="" rounded />
             </template>
@@ -67,6 +67,7 @@ export default {
           </CarouselComponent>
           <CarouselComponent
             :items="images"
+            :item-scroll="3"
             :number-item="4"
             class="gallery-thumbs"
             item-class="gallery-cell is-selected"
@@ -83,7 +84,7 @@ export default {
         </div>
         <!-- end col img slider -->
 
-        <div class="col-md-9 col-xs-12 product-description-wrap">
+        <div class="col-md-8 col-xs-12 product-description-wrap">
           <h1 class="product-title">{{ product.title }}</h1>
           <span class="price">
             <del>

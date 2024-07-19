@@ -1,7 +1,19 @@
 $('.btn-remove').click(function () {
     const id = $(this).attr('data-id');
     const type = $(this).attr('data-type');
-    const tr = $(this).parents('tr');
+    const action = $(this).attr('data-action') || 'remove';
+    const parentSelector = $(this).attr('data-parent-selector') || 'tr';
+    const tr = $(this).parents(parentSelector);
+    const rawPayload = $(this).attr('data-payload') || '{}';
+    let payload = {};
+    try
+    {
+        payload = JSON.parse(rawPayload);
+    }
+    catch (e)
+    {
+        console.log(e);
+    }
 
     iziToast.question({
         timeout: 10000,
@@ -16,7 +28,7 @@ $('.btn-remove').click(function () {
         buttons: [
             ['<button><b>Yes</b></button>', function (instance, toast) {
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                axios.post(`/admin/${type}/remove`, {id: id})
+                axios.post(`/admin/${type}/${action}`, {id: id, ...payload})
                     .then(function (res) {
                         if (res.data.status)
                         {

@@ -96,13 +96,16 @@
                                 <div class="col-sm-10">
                                     <div class="row">
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
-                                            <div class="col-sm-4 mb-2 image-item">
+                                            <div class="col-sm-3 mb-2 image-item">
                                                 <div class="w-100 position-relative">
-                                                    <img src="{{ $image->href }}" alt="hehe"
+                                                    <img src="{{ $image->href }}" alt="img"
                                                          data-id="{{$image->id}}" class="w-100">
                                                     <button type="button" rel="tooltip"
-                                                            class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"
-                                                            data-id="{{$image->id}}" title=""
+                                                            class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove"
+                                                            data-id="{{$image->id}}"
+                                                            data-type="products"
+                                                            data-action="delete-image"
+                                                            data-parent-selector=".image-item"
                                                             style="right: 8px; top: 8px;">
                                                         <i class="fa fa-times"></i>
                                                     </button>
