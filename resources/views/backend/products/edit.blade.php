@@ -14,8 +14,8 @@
                         <div class="card-body ">
                             @csrf()
                             <div class="row">
-                                <label class="col-sm-2 col-form-label">Title</label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right">Image</label>
+                                <div class="col-12 col-md-10">
                                     @include('backend.products.upload_img', ['image' => $product->thumbnail, 'name' => 'image'])
                                 </div>
                             </div>
@@ -25,8 +25,8 @@
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </div>
                                 @endif
-                                <label class="col-sm-2 col-form-label">Title</label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right">Title</label>
+                                <div class="col-12 col-md-10">
                                     <div class="form-group">
                                         <input type="text" name="title" class="form-control"
                                                value="{{old('title', $product->title)}}">
@@ -39,8 +39,8 @@
                                         <strong>{{ $errors->first('slug') }}</strong>
                                     </div>
                                 @endif
-                                <label class="col-sm-2 col-form-label">Slug</label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right">Slug</label>
+                                <div class="col-12 col-md-10">
                                     <div class="form-group">
                                         <input type="text" name="slug" class="form-control"
                                                value="{{old('slug', $product->slug)}}">
@@ -53,7 +53,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <label class="col-sm-2 col-form-label">Price</label>
+                                <label class="col-12 col-md-2 text-left text-md-right">Price</label>
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input type="number" name="price" class="form-control"
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-2 col-form-label">Categories</label>
+                                <label class="col-12 col-md-2 text-left text-md-right">Categories</label>
                                 <div class="col-lg-5 col-md-6 col-sm-3">
                                     <select class="selectpicker" data-style="btn btn-info" multiple
                                             title="Select" data-size="7" name="categories[]">
@@ -83,8 +83,8 @@
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </div>
                                 @endif
-                                <label class="col-sm-2 col-form-label">Description</label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right">Description</label>
+                                <div class="col-12 col-md-10">
                                     <div class="form-group">
                                         <textarea type="text" name="description"
                                                   class="form-control">{{old('description', $product->description)}}</textarea>
@@ -92,11 +92,11 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <label class="col-sm-2 col-form-label">Images</label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right">Images</label>
+                                <div class="col-12 col-md-10">
                                     <div class="row">
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
-                                            <div class="col-sm-3 mb-2 image-item">
+                                            <div class="col-3 mb-2 image-item">
                                                 <div class="w-100 position-relative">
                                                     <img src="{{ $image->href }}" alt="img"
                                                          data-id="{{$image->id}}" class="w-100">
@@ -121,8 +121,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
+                                <label class="col-12 col-md-2 text-left text-md-right"></label>
+                                <div class="col-12 col-md-10">
                                     <div class="form-group float-right">
                                         <button type="submit" id="submit_form" class="btn btn-success">Update</button>
                                     </div>

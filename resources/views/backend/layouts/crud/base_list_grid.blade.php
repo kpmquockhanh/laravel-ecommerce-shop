@@ -52,7 +52,7 @@
             @else
                 <div class="row no-gutters">
                     @foreach($items as $item)
-                        <div class="col-4 col-xl-3 mb-2">
+                        <div class="col-4 col-12 col-xl-3 mb-2">
                             <div class="card m-1">
                                 <div class="card-header d-flex align-items-center justify-content-between gap-2">
                                     <a style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;text-decoration: none" href="{{route('admin.products.edit', $item->id)}}">{{ $item->title }}</a>
