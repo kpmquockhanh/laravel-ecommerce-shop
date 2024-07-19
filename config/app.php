@@ -296,7 +296,7 @@ return [
     ])->toArray(),
 
 
-//    'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+    'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
 
     'per_pages' => [
         10, 20, 50, 100
