@@ -16,14 +16,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/shop/
+            cd /root/laravel-ecommerce-shop
             git checkout .
             git pull origin main
-            nvm use 16
-            node --version
-            yarn install
-            yarn build
-            php artisan optimize
-            php artisan route:cache
-            php artisan config:clear
-            php artisan view:cache
+            docker exec laravel-ecommerce-shop-app-1 yarn install
+            docker exec laravel-ecommerce-shop-app-1 yarn build
+            docker exec laravel-ecommerce-shop-app-1 php artisan optimize
+            docker exec laravel-ecommerce-shop-app-1 php artisan route:cache
+            docker exec laravel-ecommerce-shop-app-1 php artisan config:cache
+            docker exec laravel-ecommerce-shop-app-1 php artisan view:cache
