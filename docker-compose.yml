@@ -9,11 +9,10 @@ services:
       - ./docker_configs/nginx/nginx.conf:/etc/nginx/conf.d/default.conf # Sync config from host
     networks:
       - kpm
+    depends_on:
+      - app
   app:
     build:
-      args:
-        user: nginx
-        uid: 1000
       context: ./
       dockerfile: docker_configs/php/Dockerfile
     restart: unless-stopped
