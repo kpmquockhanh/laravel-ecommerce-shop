@@ -25,7 +25,7 @@ class ProductResource extends JsonResource
             'images' => $this->images->map(function ($image) {
                 return [
 //                    'id' => $image->id,
-                    'src' => $image->src ? env('AWS_URL').$image->src : asset('backend/img/placeholder.jpg'),
+                    'src' => $image->href,
                     'is_thumbnail' => $image->is_thumbnail,
                 ];
             }),

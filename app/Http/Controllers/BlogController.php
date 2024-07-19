@@ -175,14 +175,10 @@ class BlogController extends Controller
             'entity_id' => -1,
         ])->get();
 
-        //[
-        //      { title: 'Dog', value: 'mydog.jpg' },
-        //      { title: 'Cat', value: 'mycat.gif' }
-        //    ]
         return response()->json($items->map(function ($item) {
             return [
                 'title' => $item->src,
-                'value' => env('AWS_URL') . $item->src,
+                'value' => $item->href,
             ];
         }));
     }

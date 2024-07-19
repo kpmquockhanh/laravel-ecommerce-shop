@@ -98,7 +98,7 @@
                                         @foreach($product->images->filter(function ($image) {return !\Illuminate\Support\Str::contains($image->src, 'origin');}) as $image)
                                             <div class="col-sm-4 mb-2 image-item">
                                                 <div class="w-100 position-relative">
-                                                    <img src="{{env('AWS_URL')}}{{ $image->src  }}" alt="hehe"
+                                                    <img src="{{ $image->href }}" alt="hehe"
                                                          data-id="{{$image->id}}" class="w-100">
                                                     <button type="button" rel="tooltip"
                                                             class="btn btn-danger btn-icon btn-sm m-0 position-absolute btn-remove-image"

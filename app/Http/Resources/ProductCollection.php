@@ -31,7 +31,7 @@ class ProductCollection extends ResourceCollection
                     'price' => $c->price,
                     'images' => $c->images->map(function ($image) {
                         return [
-                            'src' => $image->src ? env('AWS_URL').$image->src : asset('backend/img/placeholder.jpg'),
+                            'src' => $image->href,
                             'is_thumbnail' => $image->is_thumbnail,
                         ];
                     }),
