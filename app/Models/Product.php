@@ -36,7 +36,7 @@ class Product extends Model
         return Attribute::make(
             get: function () {
                 $image = $this->images->firstWhere('is_thumbnail', true);
-                return $image ? $image->href : asset('backend/img/placeholder.jpg');
+                return $image ? env('AWS_URL') . $image->href : asset('backend/img/placeholder.jpg');
             },
         );
     }
