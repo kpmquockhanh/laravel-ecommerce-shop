@@ -63,7 +63,7 @@ $('.btn-remove').click(function () {
 $('.change-show-status').on('change', function () {
     const button = $(this);
     const id = $(this).attr('data-id');
-    const route = $(this).attr('data-route');
+    const route = $(this).attr('data-route' || 'products');
     iziToast.question({
         timeout: 10000,
         close: false,
