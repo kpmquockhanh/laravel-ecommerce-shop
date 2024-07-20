@@ -26,6 +26,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row pb-2">
+                                @if ($errors->has('slug'))
+                                    <div class="text-danger col-md-12 offset-md-2">
+                                        <strong>{{ $errors->first('slug') }}</strong>
+                                    </div>
+                                @endif
+
+                                <label class="col-sm-2 col-form-label">Slug</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group">
+                                        <input type="text" name="slug" class="form-control" value="{{old('slug')}}">
+                                    </div>
+                                </div>
+                            </div>
                             @if ($errors->has('price'))
                                 <div class="text-danger col-md-12 offset-md-2 p-0">
                                     <strong>{{ $errors->first('price') }}</strong>
