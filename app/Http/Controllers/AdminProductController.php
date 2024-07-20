@@ -41,7 +41,6 @@ class AdminProductController extends Controller
 
         $viewData = [
             'items' => $products->paginate($page),
-            'products' => $products->paginate($page),
             'queries' => $request->query(),
             'route' => 'products',
             'header' => 'Products',
