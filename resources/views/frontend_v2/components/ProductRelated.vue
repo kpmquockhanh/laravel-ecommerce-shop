@@ -20,7 +20,7 @@
         >
           <template v-slot:default="{ item }">
             <div class="product product--carousel">
-              <ProductItem :product="item" />
+              <ProductItem :product="item" :overlay="true" />
             </div>
           </template>
         </CarouselComponent>

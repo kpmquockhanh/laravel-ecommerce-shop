@@ -1,8 +1,8 @@
 <template>
-  <div class="product-item" :class="{ 'd-flex': type === 'list' }">
-    <div class="product-img hover-trigger">
-      <a href="/public" @click.prevent="routeToDetail">
-        <E-Image v-if="product.thumbnail" :src="product.thumbnail" alt="" />
+  <div class="product-item position-relative" :class="{ 'd-flex': type === 'list' }">
+    <div class="product-img hover-trigger aspect-square">
+      <a href="/public" class="h-100" @click.prevent="routeToDetail">
+        <E-Image v-if="product.thumbnail" :src="product.thumbnail" alt="" class="h-100" img-class="h-100 object-fit-cover" />
         <E-Image v-else src="@images/placeholder.jpg" alt="" />
 
         <E-Image
@@ -24,20 +24,35 @@
           </a>
         </div>
       </div>
-      <a href="#" class="product-quickview" @click.prevent="routeToDetail">{{
-        $t('see_detail')
-      }}</a>
+      <a href="#" class="product-quickview" @click.prevent="routeToDetail">
+        <span v-if="!overlay">{{ $t('see_detail') }}</span>
+        <div v-else>
+          <div>
+            {{ product.title }}
+          </div>
+          <div class="price d-flex gap-4 justify-content-center w-100">
+            <del>
+              <span>{{ formatCurrency(product.price * 1.3) }}</span>
+            </del>
+            <ins>
+          <span class="amount">{{
+              formatCurrency(parseFloat(product.price))
+            }}</span>
+            </ins>
+          </div>
+        </div>
+      </a>
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div v-if="!overlay" class="d-flex justify-content-between">
       <div class="product-details">
         <h3 class="product-title text-truncate">
           <a href="#" @click.prevent="routeToDetail">{{ product.title }}</a>
         </h3>
         <span class="category">
           <a href="#">{{
-            product.categories?.map((c) => c.name).join(', ')
-          }}</a>
+              product.categories?.map((c) => c.name).join(', ')
+            }}</a>
         </span>
       </div>
 
@@ -47,8 +62,8 @@
         </del>
         <ins>
           <span class="amount">{{
-            formatCurrency(parseFloat(product.price))
-          }}</span>
+              formatCurrency(parseFloat(product.price))
+            }}</span>
         </ins>
       </span>
     </div>
@@ -63,8 +78,8 @@
         </del>
         <ins>
           <span class="amount">{{
-            formatCurrency(parseFloat(product.price))
-          }}</span>
+              formatCurrency(parseFloat(product.price))
+            }}</span>
         </ins>
       </span>
       <span class="rating">
@@ -72,7 +87,7 @@
       </span>
       <p v-html="product.description"></p>
       <a href="#" class="btn btn-dark btn-md left"
-        ><span>{{ $t('add_to_cart') }}</span></a
+      ><span>{{ $t('add_to_cart') }}</span></a
       >
       <div class="product-add-to-wishlist">
         <a href="#"><i class="fa fa-heart"></i></a>
@@ -99,6 +114,10 @@ export default {
     product: {
       type: Object,
     },
+    overlay: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const router = useRouter()
@@ -116,3 +135,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.gap-4 {
+  gap: 4px;
+}
+.aspect-square {
+  aspect-ratio: 1;
+}
+</style>

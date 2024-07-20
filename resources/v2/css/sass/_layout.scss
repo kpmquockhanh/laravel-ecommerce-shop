@@ -667,3 +667,7 @@ address {
 .flex-child {
   flex: 1;
 }
+
+.flex-column {
+  flex-direction: column;
+}

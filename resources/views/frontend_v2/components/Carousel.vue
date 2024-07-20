@@ -79,6 +79,11 @@ export default {
   margin-right: 0 !important;
 }
 
+.carousel__item {
+  padding: 0 16px;
+  width: 100%;
+}
+
 .carousel__prev,
 .carousel__next {
   box-sizing: content-box;
