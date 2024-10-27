@@ -47,18 +47,68 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($errors->has('price'))
-                                <div class="text-danger col-md-12 offset-md-2 p-0">
-                                    <strong>{{ $errors->first('price') }}</strong>
-                                </div>
-                            @endif
                             <div class="row">
+                                @if ($errors->has('price'))
+                                    <div class="text-danger col-md-12 offset-md-2 p-0">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </div>
+                                @endif
                                 <label class="col-12 col-md-2 text-left text-md-right">Price</label>
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input type="number" name="price" class="form-control"
                                                value="{{old('price', $product->price)}}">
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="row mt-2">
+                                @if ($errors->has('variants'))
+                                    <div class="text-danger col-md-12 offset-md-2">
+                                        <strong>{{ $errors->first('variants') }}</strong>
+                                    </div>
+                                @endif
+                                <label class="col-12 col-md-2 text-left text-md-right">Variants</label>
+                                <div class="col-12 col-md-10">
+                                    <div class="form-group">
+                                        @foreach ($product->variants as $variant)
+                                            <div class="d-flex gap-4 align-items-center mt-1">
+                                                <input type="text" name="variant_ids[]" class="form-control d-none"
+                                                       value="{{ $variant->id }}">
+                                                <input type="text" name="variant_names[]" class="form-control" placeholder="Name"
+                                                       value="{{ $variant->name }}">
+                                                <input type="number" name="prices[]" class="form-control"
+                                                       placeholder="Price"
+                                                       value="{{ $variant->price }}">
+                                                <input type="number" name="compare_prices[]" class="form-control"
+                                                       placeholder="Compare Price"
+                                                       value="{{ $variant->compare_price }}">
+                                                <button type="button" class="btn btn-danger btn-sm btn-icon remove_variant_btn m-0">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        @endforeach
+
+                                        <button type="button"
+                                                class="btn btn-primary btn-icon add_variant_btn">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                @if ($errors->has('compare_price'))
+                                    <div class="text-danger col-md-12 offset-md-2 p-0">
+                                        <strong>{{ $errors->first('compare_price') }}</strong>
+                                    </div>
+                                @endif
+                                <label class="col-12 col-md-2 text-left text-md-right">Compare Price</label>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <input type="number" name="compare_price" class="form-control"
+                                               value="{{old('compare_price', $product->compare_price ?? 0)}}">
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +119,7 @@
                                             title="Select" data-size="7" name="categories[]">
                                         @foreach ($categories as $category)
                                             <option value="{{$category->id}}"
-                                                {{in_array($category->id, $listIdCate)?'selected':''}}>
+                                                    {{in_array($category->id, $listIdCate)?'selected':''}}>
                                                 {{$category->name}}
                                             </option>
                                         @endforeach
@@ -120,6 +170,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <label class="col-12 col-md-2 text-left text-md-right"></label>
                                 <div class="col-12 col-md-10">
@@ -139,30 +190,52 @@
 @section('script')
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script>
-        Dropzone.autoDiscover = false;
+      Dropzone.autoDiscover = false
 
-        let myDropzone = new Dropzone("div#kpm", {
-            url: '/admin/products/upload/{{$product->id}}',
-            paramName: "file",
-            maxFilesize: 10,
-            acceptedFiles: "image/*",
-            autoProcessQueue: false,
-            complete: () => {
-                $("#form").trigger("submit");
-            },
-            headers: {
-                "X-CSRF-TOKEN": '{{ csrf_token() }}'
-            },
-            addRemoveLinks: true
-        });
+      let myDropzone = new Dropzone('div#kpm', {
+        url: '/admin/products/upload/{{$product->id}}',
+        paramName: 'file',
+        maxFilesize: 10,
+        acceptedFiles: 'image/*',
+        autoProcessQueue: false,
+        complete: () => {
+          $('#form').trigger('submit')
+        },
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        addRemoveLinks: true,
+      })
 
-        $("#submit_form").on("click", function(e) {
-            e.preventDefault();
-            if (myDropzone.getQueuedFiles().length) {
-                myDropzone.processQueue();
-                return;
-            }
-            $("#form").trigger("submit");
-        });
+      $('#submit_form').on('click', function(e) {
+        e.preventDefault()
+        if (myDropzone.getQueuedFiles().length) {
+          myDropzone.processQueue()
+          return
+        }
+        $('#form').trigger('submit')
+      })
+
+      $('.add_variant_btn').on('click', function(e) {
+        e.preventDefault()
+        let $this = $(this)
+        $this.before(` <div class="d-flex gap-4 align-items-center mt-1"> <input type="text" name="variant_ids[]" class="form-control d-none"
+                                                       value="0"><input type="text" name="variant_names[]" class="form-control" placeholder="Name"
+                                                   value="">
+                                            <input type="number" name="prices[]" class="form-control"
+                                                   placeholder="Price"
+                                                   value="">
+                                            <input type="number" name="compare_prices[]" class="form-control"
+                                                   placeholder="Compare Price"
+                                                   value="">
+                                            <button type="button" class="btn btn-danger btn-sm btn-icon remove_variant_btn m-0">
+                                                <i class="fa fa-minus"></i>
+                                            </button></div>`)
+      });
+
+      $('body').on('click', '.remove_variant_btn', function(e) {
+        e.preventDefault()
+        $(this).parent().remove()
+      });
     </script>
 @stop

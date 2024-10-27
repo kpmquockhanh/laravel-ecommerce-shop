@@ -80,7 +80,6 @@ export default {
 }
 
 .carousel__item {
-  padding: 0 16px;
   width: 100%;
 }
 

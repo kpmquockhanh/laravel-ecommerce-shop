@@ -1,4 +1,5 @@
-import { buildQueryParams } from './utils'
+import axios from 'axios'
+import { buildQueryParams } from '../utils'
 
 const doRequest = async (method, url, data = null) => {
   try {
@@ -34,5 +35,5 @@ export const doGet = async (url, queryObj = {}) => {
 
 export const doPost = (url, { query, data }) => {
   const q = buildQueryParams(query)
-  return doRequest('post', `${url}?${query}`, data)
+  return doRequest('post', `${url}?${q}`, data)
 }

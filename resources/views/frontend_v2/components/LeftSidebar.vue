@@ -1,5 +1,5 @@
 <template>
-  <aside class="col-md-3 sidebar left-sidebar">
+  <aside class="col-md-3 sidebar left-sidebar d-none d-md-block">
     <!-- Categories -->
     <div class="widget categories">
       <h3 class="widget-title heading uppercase relative bottom-line full-grey">
@@ -9,6 +9,7 @@
         <li
           v-for="category in categories"
           :class="{ 'active-cat': category.id === currentCategory }"
+          :key="category.id"
         >
           <a href="#" @click.prevent="onClickCategory(category)">{{
             category.name
@@ -49,14 +50,11 @@
   </aside>
 </template>
 <script>
-import FilterColor from './FilterColor.vue'
-import FilterSize from './FilterSize.vue'
-import BestSeller from './BestSeller.vue'
 import { useCategory } from '../../../js/composables/category'
 
 export default {
   name: 'LeftSidebar',
-  components: { BestSeller, FilterSize, FilterColor },
+  // components: { BestSeller, FilterSize, FilterColor },
   props: {},
   setup() {
     const { currentCategory, categories, countCategories, onClickCategory } =

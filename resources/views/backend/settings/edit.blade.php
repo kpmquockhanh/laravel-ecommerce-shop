@@ -7,7 +7,7 @@
                 <div class="col-sm-12">
                     <div class="card ">
                         <div class="card-header">
-                            <h4 class="card-title">Add setting</h4>
+                            <h4 class="card-title">Update setting</h4>
                         </div>
                         <div class="card-body ">
                             @csrf()
@@ -25,20 +25,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
-                                @if ($errors->has('value'))
-                                    <div class="text-danger col-md-12 offset-md-2">
-                                        <strong>{{ $errors->first('value') }}</strong>
-                                    </div>
-                                @endif
-                                <label class="col-sm-2 col-form-label">Value</label>
-                                <div class="col-sm-10">
-                                    <div class="form-group">
-                                        <input type="text" name="value" class="form-control"
-                                               value="{{old('value', $setting->value)}}">
+                            @if($setting->type == 'image')
+                                <div class="row mt-2">
+                                    <label class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        @include('backend.products.upload_img', ['image' => $setting->images[0]->href, 'name' => 'image'])
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="row mt-2">
+                                    @if ($errors->has('value'))
+                                        <div class="text-danger col-md-12 offset-md-2">
+                                            <strong>{{ $errors->first('value') }}</strong>
+                                        </div>
+                                    @endif
+                                    <label class="col-sm-2 col-form-label">Value</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group">
+                                            <input type="text" name="value" class="form-control"
+                                                   value="{{old('value', $setting->value)}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
                             <div class="row">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">

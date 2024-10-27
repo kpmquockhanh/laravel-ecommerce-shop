@@ -19,7 +19,7 @@
           :breakpoints="breakpoints"
         >
           <template v-slot:default="{ item }">
-            <div class="product product--carousel">
+            <div class="product product--carousel px-2">
               <ProductItem :product="item" :overlay="true" />
             </div>
           </template>
@@ -31,11 +31,11 @@
 </template>
 <script>
 import CarouselComponent from './Carousel.vue'
-import { doGet } from '../../../js/http'
 import get from 'lodash/get'
 import { onMounted, ref, watch } from 'vue'
 import ProductItem from './ProductItem.vue'
 import CardSkeleton from './core/CardSkeleton.vue'
+import { doGet } from '../../../js/composables/http'
 
 export default {
   name: 'ProductRelated',

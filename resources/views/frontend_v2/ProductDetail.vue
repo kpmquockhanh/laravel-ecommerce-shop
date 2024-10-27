@@ -14,6 +14,12 @@ export default {
   setup() {
     const { product, fetchProduct, slug } = useProduct()
     const myCarousel = ref(null)
+    const selectedVariant = ref(null)
+
+    const onChangeVariant = (variant) => {
+      selectedVariant.value = variant
+    }
+
     const images = computed(() =>
       get(product.value, 'images', []).filter(
         (image) => !image.src.includes('origin')
@@ -24,19 +30,26 @@ export default {
         () => true
       )
     )
+
+    const cPrice = computed(() => {
+      if (selectedVariant.value) {
+        return selectedVariant.value
+      }
+      return product.value
+    })
+
     const onChangePreview = (image) => {
-      const split = image.src.split('/')
-      const origin = split[split.length - 1]
-      const timestamp = origin.split('-')[0]
       const originImageIndex = originImages.value.findIndex(
-        (image) => image.src.includes(timestamp) || image.is_thumbnail
+        (i) => image.src === i.src
       )
       if (originImageIndex > -1 && myCarousel.value) {
         myCarousel.value.slideTo(originImageIndex)
       }
     }
     onMounted(() => {
-      fetchProduct()
+      fetchProduct().then(() => {
+        selectedVariant.value = product.value.variants[0]
+      })
     })
     return {
       slug,
@@ -45,6 +58,9 @@ export default {
       originImages,
       onChangePreview,
       myCarousel,
+      onChangeVariant,
+      selectedVariant,
+      cPrice,
     }
   },
 }
@@ -74,6 +90,7 @@ export default {
           >
             <template v-slot:default="slotProps">
               <SImage
+                class="mt-2"
                 :src="slotProps.item.src"
                 alt=""
                 rounded
@@ -87,12 +104,12 @@ export default {
         <div class="col-md-8 col-xs-12 product-description-wrap">
           <h1 class="product-title">{{ product.title }}</h1>
           <span class="price">
-            <del>
-              <span>{{ formatCurrency(product.price * 1.3) }}</span>
+            <del v-if="cPrice.compare_price">
+              <span>{{ formatCurrency(cPrice.compare_price) }}</span>
             </del>
             <ins>
               <span class="amount">{{
-                formatCurrency(product.price * 1)
+                formatCurrency(cPrice.price)
               }}</span>
             </ins>
           </span>
@@ -101,7 +118,7 @@ export default {
           </span>
           <p class="short-description" v-html="product.description"></p>
 
-          <div class="color-swatches clearfix">
+          <div class="color-swatches clearfix" v-if="false">
             <span>Color:</span>
             <a href="#" class="swatch-violet"></a>
             <a href="#" class="swatch-black"></a>
@@ -109,12 +126,7 @@ export default {
           </div>
 
           <div class="size-options clearfix">
-            <span>Size:</span>
-            <a href="#" class="size-xs selected">XS</a>
-            <a href="#" class="size-s">S</a>
-            <a href="#" class="size-m">M</a>
-            <a href="#" class="size-l">L</a>
-            <a href="#" class="size-xl">XL</a>
+            <a href="#" :class="{'selected': selectedVariant?.id === variant.id}" v-for="variant in product.variants" :key="variant.id" @click="onChangeVariant(variant)">{{ variant.name }}</a>
           </div>
 
           <div class="product-actions">
@@ -149,20 +161,23 @@ export default {
           </div>
 
           <div class="product_meta">
-            <span class="sku">SKU: <a href="#">111763</a></span>
-            <span class="brand_as"
-              >{{ $t('category') }}: <a href="#">Men T-shirt</a></span
-            >
+<!--            <span class="sku">SKU: <a href="#">111763</a></span>-->
+<!--            <span class="brand_as"-->
+<!--              >{{ $t('category') }}: <a href="#">Men T-shirt</a></span-->
+<!--            >-->
             <span class="posted_in"
-              >{{ $t('tags') }}:
-              <a href="#">{{
-                product.categories?.map((c) => c.name).join(', ')
-              }}</a></span
+              ><span>{{ $t('tags') }}:</span>
+              <span class="d-flex gap-text">
+                <a href="#" v-for="category in product.categories" :key="category.id">{{
+                    category.name
+                  }}</a>
+              </span>
+            </span
             >
           </div>
 
           <!-- Accordion -->
-          <div class="panel-group accordion mb-50" id="accordion">
+          <div class="panel-group accordion mb-50" id="accordion" v-if="false">
             <!--            <div class="panel">-->
             <!--              <div class="panel-heading">-->
             <!--                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="minus">Description<span>&nbsp;</span>-->

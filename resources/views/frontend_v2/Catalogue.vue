@@ -11,7 +11,7 @@
                                 class="product"
                                 :class="[
                                   `product-${layout}`,
-                                  { 'col-md-4 col-xs-6': layout === 'grid' },
+                                  { 'col-md-4 col-6 col-lg-3': layout === 'grid' },
                                 ]"
                                 v-for="product in products"
                                 :key="product.id"

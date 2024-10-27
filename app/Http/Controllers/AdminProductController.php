@@ -7,12 +7,16 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductVariant;
 use App\Traits\ListTrait;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 class AdminProductController extends Controller
 {
@@ -56,6 +60,7 @@ class AdminProductController extends Controller
                     'func' => function ($item) {
                         return Str::limit($item->title, 20, '...');
                     },
+                    'class' => 'font-weight-bold',
                 ],
                 'image' => [
                     'title' => 'Image',
@@ -71,18 +76,29 @@ class AdminProductController extends Controller
                 ],
                 'price' => [
                     'title' => 'Price',
+                    'type' => 'currency',
+                ],
+                'compare_price' => [
+                    'title' => 'Compare Price',
+                    'func' => function ($item) {
+                        return $item->compare_price ?? 0;
+                    },
+                    'type' => 'currency',
+
                 ],
                 'created_at' => [
                     'title' => 'Created At',
                     'func' => function ($item) {
                         return $item->created_at->diffForHumans();
                     },
+                    'class' => 'text-italic',
                 ],
                 'updated_at' => [
                     'title' => 'Updated At',
                     'func' => function ($item) {
                         return $item->updated_at->diffForHumans();
                     },
+                    'class' => 'text-italic',
                 ],
                 'actions' => [
                     'title' => 'Actions',
@@ -136,7 +152,7 @@ class AdminProductController extends Controller
             return redirect()->back();
         }
 
-        $product = Product::with('categories')->with('images')->findOrFail($id);
+        $product = Product::with('categories', 'images', 'variants')->findOrFail($id);
         if (!$product->canChange()) {
             return redirect(route('admin.products.list'))->withErrors(['noPermission' => 'You have no permission to change this product!']);
         }
@@ -153,14 +169,63 @@ class AdminProductController extends Controller
     {
         $id = $request->id;
         $product = Product::query()->findOrFail($request->id);
-        //Update category of product
 
+        $variantNames = $request->get('variant_names');
+        $prices = $request->get('prices');
+        $comparePrices = $request->get('compare_prices');
+        $variantIds = $request->get('variant_ids');
+
+        $insertVariants = [];
+        $updateVariants = [];
+
+        foreach ($variantNames as $key => $variantName) {
+            if (!$variantName || !$prices[$key]) {
+                continue;
+            }
+
+            $variantId = $variantIds[$key];
+
+            if ($variantId) {
+                $updateVariants[] = [
+                    'id' => $variantId,
+                    'name' => $variantName,
+                    'price' => $prices[$key],
+                    'compare_price' => $comparePrices[$key],
+                    'product_id' => $id,
+                    "updated_at" => date('Y-m-d H:i:s'),
+                ];
+                continue;
+            }
+
+            $insertVariants[] = [
+                'name' => $variantName,
+                'price' => $prices[$key],
+                'compare_price' => $comparePrices[$key],
+                'id' => $variantIds[$key],
+                'product_id' => $id,
+                'sku' => Str::random(10),
+                "created_at" => date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s'),
+            ];
+        }
+
+        if (count($insertVariants) > 0) {
+            ProductVariant::query()->insertOrIgnore($insertVariants);
+        }
+        foreach ($updateVariants as $updateVariant) {
+            $updateId = $updateVariant['id'];
+            unset($updateVariant['id']);
+            ProductVariant::query()->findOrFail($updateId)->update($updateVariant);
+        }
+
+        //Update category of product
         $this->processCategory($request, $product);
         $data = $this->getDataForStore($request, 'update');
         if ($image = $request->image) {
             $this->doUpload($image, $id, 'product');
         }
         $product->update($data);
+
         return redirect(route('admin.products.edit', ['id' => $id]));
     }
 
@@ -235,6 +300,10 @@ class AdminProductController extends Controller
             'title',
             'message',
             'price',
+            'compare_price',
+            'prices',
+            'compare_prices',
+            'variant_names',
             'description',
             'slug',
         ]);
@@ -299,5 +368,130 @@ class AdminProductController extends Controller
         return response()->json([
             'status' => false,
         ]);
+    }
+
+    public function import()
+    {
+        return view('backend.products.import')->with([
+            'image' => asset('backend/img/placeholder.jpg'),
+        ]);
+    }
+    public function importProduct(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        $file = $request->file('file');
+        // Process the file as needed, e.g., parsing CSV, etc.
+        $reader = new Xlsx();
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($file);
+        $sheet = $spreadsheet->getActiveSheet();
+        $excelData = $sheet->rangeToArray('A1:AJ81', null, true, false, true);
+
+        $excelData = array_map(function($row) {
+            return array_filter($row, function($value) {
+                return !is_null($value);
+            });
+        }, $excelData);
+
+        $items = [];
+        foreach ($excelData as $row => $rowItem) {
+            if (count($rowItem) < 1) {
+                continue;
+            }
+
+            foreach ($rowItem as $col => $cellValue) {
+                if (Str::contains($cellValue, '-')) {
+                    $items["$row-$col"] = [
+                        'sku' => $cellValue
+                    ];
+                }
+            }
+        }
+
+        foreach ($items as $key => $item) {
+            [$row, $col] = explode('-', $key);
+
+            for ($i = (int)$row + 1; $i < count($excelData); $i++) {
+                $rowItem = $excelData[$i];
+                if (count($rowItem) < 1) {
+                    continue;
+                }
+
+                if (isset($rowItem[$col]) && (Str::contains($rowItem[$col], 'k') || $rowItem[$col] > 800)) {
+                    $items[$key]['price'] = (int)Str::replace('k', '', $rowItem[$col]) * 1000;
+                    break;
+                }
+
+                if (isset($rowItem[$col])) {
+                    $items[$key]['variants'][] = $rowItem[$col];
+                }
+            }
+        }
+
+//            dd($items);
+//            $items = [$items["3-B"]];
+        foreach ($items as $item) {
+            $product = Product::query()->where('slug', Str::slug($item['sku']))->first();
+            if ($product) {
+                $product->update([
+                    'price' => $item['price'] ?? 0,
+                ]);
+
+                foreach ($item['variants'] as $variant) {
+                    $productVariant = ProductVariant::query()->where('sku', "$product->slug-$variant")->first();
+                    if ($productVariant) {
+                        $productVariant->update([
+                            'price' => $item['price'] ?? 0,
+                        ]);
+                        continue;
+                    }
+
+                    ProductVariant::query()->create([
+                        'sku' => "$product->slug-$variant",
+                        'price' => $item['price'] ?? 0,
+                        'name' => $variant,
+                        'product_id' => $product->id
+                    ]);
+                }
+                continue;
+            }
+
+            $product = Product::query()->create([
+                'sku' => $item['sku'],
+                'price' => $item['price'] ?? 0,
+                'slug' => Str::slug($item['sku']),
+                'title' => $item['sku'],
+                'active' => 1,
+                'created_by' => Auth::id(),
+            ]);
+
+            foreach ($item['variants'] as $variant) {
+                ProductVariant::query()->create([
+                    'sku' => "$product->slug-$variant",
+                    'price' => $item['price'] ?? 0,
+                    'name' => $variant,
+                    'product_id' => $product->id
+                ]);
+            }
+        }
+
+        dd('done');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Import successful'
+        ]);
+
+        try {
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Import failed: ' . $e->getMessage()
+            ]);
+        }
     }
 }

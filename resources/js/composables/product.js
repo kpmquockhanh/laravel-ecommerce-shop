@@ -1,5 +1,5 @@
 import { computed, nextTick, ref, watch } from "vue";
-import { doGet } from "../http";
+import { doGet } from "./http";
 import get from "lodash/get";
 import { useRoute, useRouter } from "vue-router";
 import { useCategory } from "./category";

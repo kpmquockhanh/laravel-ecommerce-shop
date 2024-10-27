@@ -17,6 +17,7 @@ class Product extends Model
         'slug',
         'active',
         'price',
+        'compare_price',
         'image',
         'description',
     ];
@@ -29,6 +30,11 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(Image::class, 'entity_id')->where('entity_type', 'product');
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id');
     }
 
     public function thumbnail(): Attribute

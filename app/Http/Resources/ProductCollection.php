@@ -29,6 +29,7 @@ class ProductCollection extends ResourceCollection
                         ];
                     }),
                     'price' => $c->price,
+                    'compare_price' => $c->compare_price,
                     'images' => $c->images->map(function ($image) {
                         return [
                             'src' => $image->href,

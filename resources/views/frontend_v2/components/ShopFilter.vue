@@ -1,5 +1,5 @@
 <template>
-  <div class="shop-filter">
+  <div class="shop-filter" v-if="false">
     <div class="view-mode hidden-xs">
       <span>{{ $t('view') }}:</span>
       <a
@@ -26,6 +26,7 @@
         <option
           :value="item.value"
           v-for="item in dropdownData"
+          :key="item.value"
           :selected="item.is_default"
         >
           {{ item.label }}
@@ -46,7 +47,7 @@ import { ref } from 'vue'
 
 export default {
   name: 'ShopFilter',
-  setup(props, { emit }) {
+  setup() {
     const { layout, setLayout } = useLayout()
     const { t } = useI18n()
 

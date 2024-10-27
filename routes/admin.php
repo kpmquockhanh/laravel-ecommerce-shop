@@ -46,6 +46,9 @@ Route::prefix('')->group(function () {
                 ->post('change-status', [App\Http\Controllers\AdminProductController::class, 'changeShowStatus'])
                 ->name('admin.products.change-status');
 
+            Route::get('import', [App\Http\Controllers\AdminProductController::class, 'import'])->name('admin.products.import');
+            Route::post('import', [App\Http\Controllers\AdminProductController::class, 'importProduct'])->name('admin.products.import.post');
+
             // Categories
             Route::prefix('categories')->group(function () {
                 Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('admin.categories.list');

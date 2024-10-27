@@ -8,8 +8,9 @@
             <li
               v-for="(item, index) in items"
               :class="{ active: index === items.length - 1 }"
+              :key="index"
             >
-              <a href="#" @click.prevent="routeTo({ name: item.name })">{{
+              <a class="text-capitalize" href="#" @click.prevent="routeTo({ name: item.name })">{{
                 item.label
               }}</a>
             </li>
@@ -27,7 +28,7 @@ import { useProduct } from '../../../../js/composables/product'
 import { useI18n } from 'vue-i18n-lite'
 
 export default {
-  name: 'Breadcrumb',
+  name: 'BreadcrumbComponent',
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -41,6 +42,10 @@ export default {
             {
               name: 'home',
               label: t('home'),
+            },
+            {
+              name: 'product_list',
+              label: t('products'),
             },
             {
               name: 'product-detail',

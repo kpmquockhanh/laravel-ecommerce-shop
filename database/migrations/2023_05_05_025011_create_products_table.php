@@ -18,7 +18,8 @@ return new class extends Migration
             $table->boolean('active')->default(false);
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('price');
+            $table->float('price', 10);
+            $table->float('compare_price', 10)->nullable();
             $table->integer('image_id')->nullable();
             $table->integer('priority')->default(0);
             $table->softDeletes();

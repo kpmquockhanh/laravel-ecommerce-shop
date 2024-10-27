@@ -40,6 +40,9 @@
                                             {{$item->id}}
                                         </td>
                                         <td class="text-center">
+                                            {{$item->type}}
+                                        </td>
+                                        <td class="text-center">
                                             {{$item->key}}
                                         </td>
                                         <td class="text-center">

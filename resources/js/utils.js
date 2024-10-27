@@ -6,5 +6,5 @@ export const buildQueryParams = (params) => {
 }
 
 export const formatCurrency = (value) => {
-  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  return value.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
 }

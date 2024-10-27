@@ -26,6 +26,13 @@
                                 </div>
                             </div>
                             <div class="row mt-2">
+                                <label class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    @include('backend.products.upload_img', ['image' => asset('backend/img/placeholder.jpg'), 'name' => 'image'])
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
                                 @if ($errors->has('value'))
                                     <div class="text-danger col-md-12 offset-md-2">
                                         <strong>{{ $errors->first('value') }}</strong>

@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/products')->group(function () {
     Route::get('/', function (Request $request) {
-        $products = \App\Models\Product::with(['categories', 'images'])->where('active', 1);
+        $products = \App\Models\Product::with(['categories:id,name,code', 'images'])->where('active', 1);
         if ($request->category) {
             $products->whereHas('categories', function ($query) {
                 $query->where('categories.id', request()->query('category'));
@@ -66,7 +66,7 @@ Route::prefix('/products')->group(function () {
         return new ProductResource(\App\Models\Product::query()->findOrFail($id));
     })->where('id', '\d+');
     Route::get('/{slug}', function ($slug) {
-        return new ProductResource(\App\Models\Product::with('images')->where(['slug' => $slug])->firstOrFail());
+        return new ProductResource(\App\Models\Product::with('images', 'categories:id,name,code', 'variants')->where(['slug' => $slug])->firstOrFail());
     });
 });
 
@@ -94,4 +94,9 @@ Route::prefix('/posts')->group(function () {
         $blogs = \App\Models\Blog::query()->orderBy('id', 'desc')->limit(100)->get();
         return new \App\Http\Resources\BlogCollection($blogs);
     });
+});
+
+Route::get('/settings', function () {
+    $settings = \App\Models\Setting::with('images')->orderBy('id', 'desc')->limit(100)->get();
+    return new \App\Http\Resources\SettingsResource($settings);
 });

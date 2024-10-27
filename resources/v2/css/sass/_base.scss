@@ -8,3 +8,13 @@
 .object-fit-cover {
   object-fit: cover;
 }
+
+.gap-text {
+  gap: 4px;
+  a::after {
+    content: ', ';
+  }
+  a:last-child::after {
+    content: '';
+  }
+}

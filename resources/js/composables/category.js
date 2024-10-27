@@ -1,7 +1,7 @@
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { doGet } from '../http'
 import get from 'lodash/get'
+import { doGet } from './http'
 
 // global state, created in module scope
 const currentCategory = ref(0)
@@ -22,6 +22,9 @@ export function useCategory() {
   }
 
   const onClickCategory = async (category) => {
+    if (router.currentRoute.value.name !== 'product_list') {
+      await router.push({ name: 'product_list', params: { slug: category.slug } })
+    }
     // Remove query q
     const query = { ...route.query }
     delete query.q

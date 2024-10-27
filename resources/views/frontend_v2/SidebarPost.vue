@@ -12,20 +12,17 @@
     <div class="widget categories">
       <h3 class="widget-title heading relative bottom-line full-grey">Categories</h3>
       <ul class="list-dividers">
-        <li>
-          <a href="#">Women</a>
-        </li>
-        <li>
-          <a href="#">Men</a>
-        </li>
-        <li>
-          <a href="#">Accessories</a>
-        </li>
-        <li>
-          <a href="#">Bags</a>
-        </li>
-        <li>
-          <a href="#">Watches</a>
+        <li
+          v-for="category in categories"
+          :class="{ 'active-cat': category.id === currentCategory }"
+          :key="category.id"
+        >
+          <div class="d-flex">
+            <a class="text-truncate" href="#" @click.prevent="onClickCategory(category)" style="max-width: 150px">{{
+                category.name
+              }}</a
+            ><span>({{ countCategories[`category-${category.id}`] || 0 }})</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -113,7 +110,24 @@
   </aside>
 </template>
 <script>
+import { useCategory } from '../../js/composables/category'
+import { onMounted } from 'vue'
+
 export default {
-  name: "SidebarPost"
+  name: "SidebarPost",
+  setup() {
+    const { currentCategory, categories, countCategories, onClickCategory, fetchCategories } =
+      useCategory()
+
+    onMounted(() => {
+      fetchCategories()
+    })
+    return {
+      currentCategory,
+      categories,
+      countCategories,
+      onClickCategory,
+    }
+  }
 };
 </script>

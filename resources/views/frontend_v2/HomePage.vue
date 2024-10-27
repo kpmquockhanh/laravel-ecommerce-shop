@@ -1,6 +1,7 @@
 <script>
 import { nextTick, onMounted, ref } from "vue";
 import BlogList from "./BlogList.vue";
+import { useSettings } from '../../js/composables/settings'
 
 export default {
   name: "CataloguePage",
@@ -13,7 +14,7 @@ export default {
          -------------------------------------------------------*/
       // eslint-disable-next-line no-undef
       $(owl_hero.value).owlCarousel({
-        autoPlay: 3000,
+        // autoPlay: 3000,
         navigation: true,
         navigationText: ["<i class='ui-left-arrow'></i>", "<i class='ui-right-arrow'></i>"],
         slideSpeed: 300,
@@ -25,13 +26,17 @@ export default {
       })
     };
 
+    const st = useSettings();
     onMounted(() => {
       nextTick(() => {
         initOwlCarousel();
+        st.fetchSettings()
       })
     })
+
     return {
       owl_hero,
+      settings: st.settings,
     };
   }
 };
@@ -44,7 +49,9 @@ export default {
       <section class="hero-wrap text-center relative">
         <div id="owl-hero" ref="owl_hero" class="owl-carousel owl-theme light-arrows slider-animated">
           <div class="hero-slide overlay b1">
-            <div class="container">
+            <div class="container"
+                 :style="{'background-image': `url(${settings?.home_page_hero_image1})`}"
+                 style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
                   <h1 class="hero-title nocaps">Great Fashion 2017</h1>
@@ -57,7 +64,8 @@ export default {
             </div>
           </div>
           <div class="hero-slide overlay b2">
-            <div class="container">
+            <div class="container" :style="{'background-image': `url(${settings?.home_page_hero_image2})`}"
+              style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
                   <h1 class="hero-title nocaps">Exclusive Products</h1>
@@ -71,7 +79,8 @@ export default {
             </div>
           </div>
           <div class="hero-slide overlay b3">
-            <div class="container">
+            <div class="container" :style="{'background-image': `url(${settings?.home_page_hero_image3})`}"
+              style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
                   <h1 class="hero-title nocaps">Enjoy Online Shopping</h1>

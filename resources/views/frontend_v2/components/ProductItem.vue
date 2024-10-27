@@ -14,7 +14,7 @@
           no-loading
         />
       </a>
-      <div class="product-label">
+      <div class="product-label" v-if="product.compare_price">
         <span class="sale">sale</span>
       </div>
       <div class="hover-2">
@@ -31,8 +31,8 @@
             {{ product.title }}
           </div>
           <div class="price d-flex gap-4 justify-content-center w-100">
-            <del>
-              <span>{{ formatCurrency(product.price * 1.3) }}</span>
+            <del v-if="product.compare_price">
+              <span>{{ formatCurrency(product.compare_price) }}</span>
             </del>
             <ins>
           <span class="amount">{{
@@ -44,7 +44,7 @@
       </a>
     </div>
 
-    <div v-if="!overlay" class="d-flex justify-content-between">
+    <div v-if="!overlay" class="d-flex flex-column">
       <div class="product-details">
         <h3 class="product-title text-truncate">
           <a href="#" @click.prevent="routeToDetail">{{ product.title }}</a>
@@ -57,9 +57,9 @@
       </div>
 
       <span class="price">
-        <del>
-          <span>{{ formatCurrency(product.price * 1.3) }}</span>
-        </del>
+        <del v-if="product.compare_price">
+              <span>{{ formatCurrency(product.compare_price) }}</span>
+            </del>
         <ins>
           <span class="amount">{{
               formatCurrency(parseFloat(product.price))
@@ -73,9 +73,9 @@
         <a href="#" @click.prevent="routeToDetail">{{ product.title }}</a>
       </h3>
       <span class="price">
-        <del>
-          <span>{{ formatCurrency(product.price * 1.3) }}</span>
-        </del>
+       <del v-if="product.compare_price">
+              <span>{{ formatCurrency(product.compare_price) }}</span>
+            </del>
         <ins>
           <span class="amount">{{
               formatCurrency(parseFloat(product.price))

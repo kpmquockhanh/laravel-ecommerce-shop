@@ -60,7 +60,7 @@
                         @foreach($items as $item)
                             <tr>
                                 @foreach($display_fields as $key => $field)
-                                    <td class="text-center">
+                                    <td class="text-center {{ $field['class'] ?? '' }}">
                                         @switch($key)
                                             @case('image')
                                                 <img
@@ -75,6 +75,8 @@
                                                     <a href="{{ $field['link']($item) }}">
                                                         {{ isset($field['func']) ? $field['func']($item) : $item[$key] }}
                                                     </a>
+                                                @elseif(isset($field['type']) && $field['type'] == 'currency')
+                                                    {{ number_format(isset($field['func']) ? $field['func']($item) : $item[$key]) }}đ
                                                 @else
                                                     {{ isset($field['func']) ? $field['func']($item) : $item[$key] }}
                                                 @endif

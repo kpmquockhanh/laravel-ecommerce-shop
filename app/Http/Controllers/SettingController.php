@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
+    use UploadTrait;
     public function index(Request $request)
     {
-        $categories = Setting::query();
+        $categories = Setting::with('images');
         $page = 50;
         if ($paginate = $request->paginate) {
             $page = $paginate;
@@ -26,6 +28,15 @@ class SettingController extends Controller
             'display_fields' => [
                 'id' => [
                     'title' => '#',
+                ],
+                'image' => [
+                    'title' => 'Image',
+                    'func' => function ($item) {
+                        if ($item->images->count() > 0) {
+                            return $item->images[0]->href;
+                        }
+                        return '';
+                    },
                 ],
                 'key' => [
                     'title' => 'Key',
@@ -121,7 +132,19 @@ class SettingController extends Controller
 
     public function add(Request $request)
     {
-        Setting::query()->create($request->all(['key', 'value']));
+        $payload = $request->all(['key', 'value']);
+        if (!$payload['value']) {
+            $payload['value'] = 'image';
+        }
+        $image = $request->file('image');
+        $setting = Setting::query()->create([...$payload, 'image' => $image, 'type' => 'string']);
+        if ($image) {
+            $this->doUpload($image, $setting->id, 'setting', false);
+            $setting->update([
+                'type' => 'image'
+            ]);
+        }
+
         return redirect(route('admin.settings.list'));
     }
 
@@ -133,8 +156,17 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
+        $payload = $request->all(['key', 'value']);
+        if (!$payload['value']) {
+            $payload['value'] = 'image';
+        }
         $setting = Setting::query()->where(['id' => $request->id]);
-        $setting->update($request->all(['key', 'value']));
+        $image = $request->file('image');
+        if ($image) {
+            Image::query()->where(['entity_id' => $request->id, 'entity_type' => 'setting'])->delete();
+            $this->doUpload($image, $request->id, 'setting', false);
+        }
+        $setting->update($payload);
         return redirect(route('admin.settings.list'));
     }
 

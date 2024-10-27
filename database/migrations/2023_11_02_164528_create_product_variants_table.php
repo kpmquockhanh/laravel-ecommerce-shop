@@ -18,9 +18,12 @@ return new class extends Migration
             // product_id
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             // price
-            $table->float('price');
+            $table->float('price', 10);
+            $table->float('compare_price', 10)->default(0);
             // sku
             $table->string('sku');
+            $table->unique(['product_id', 'name']);
+            $table->unique('sku');
             $table->timestamps();
         });
     }

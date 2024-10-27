@@ -4,11 +4,10 @@ import { useI18n } from "vue-i18n-lite";
 import NavCart from "./NavCart.vue";
 import { nextTick, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import HeaderDropDownExt from "./HeaderDropDownExt.vue";
 
 export default {
   name: "HeaderV2Type1",
-  components: { HeaderDropDownExt, NavCart },
+  components: { NavCart },
   setup() {
     const router = useRouter();
     const i18n = useI18n();
@@ -177,7 +176,7 @@ export default {
                 <span class="icon-bar"></span>
               </button>
               <!-- Mobile cart -->
-              <div class="nav-cart mobile-cart hidden-lg hidden-md">
+              <div class="nav-cart mobile-cart hidden-lg hidden-md" v-if="false">
                 <div class="nav-cart-outer">
                   <div class="nav-cart-inner">
                     <a href="#" class="nav-cart-icon">
@@ -228,7 +227,7 @@ export default {
 
             <div class="flex-child flex-right nav-right hidden-sm hidden-xs">
               <ul>
-                <li class="nav-register">
+                <li class="nav-register" v-if="false">
                   <a href="#">{{ $t("my_account") }}</a>
                 </li>
                 <li class="nav-search-wrap style-2 hidden-sm hidden-xs">
@@ -240,7 +239,7 @@ export default {
                     <i class="fa fa-search"></i>
                   </a>
                 </li>
-                <li class="nav-cart">
+                <li class="nav-cart" v-if="false">
                   <NavCart />
                 </li>
               </ul>

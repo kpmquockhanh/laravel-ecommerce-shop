@@ -1,9 +1,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { doGet } from "../http";
+import { doGet } from "./http";
 import get from "lodash/get";
-
-
 export function usePost() {
   const router = useRouter();
   const isLoadingPosts = ref(true);
