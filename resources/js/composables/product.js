@@ -6,6 +6,7 @@ import { useCategory } from "./category";
 
 // global state, created in module scope
 const isLoadingProducts = ref(false);
+const isLoadingProduct = ref(false);
 const products = ref([]);
 const productMeta = ref({});
 const product = ref({});
@@ -87,17 +88,18 @@ export function useProduct() {
         });
     };
 
-    const fetchProduct = async (target) => {
+    const fetchProduct = async () => {
         if (!slug.value) {
             return;
         }
 
-        console.log("fetch product", target, slug.value);
+        isLoadingProduct.value = true;
         const resp = await doGet(`/api/products/${slug.value}`);
         if (resp.error && resp.status === 404) {
             await router.push({ name: "404" });
             return;
         }
+        isLoadingProduct.value = false;
         product.value = get(resp, "data", {});
         scrollToTop();
     };
@@ -121,7 +123,7 @@ export function useProduct() {
         if (!oldVal || val === oldVal) {
             return;
         }
-        fetchProduct("watch").then();
+        fetchProduct().then();
     });
     return {
         products,
@@ -136,6 +138,7 @@ export function useProduct() {
         product,
         fetchProduct,
         slug,
-        querySearch
+        querySearch,
+        isLoadingProduct,
     };
 }

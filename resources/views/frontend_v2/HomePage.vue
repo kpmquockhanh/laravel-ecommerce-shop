@@ -54,8 +54,8 @@ export default {
                  style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
-                  <h1 class="hero-title nocaps">Great Fashion 2017</h1>
-                  <h2 class="hero-subtitle lines">New Arrivals Collection</h2>
+                  <h1 class="hero-title nocaps">{{ settings?.home_page_title }}</h1>
+                  <h2 class="hero-subtitle lines">{{ settings?.home_page_subtitle }}</h2>
                   <div class="buttons-holder">
                     <a href="#" class="btn btn-lg btn-transparent"><span>Shop Now</span></a>
                   </div>
@@ -68,8 +68,8 @@ export default {
               style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
-                  <h1 class="hero-title nocaps">Exclusive Products</h1>
-                  <h2 class="hero-subtitle lines">Get awesome items only in Zenna online shop</h2>
+                  <h1 class="hero-title nocaps">{{ settings?.home_page_title2 }}</h1>
+                  <h2 class="hero-subtitle lines">{{ settings?.home_page_subtitle2 }}</h2>
                   <div class="buttons-holder">
                     <a href="#" class="btn btn-lg btn-color"><span>Buy it Now</span></a>
                     <a href="#" class="btn btn-lg btn-transparent"><span>Learn More</span></a>
@@ -83,8 +83,8 @@ export default {
               style="background-size: cover">
               <div class="hero-holder">
                 <div class="hero-message">
-                  <h1 class="hero-title nocaps">Enjoy Online Shopping</h1>
-                  <h2 class="hero-subtitle lines">Zenna is perfectly responsive theme</h2>
+                  <h1 class="hero-title nocaps">{{ settings?.home_page_title3 }}</h1>
+                  <h2 class="hero-subtitle lines">{{settings?.home_page_subtitle3 }}</h2>
                   <div class="buttons-holder">
                     <a href="#" class="btn btn-lg btn-transparent"><span>Shop Now</span></a>
                   </div>

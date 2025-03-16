@@ -27,5 +27,7 @@
     "cart": "Cart",
     "description": "Description",
     "404_1": "Look like you're lost",
-    "404_2": "the page you are looking for not available!"
+    "404_2": "the page you are looking for not available!",
+    "no_products_found": "No products found",
+    "products": "Products"
 }

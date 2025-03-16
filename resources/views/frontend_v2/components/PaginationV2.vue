@@ -6,7 +6,7 @@
     </p>
     <nav class="pagination right clearfix">
       <a href="#"><i class="fa fa-angle-left"></i></a>
-      <template v-for="n in pageNumber">
+      <template v-for="n in pageNumber" :key="n">
         <span v-if="currentPage === n" class="page-numbers current">{{
           n
         }}</span>
@@ -21,7 +21,7 @@
 import { computed } from 'vue'
 
 export default {
-  name: 'Pagination',
+  name: 'PaginationComponent',
   props: {
     total: {
       type: Number,

@@ -19,6 +19,7 @@ class BlogCollection extends ResourceCollection
                 return [
                     'id' => $c->id,
                     'title' => $c->title,
+                    'content' => mb_substr($c->content, 0, 20, 'UTF-8') . "...",
                     'created_at' => $c->created_at->diffForHumans(),
                     'updated_at' => $c->updated_at->diffForHumans(),
                 ];

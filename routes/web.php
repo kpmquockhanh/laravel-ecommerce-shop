@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('cache.headers:public;max_age=2628000;etag')->get('{any}', function () {
     return view('vue');
 })->where('any', '.*')
-    ->where('any', '^(?!.*api).*$');
+    ->where('any', '^(?!.*api).*$')->where('any', '^(?!.*admin).*$');

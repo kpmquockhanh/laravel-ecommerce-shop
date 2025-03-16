@@ -31,7 +31,10 @@ class CategoryCollection extends ResourceCollection
                     'name' => $c->name,
                     'code' => $c->code,
                 ];
-            }),
+            })->sortByDesc(function ($c) use ($mapCount) {
+                $id = $c['id'];
+                return $mapCount["category-$id"] ?? 0;
+            })->values(),
             'count'=> $mapCount,
         ];
     }

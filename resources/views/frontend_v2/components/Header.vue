@@ -2,8 +2,9 @@
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n-lite";
 import NavCart from "./NavCart.vue";
-import { nextTick, ref, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { onClickOutside } from "@vueuse/core";
+import { useSettings } from '../../../js/composables/settings'
 
 export default {
   name: "HeaderV2Type1",
@@ -11,6 +12,8 @@ export default {
   setup() {
     const router = useRouter();
     const i18n = useI18n();
+    const { settings, fetchSettings } = useSettings();
+
     const { current, changeLocale } = i18n;
     const target = ref(null);
     const routeToHome = () => {
@@ -56,6 +59,10 @@ export default {
           isOpenSearch.value = false;
         });
     };
+
+    onMounted(() => {
+      fetchSettings()
+    })
     return {
       current,
       onChangeLocale,
@@ -64,7 +71,8 @@ export default {
       target,
       searchString,
       onSubmitSearch,
-      input
+      input,
+      settings,
     };
   }
 };
@@ -158,7 +166,7 @@ export default {
                   <a href="/public" @click.prevent="routeToHome">
                     <img
                       class="logo-dark"
-                      src="@assets/v2/img/logo_dark.png"
+                      :src="settings?.logo"
                       alt="logo"
                     />
                   </a>

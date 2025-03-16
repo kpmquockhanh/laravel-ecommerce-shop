@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Kpm Shop v2</title>
+    <title>{{ config('app.name') }}</title>
 
     <meta charset="utf-8">
     <!--[if IE]>

@@ -55,11 +55,7 @@ export default {
           </li>
         </ul>
         <div class="entry-content">
-          <p>We possess within us two minds. So far I have written only of the conscious mind. This Theme is the
-            Best theme on ThemeForest. So far I have written only of the conscious mind. I would now like to
-            introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind
-            contains such power.</p>
-
+          <div v-html="item.content"></div>
           <router-link :to="{
             name: 'post_single',
             params: {

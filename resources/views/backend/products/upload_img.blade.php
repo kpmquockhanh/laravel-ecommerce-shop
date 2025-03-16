@@ -1,6 +1,6 @@
-@if ($errors->has('image'))
+@if ($errors->has($name))
     <div class="text-danger col-md-10">
-        <strong>{{ $errors->first('image') }}</strong>
+        <strong>{{ $errors->first($name) }}</strong>
     </div>
 @endif
 <div class="fileinput fileinput-new text-center position-relative" data-provides="fileinput">
@@ -12,7 +12,7 @@
         <span class="btn btn-rose btn-round btn-file btn-sm">
           <span class="fileinput-new">Select</span>
           <span class="fileinput-exists">Change</span>
-          <input type="file" name="image" accept="image/*">
+          <input type="file" name="{{ $name }}" accept="image/*">
         </span>
         <a href="#" class="btn btn-danger btn-round btn-sm fileinput-exists"
            data-dismiss="fileinput"><i class="fa fa-times mr-1"></i>Cancel</a>

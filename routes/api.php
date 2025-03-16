@@ -76,14 +76,14 @@ Route::prefix('/categories')->group(function () {
         return new \App\Http\Resources\CategoryCollection(\App\Models\Category::query()->orderBy('id', 'desc')->limit(3)->get());
     });
     Route::get('/', function () {
-        $categories = \App\Models\Category::query()->orderBy('id', 'desc')->limit(100)->get();
+        $categories = \App\Models\Category::query()->orderBy('id', 'desc')->paginate(100);
         return new \App\Http\Resources\CategoryCollection($categories);
     });
 });
 
 Route::prefix('/posts')->group(function () {
     Route::get('/', function () {
-        $blogs = \App\Models\Blog::query()->orderBy('id', 'desc')->limit(100)->get();
+        $blogs = \App\Models\Blog::query()->orderBy('id', 'desc')->paginate(2);
         return new \App\Http\Resources\BlogCollection($blogs);
     });
     Route::get('/{slug}', function ($slug) {

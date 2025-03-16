@@ -27,5 +27,7 @@
     "add_to_cart": "Thêm vào giỏ hàng",
     "cart": "Giỏ hàng",
     "404_1": "Có vẻ bạn đang bị lạc",
-    "404_2": "trang bạn đang truy cập không khả dụng!"
+    "404_2": "trang bạn đang truy cập không khả dụng!",
+    "no_products_found": "Không tìm thấy sản phẩm",
+    "products": "Sản phẩm"
 }

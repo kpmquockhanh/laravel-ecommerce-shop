@@ -7,12 +7,13 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
     use UploadTrait;
-    public function index(Request $request)
+    public function index_tmp(Request $request)
     {
         $categories = Setting::with('images');
         $page = 50;
@@ -67,6 +68,16 @@ class SettingController extends Controller
         ];
 
         return view('backend.layouts.crud.base_list_table')->with($viewData);
+    }
+
+    public function index(Request $request)
+    {
+        $settings = Setting::with('images')->get()->keyBy('key')->map(function ($item) {
+            return $item->images->count() > 0 ? $item->images[0]->href : $item->value;
+        });
+        return view('backend.settings.list')->with([
+            'settings' => $settings,
+        ]);
     }
 
     public function create()
@@ -167,6 +178,53 @@ class SettingController extends Controller
             $this->doUpload($image, $request->id, 'setting', false);
         }
         $setting->update($payload);
+        return redirect(route('admin.settings.list'));
+    }
+
+    public function massUpdate(Request $request)
+    {
+        $request->validate([
+            'home_page_title' => 'required',
+            'home_page_subtitle' => 'required',
+            'home_page_title2' => 'required',
+            'home_page_subtitle2' => 'required',
+            'home_page_title3' => 'required',
+            'home_page_subtitle3' => 'required',
+            'home_page_hero_image1' => 'file',
+            'home_page_hero_image2' => 'file',
+            'home_page_hero_image3' => 'file',
+            'logo' => 'file',
+        ]);
+        $payload = $request->only([
+            'home_page_hero_image1',
+            'home_page_hero_image2',
+            'home_page_hero_image3',
+            'home_page_title',
+            'home_page_subtitle',
+            'home_page_title2',
+            'home_page_subtitle2',
+            'home_page_title3',
+            'home_page_subtitle3',
+            'logo',
+        ]);
+
+//        dd($payload);
+        foreach ($payload as $key => $value) {
+            if ($key == 'home_page_hero_image1' || $key == 'home_page_hero_image2' || $key == 'home_page_hero_image3' || $key == 'logo') {
+                $image = $request->file($key);
+                if ($image) {
+                    $setting = Setting::query()->updateOrCreate(['key' => $key], ['value' => 'image']);
+                    $oldImages = Image::query()->where(['entity_id' => $setting->id, 'entity_type' => 'setting'])->get();
+                    foreach ($oldImages as $img) {
+                        Storage::delete($img->src);
+                    }
+                    $this->doUpload($image, $setting->id, 'setting', false);
+                    continue;
+                }
+            }
+            Setting::query()->updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
         return redirect(route('admin.settings.list'));
     }
 

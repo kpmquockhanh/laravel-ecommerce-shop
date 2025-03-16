@@ -114,6 +114,7 @@ Route::prefix('')->group(function () {
             Route::post('/create', [App\Http\Controllers\SettingController::class, 'add'])->name('admin.settings.add');
             Route::get('/edit/{id}', [App\Http\Controllers\SettingController::class, 'edit'])->name('admin.settings.edit');
             Route::post('/edit/{id}', [App\Http\Controllers\SettingController::class, 'update'])->name('admin.settings.update');
+            Route::post('/mass-update', [App\Http\Controllers\SettingController::class, 'massUpdate'])->name('admin.settings.mass_update');
             Route::post('/remove', [App\Http\Controllers\SettingController::class, 'delete'])->name('admin.settings.delete');
 
             // Images

@@ -374,119 +374,120 @@ class AdminProductController extends Controller
     {
         return view('backend.products.import')->with([
             'image' => asset('backend/img/placeholder.jpg'),
+            'categories' => Category::all(),
         ]);
     }
     public function importProduct(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        $file = $request->file('file');
-        // Process the file as needed, e.g., parsing CSV, etc.
-        $reader = new Xlsx();
-        $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load($file);
-        $sheet = $spreadsheet->getActiveSheet();
-        $excelData = $sheet->rangeToArray('A1:AJ81', null, true, false, true);
+        try {
+            $file = $request->file('file');
+            $categoryId = $request->get('category_id');
+            $reader = new Xlsx();
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file);
+            $sheet = $spreadsheet->getActiveSheet();
+            $excelData = $sheet->rangeToArray('A1:AJ81', null, true, false, true);
 
-        $excelData = array_map(function($row) {
-            return array_filter($row, function($value) {
-                return !is_null($value);
-            });
-        }, $excelData);
+            $excelData = array_map(function($row) {
+                return array_filter($row, function($value) {
+                    return !is_null($value);
+                });
+            }, $excelData);
 
-        $items = [];
-        foreach ($excelData as $row => $rowItem) {
-            if (count($rowItem) < 1) {
-                continue;
-            }
-
-            foreach ($rowItem as $col => $cellValue) {
-                if (Str::contains($cellValue, '-')) {
-                    $items["$row-$col"] = [
-                        'sku' => $cellValue
-                    ];
-                }
-            }
-        }
-
-        foreach ($items as $key => $item) {
-            [$row, $col] = explode('-', $key);
-
-            for ($i = (int)$row + 1; $i < count($excelData); $i++) {
-                $rowItem = $excelData[$i];
+            $items = [];
+            foreach ($excelData as $row => $rowItem) {
                 if (count($rowItem) < 1) {
                     continue;
                 }
 
-                if (isset($rowItem[$col]) && (Str::contains($rowItem[$col], 'k') || $rowItem[$col] > 800)) {
-                    $items[$key]['price'] = (int)Str::replace('k', '', $rowItem[$col]) * 1000;
-                    break;
-                }
-
-                if (isset($rowItem[$col])) {
-                    $items[$key]['variants'][] = $rowItem[$col];
+                foreach ($rowItem as $col => $cellValue) {
+                    if (Str::contains($cellValue, '-')) {
+                        $items["$row-$col"] = [
+                            'sku' => $cellValue
+                        ];
+                    }
                 }
             }
-        }
 
-//            dd($items);
-//            $items = [$items["3-B"]];
-        foreach ($items as $item) {
-            $product = Product::query()->where('slug', Str::slug($item['sku']))->first();
-            if ($product) {
-                $product->update([
-                    'price' => $item['price'] ?? 0,
-                ]);
+            foreach ($items as $key => $item) {
+                [$row, $col] = explode('-', $key);
 
-                foreach ($item['variants'] as $variant) {
-                    $productVariant = ProductVariant::query()->where('sku', "$product->slug-$variant")->first();
-                    if ($productVariant) {
-                        $productVariant->update([
-                            'price' => $item['price'] ?? 0,
-                        ]);
+                for ($i = (int)$row + 1; $i < count($excelData); $i++) {
+                    $rowItem = $excelData[$i];
+                    if (count($rowItem) < 1) {
                         continue;
                     }
 
+                    if (isset($rowItem[$col]) && (Str::contains($rowItem[$col], 'k') || $rowItem[$col] > 800)) {
+                        $items[$key]['price'] = (int)Str::replace('k', '', $rowItem[$col]) * 1000;
+                        break;
+                    }
+
+                    if (isset($rowItem[$col])) {
+                        $items[$key]['variants'][] = $rowItem[$col];
+                    }
+                }
+            }
+
+            foreach ($items as $item) {
+                $product = Product::query()->where('slug', Str::slug($item['sku']))->first();
+                if ($product) {
+                    $product->update([
+                        'price' => $item['price'] ?? 0,
+                    ]);
+
+                    foreach ($item['variants'] as $variant) {
+                        $productVariant = ProductVariant::query()->where('sku', "$product->slug-$variant")->first();
+                        if ($productVariant) {
+                            $productVariant->update([
+                                'price' => $item['price'] ?? 0,
+                            ]);
+                            continue;
+                        }
+
+                        ProductVariant::query()->create([
+                            'sku' => "$product->slug-$variant",
+                            'price' => $item['price'] ?? 0,
+                            'name' => $variant,
+                            'product_id' => $product->id
+                        ]);
+                    }
+                    continue;
+                }
+
+                $product = Product::query()->create([
+                    'sku' => $item['sku'],
+                    'price' => $item['price'] ?? 0,
+                    'slug' => Str::slug($item['sku']),
+                    'title' => $item['sku'],
+                    'active' => 1,
+                    'created_by' => Auth::id(),
+                ]);
+
+                ProductCategory::query()->insert([
+                    'product_id' => $product->id,
+                    'category_id' => $categoryId,
+                ]);
+
+                foreach ($item['variants'] as $variant) {
                     ProductVariant::query()->create([
                         'sku' => "$product->slug-$variant",
                         'price' => $item['price'] ?? 0,
                         'name' => $variant,
-                        'product_id' => $product->id
+                        'product_id' => $product->id,
                     ]);
                 }
-                continue;
             }
 
-            $product = Product::query()->create([
-                'sku' => $item['sku'],
-                'price' => $item['price'] ?? 0,
-                'slug' => Str::slug($item['sku']),
-                'title' => $item['sku'],
-                'active' => 1,
-                'created_by' => Auth::id(),
+            return response()->json([
+                'status' => true,
+                'message' => 'Import successful'
             ]);
-
-            foreach ($item['variants'] as $variant) {
-                ProductVariant::query()->create([
-                    'sku' => "$product->slug-$variant",
-                    'price' => $item['price'] ?? 0,
-                    'name' => $variant,
-                    'product_id' => $product->id
-                ]);
-            }
-        }
-
-        dd('done');
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Import successful'
-        ]);
-
-        try {
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,

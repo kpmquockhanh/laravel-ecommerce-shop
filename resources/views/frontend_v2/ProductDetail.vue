@@ -6,13 +6,14 @@ import CarouselComponent from './components/Carousel.vue'
 import ProductRelated from './components/ProductRelated.vue'
 import { useProduct } from '../../js/composables/product'
 import { formatCurrency } from '../../js/utils'
+import PageSkeleton from './components/core/PageSkeleton.vue'
 
 export default {
   name: 'ProductDetail',
   methods: { formatCurrency },
-  components: { ProductRelated, CarouselComponent, SImage },
+  components: { PageSkeleton, ProductRelated, CarouselComponent, SImage },
   setup() {
-    const { product, fetchProduct, slug } = useProduct()
+    const { product, fetchProduct, slug, isLoadingProduct } = useProduct()
     const myCarousel = ref(null)
     const selectedVariant = ref(null)
 
@@ -61,6 +62,7 @@ export default {
       onChangeVariant,
       selectedVariant,
       cPrice,
+      isLoadingProduct,
     }
   },
 }
@@ -69,7 +71,8 @@ export default {
 <template>
   <section v-if="product?.id" class="section-wrap pb-40 single-product">
     <div class="container-fluid semi-fluid">
-      <div class="row">
+      <page-skeleton v-if="isLoadingProduct" :number-item="4" class="px-5" />
+      <div class="row" v-else>
         <div class="col-md-4 col-xs-12">
           <CarouselComponent :items="originImages" ref="myCarousel" :number-item="1">
             <template v-slot:default="slotProps">
